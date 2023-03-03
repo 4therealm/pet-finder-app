@@ -23,6 +23,7 @@ const LoginPage = (props) => {
       }
     })
     const result = await query.json()
+    console.log(result)
 //if the query is not ok, set the signup result to fail
     if( result && !result.err && result.data && result.data.token ){
       setLoginResult("success")

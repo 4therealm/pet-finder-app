@@ -16,7 +16,13 @@ const userSchema = new Schema({
   location: {
     type: String,
     
-  }
+  },
+  pets: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Pet'
+    }
+  ]
 });
 
 const User = model('User', userSchema);

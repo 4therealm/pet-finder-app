@@ -26,6 +26,7 @@ function App() {
       const result = await query.json()
       // getting a result back means the user is verified
       // if the query is ok, set the user state
+      console.log(result)
       if( result ){
         setUser(result)
       }
