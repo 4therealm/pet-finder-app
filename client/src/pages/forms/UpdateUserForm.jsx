@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from "react"
 import { useParams } from "react-router-dom";
 export default function UpdateUserForm({setShowUserForm,user}) {
-  const {id} = useParams()
-  const [userFormData,setUserFormData]=useState({email: "",password: "",name: "",location: ""}) //this is the state that will be updated when the user changes the input fields
+  const {id} = useParams()//this is the id of the user that is being updated
+  const [userFormData,setUserFormData]=useState({email: "" ,password: "", name: "", location: ""}) //this is the state that will be updated when the user changes the input fields
   const [userUpdateResult,setUserUpdateResult]=useState("") //this is the state that will be updated when the user updates their profile information and will be used to trigger the useEffect hook
 
 
