@@ -3,6 +3,7 @@ import { useState } from "react"
 import cookie from "js-cookie"
 
 const LoginPage = (props) => {
+  console.log(props)
 
   const defForm = { email: "", password: "" }
   const [ formData, setFormData ] = useState(defForm)
@@ -13,7 +14,7 @@ const LoginPage = (props) => {
   }
 
   const handleFormSubmit = async (e) => {
-    console.log(formData)
+    // console.log(formData)
     e.preventDefault()
     const query = await fetch("/api/user/auth", {
       method: "post",
@@ -23,7 +24,7 @@ const LoginPage = (props) => {
       }
     })
     const result = await query.json()
-    console.log(result)
+    // console.log(result)
 //if the query is not ok, set the signup result to fail
     if( result && !result.err && result.data && result.data.token ){
       setLoginResult("success")

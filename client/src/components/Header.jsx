@@ -1,20 +1,19 @@
+import {useContext} from 'react'
 import cookie from 'js-cookie'
-const Header = ({user}) => {
+import {UserContext} from "../App"
 
+const Header = () => {
+  const {user} = useContext(UserContext)
 
   const logout = () => {
-    console.log('auth-logout')
-    // remove the token from the cookie
     cookie.remove('auth-token')
-    // will send them anywhere there isnt an auth path
     window.location.href = '/'
-    }
-    
+  }
+
   return (
     <header className="px-2 pb-0 mb-0" style={{ borderBottom: "1px solid #333" }}>
       <nav className="navbar navbar-dark navbar-expand-md bg-body-secondary" data-bs-theme="dark">
         <div className="container-fluid">
-          {/* <a className="navbar-brand" href="##">Navbar</a> */}
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -36,7 +35,8 @@ const Header = ({user}) => {
               ) : (
                 <>
                   <li className="nav-item">
-                    <a className="nav-link" href="/profile">Profile</a>
+                    {/* use a dynamic URL with the user id */}
+                    <a className="nav-link" href={`/profile/id?id=${user._id}`}>Profile</a>
                   </li>
                   <li className="nav-item">
                     <a className="nav-link" href="##" onClick={logout}>Logout</a>
@@ -51,6 +51,5 @@ const Header = ({user}) => {
     </header>
   )
 }
-
 
 export default Header

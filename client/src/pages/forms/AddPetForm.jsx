@@ -1,125 +1,174 @@
-// export default function AddPetForm({ handleAddPet, handleCancel, userId, setPets }) {
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     type: "",
-//     breed: "",
-//     description: "",
-//     age: "",
-//     gender: "",
-//     size: "",
-//     color: "",
-//     friendly: "",
-//     health: "",
-//     notes: "",
-//     userId: userId,
-//   });
-
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
+import React, { useState, useEffect } from "react";
+export default function AddPetForm({user, handleAddPet, setShowPetForm}) {
+  //this is the state that will be updated when the user changes the input fields in the add pet form
+  const [petFormData, setPetFormData] = useState({
+    name: "",
+    type: "",
+    breed: "",
+    description: "",
+    age: "",
+    gender: "",
+    size: "",
+    color: "",
+    friendly: "",
+    health: "",
+    notes: "",
+    owner: user,
+  });
+  //this is the state that will be updated when the user adds a pet and will be used to display the pets
 
 
-//     try {
-//       const response = await axios.post("/api/pets", formData);
-//       console.log(response.data);
+ const [pets, setPets] = useState([])//this is the state that will be updated when the user adds a pet and will be used to display the pets
 
-//       if (!response.data) {
-//         throw new Error("Failed to add pet");
-//       }
+ const handlePetInputChange = (e) => {
+  // console.log(e.target.name, e.target.value)
+  setPetFormData({...petFormData, [e.target.name]: e.target.value})
+}
 
-//       handleAddPet(formData);
-//       setPets((prevPets) => [...prevPets, formData]); // add the new pet to the pets array
-//       setFormData({
-//         name: "",
-//         type: "",
-//         breed: "",
-//         description: "",
-//         age: "",
-//         gender: "",
-//         size: "",
-//         color: "",
-//         friendly: "",
-//         health: "",
-//         notes: "",
-//         userId: "",
-//       });
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <h2>Add a Pet</h2>
-//       <div>
-//         <label htmlFor="name">Name:</label>
-//         <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-//       </div>
-//       <div>
-//         <label htmlFor="type">Type:</label>
-//         <input type="text" name="type" value={formData.type} onChange={handleChange} required />
-//       </div>
-//       <div>
-//         <label htmlFor="breed">Breed:</label>
-//         <input type="text" name="breed" value={formData.breed} onChange={handleChange} />
-//       </div>
-//       <div>
-//         <label htmlFor="age">Age:</label>
-//         <input type="number" name="age" value={formData.age} onChange={handleChange} step={1} />
-//       </div>
-//       <div>
-//         <label htmlFor="gender">Gender:</label>
-//         <select name="gender" value={formData.gender} onChange={handleChange}>
-//           <option value="">Select</option>
-//           <option value="male">Male</option>
-//           <option value="female">Female</option>
-//           <option value="other">Other</option>
-//         </select>
-//       </div>
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      console.log(petFormData)
+      const query = await fetch(`/api/user/${user.id}/addPet`, {
+        method: "post",
+        body: JSON.stringify(petFormData),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      const result = await query.json()
+      console.log(result)
+      if (!result.data) {
+        throw new Error("Failed to add pet");
+      }
 
-//       <div>
-//         <label htmlFor="size">Size:</label>
-//         <select name="size" value={formData.size} onChange={handleChange}>
-//           <option value="small">Small</option>
-//           <option value="medium">Medium</option>
-//           <option value="large">Large</option>
-//         </select>
-//       </div>
+      handleAddPet(petFormData);
+      setPets((Pets) => [...Pets, petFormData]); // add the new pet to the pets array
+      setPetFormData({
+        name: "",
+        type: "",
+        breed: "",
+        description: "",
+        age: "",
+        gender: "",
+        size: "",
+        color: "",
+        friendly: "",
+        health: "",
+        notes: "",
+        owner: "",
+      });
+      setShowPetForm(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return (
+    <div className="AddPetForm">
+    <div className="row">
+    <div className="col-6">
 
-//       <div>
-//         <label htmlFor="color">Color:</label>
-//         <input type="text" name="color" value={formData.color} onChange={handleChange} />
-//       </div>
-//       <div>
-//         <label htmlFor="friendly">Friendly:</label>
-//         <div>
-//           <input type="radio" id="friendly-yes" name="friendly" value="yes" checked={formData.friendly==="yes"} onChange={handleChange} />
-//           <label htmlFor="friendly-yes">Yes</label>
-//         </div>
-//         <div>
-//           <input type="radio" id="friendly-no" name="friendly" value="no" checked={formData.friendly==="no"} onChange={handleChange} />
-//           <label htmlFor="friendly-no">No</label>
-//         </div>
-//       </div>
+      <form onSubmit={handleSubmit} className="mb-2">
+        <div className="form-group mb-2">
+          <label>Name</label>
+          <input
+            type="text"
+            className="form-control"
+            name="name"
+        
+            onChange={handlePetInputChange}
+          />  
+        </div>
+        <div className="form-group mb-2">
+          <label>Type</label>
+          <input
+          
+            type="text"
+            className="form-control"
+            name="type"
+    
+            onChange={handlePetInputChange}
+          />
+        </div>
+        <div className="form-group mb-2">
+          <label>Pet Breed</label>
+          <input
+            type="text"
+            className="form-control"
+            name="breed"
+        
+            onChange={handlePetInputChange}
+          />
+        </div>
+        <div className="form-group mb-2">
+          <label>Age</label>
+          <input
+            type="text"
+            className="form-control"
+            name="age"
+  
+            onChange={handlePetInputChange}
+          />
+        </div>
+        <div className="form-group mb-2">
+          <label>Weight</label>
+          <input
+            type="text"
+            className="form-control"
+            name="weight"
+       
+            onChange={handlePetInputChange}
+          />
+        </div>
+        <div>
+<label htmlFor="gender">Gender:</label>
+<select name="gender" onChange={handlePetInputChange}>
+<option value="">Select</option>
+<option value="male">Male</option>
+<option value="female">Female</option>
+<option value="other">Other</option>
+</select>
+</div>
 
-//       <div>
-//         <label htmlFor="health">Health:</label>
-//         <input type="text" name="health" value={formData.health} onChange={handleChange} />
-//       </div>
-//       <div>
-//         <label htmlFor="notes">Notes:</label>
-//         <input type="text" name="notes" value={formData.notes} onChange={handleChange} />
-//       </div>
-//       <div>
-//         <label htmlFor="userId">User Id:</label>
-//         <input hidden type="text" name="userId" value={userId} onChange={handleChange} />
-//         <p>{userId}</p>
-//       </div>
-//       <button type="submit">Add Pet</button>
-//       <button type="button" onClick={handleCancel}>Cancel</button>
-//     </form>
-//   )
-// }
+<div>
+<label htmlFor="size">Size:</label>
+<select name="size" onChange={handlePetInputChange}>
+<option value="small">Small</option>
+<option value="medium">Medium</option>
+<option value="large">Large</option>
+</select>
+</div>
+
+<div>
+<label htmlFor="color">Color:</label>
+<input type="text" name="color"  onChange={handlePetInputChange} />
+</div>
+<div>
+<label htmlFor="friendly">Friendly:</label>
+<div>
+<input type="radio" id="friendly-yes" name="friendly" value="yes" checked={"yes"} onChange={handlePetInputChange} />
+<label htmlFor="friendly-yes">Yes</label>
+</div>
+<div>
+<input type="radio" id="friendly-no" name="friendly" value="no" checked={"no"} onChange={handlePetInputChange} />
+<label htmlFor="friendly-no">No</label>
+</div>
+</div>
+
+<div>
+<label htmlFor="health">Health:</label>
+<input type="text" name="health" onChange={handlePetInputChange} />
+</div>
+<div>
+<label htmlFor="notes">Notes:</label>
+<input type="text" name="notes"  onChange={handlePetInputChange} />
+</div>
+        <button type="submit" className="btn btn-primary mt-2">
+          Add Pet
+        </button>
+      </form>
+      </div>
+      </div>
+    </div>
+      )
+}

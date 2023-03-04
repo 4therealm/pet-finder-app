@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext, createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import cookie from "js-cookie"
 import { Header, Wrapper } from "./components"
@@ -7,6 +7,7 @@ import { HomePage, LoginPage, ProfilePage, SignupPage } from "./pages";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/global.css'
 
+const UserContext = createContext()
 function App() {
   // stateful variable to hold the user object
   const [ user, setUser ] = useState(null)
@@ -26,9 +27,11 @@ function App() {
       const result = await query.json()
       // getting a result back means the user is verified
       // if the query is ok, set the user state
-      console.log(result)
+      // console.log(result)
       if( result ){
         setUser(result)
+        // console.log(user)
+        // console.log(result)
       }
     }
   }
@@ -37,21 +40,27 @@ function App() {
     verifyUser()
   },[])
 
+
+  
+
   return (
     <BrowserRouter>
       <Wrapper>
-        <Header user={user} />
+<UserContext.Provider value={{user, setUser}}>
+        <Header user={user} verifyUser={verifyUser} />
         <div className="pt-3 px-4">
           <Routes>
             <Route path="/" element={<HomePage user={user} />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/profile" element={<ProfilePage user={user} />} />
+            <Route path="/profile/:id" element={<ProfilePage user={user} />} />
             <Route path="/signup" element={<SignupPage />} />
           </Routes>
         </div>
+</UserContext.Provider>
       </Wrapper>
     </BrowserRouter>
   );
 }
 
 export default App;
+export { UserContext }
