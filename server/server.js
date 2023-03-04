@@ -2,9 +2,13 @@ const express = require('express');
 const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+app.use(cors({
+  origin: 'http://localhost:3000' // replace with the domain of your client-side app
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

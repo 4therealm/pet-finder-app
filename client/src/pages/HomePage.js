@@ -1,17 +1,18 @@
+import React, { useContext } from 'react';
+import { UserContext } from '../App';
 
-const HomePage = ({user}) => {
+const HomePage = () => {
+  const { user } = useContext(UserContext);
 
   return (
-    <>
-      <h1>Home Page</h1>
-
-      { !user ? (
-        <p>The user is not logged in.</p>
+    <div>
+ {user?.name ? (
+        <h2>Hello, {user.name}!</h2>
       ) : (
-        <p>The user is logged in.</p>
+        <p>Please log in to see your profile.</p>
       )}
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default HomePage
+export default HomePage;

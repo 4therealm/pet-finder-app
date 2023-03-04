@@ -1,4 +1,5 @@
-const { User } = require("../models");
+const { User, Pet } = require("../models");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -107,4 +108,69 @@ module.exports = {
 // Return the user
     return res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location });
   },
+
+
+  async getUserById(req, res) {
+    console.log('userID')
+    try {
+      const dbUser = await User.findById(req.params.id)
+      .populate('pets')
+      res
+        .status(200)
+        .json(dbUser)
+    } catch (error) {
+      res
+        .status(500)
+        .json(error)
+    }
+  },
+
+  async createPet(req, res) {
+    const userId = req.params.id;
+    try {
+      const {
+        name,
+        type,
+        description,
+        breed,
+        age,
+        gender,
+        size,
+        color,
+        friendly,
+        health,
+        notes,
+        owner,
+      } = req.body;
+      const dbPet = await Pet.create({
+        name,
+        type,
+        description,
+        breed,
+        age,
+        gender,
+        size,
+        color,
+        friendly,
+        health,
+        notes,
+        owner: userId,
+      });
+      if (!dbPet) {
+        throw new Error("Failed to create pet");
+      }
+      const dbUser = await User.findByIdAndUpdate(
+        { _id: userId },
+        { $push: { pets: dbPet._id } }
+      );
+      if (!dbUser) {
+        throw new Error("Failed to update user");
+      }
+      res.status(200).json(`dbPet: ${dbPet} dbUser: ${dbUser}`);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
+  }
+  
 };

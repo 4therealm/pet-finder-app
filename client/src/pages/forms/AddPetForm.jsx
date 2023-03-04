@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from "react";
-export default function AddPetForm({user, handleAddPet, setShowPetForm}) {
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../App";
+
+export default function AddPetForm({handleAddPet, setShowPetForm}) {
+  const { user } = useContext(UserContext);
+
   //this is the state that will be updated when the user changes the input fields in the add pet form
   const [petFormData, setPetFormData] = useState({
     name: "",
@@ -29,7 +33,7 @@ const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       console.log(petFormData)
-      const query = await fetch(`/api/user/${user.id}/addPet`, {
+      const query = await fetch(`http://localhost:3001/api/user/${user._id}/pet`, {
         method: "post",
         body: JSON.stringify(petFormData),
         headers: {
@@ -75,6 +79,7 @@ const handleSubmit = async (event) => {
             type="text"
             className="form-control"
             name="name"
+            value={petFormData.name}
         
             onChange={handlePetInputChange}
           />  
@@ -86,6 +91,7 @@ const handleSubmit = async (event) => {
             type="text"
             className="form-control"
             name="type"
+            value={petFormData.type}
     
             onChange={handlePetInputChange}
           />
@@ -96,6 +102,7 @@ const handleSubmit = async (event) => {
             type="text"
             className="form-control"
             name="breed"
+            value={petFormData.breed}
         
             onChange={handlePetInputChange}
           />
@@ -106,20 +113,12 @@ const handleSubmit = async (event) => {
             type="text"
             className="form-control"
             name="age"
+            value={petFormData.age}
   
             onChange={handlePetInputChange}
           />
         </div>
-        <div className="form-group mb-2">
-          <label>Weight</label>
-          <input
-            type="text"
-            className="form-control"
-            name="weight"
        
-            onChange={handlePetInputChange}
-          />
-        </div>
         <div>
 <label htmlFor="gender">Gender:</label>
 <select name="gender" onChange={handlePetInputChange}>
@@ -133,7 +132,7 @@ const handleSubmit = async (event) => {
 <div>
 <label htmlFor="size">Size:</label>
 <select name="size" onChange={handlePetInputChange}>
-<option value="small">Small</option>
+<option value={"small"}>Small</option>
 <option value="medium">Medium</option>
 <option value="large">Large</option>
 </select>
@@ -143,7 +142,7 @@ const handleSubmit = async (event) => {
 <label htmlFor="color">Color:</label>
 <input type="text" name="color"  onChange={handlePetInputChange} />
 </div>
-<div>
+{/* <div>
 <label htmlFor="friendly">Friendly:</label>
 <div>
 <input type="radio" id="friendly-yes" name="friendly" value="yes" checked={"yes"} onChange={handlePetInputChange} />
@@ -153,7 +152,7 @@ const handleSubmit = async (event) => {
 <input type="radio" id="friendly-no" name="friendly" value="no" checked={"no"} onChange={handlePetInputChange} />
 <label htmlFor="friendly-no">No</label>
 </div>
-</div>
+</div> */}
 
 <div>
 <label htmlFor="health">Health:</label>
