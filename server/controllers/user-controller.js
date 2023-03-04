@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 module.exports = {
+
+  
   async createUser({ body }, res) {
     const { email, password, name, location } = body;
     // Check if the user already exists
@@ -25,7 +27,6 @@ module.exports = {
     // Return the user
     res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location });
   },
-
   // the user is updated by the id
   async updateUser({ body, params }, res) {
     const { email, password, name, location } = body;
@@ -109,9 +110,21 @@ module.exports = {
     return res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location });
   },
 
+  async getAllUsers(req, res) {
+    try {
+      const dbUser = await User.find({})
+      res
+        .status(200)
+        .json(dbUser)
+    } catch (error) {
+      res
+        .status(500)
+        .json(error)
+    }
+  },
 
+  //this is the route that is called when the user clicks on the profile button
   async getUserById(req, res) {
-    console.log('userID')
     try {
       const dbUser = await User.findById(req.params.id)
       .populate('pets')
@@ -124,7 +137,7 @@ module.exports = {
         .json(error)
     }
   },
-
+//this is the route that is called when the user adds a pet
   async createPet(req, res) {
     const userId = req.params.id;
     try {
@@ -154,7 +167,7 @@ module.exports = {
         friendly,
         health,
         notes,
-        owner: userId,
+        owner,
       });
       if (!dbPet) {
         throw new Error("Failed to create pet");
@@ -171,6 +184,20 @@ module.exports = {
       console.log(error);
       res.status(500).json(error);
     }
+  },
+
+ async deleteUser(req, res) {
+    try {
+      const dbUser = await User.findByIdAndDelete(req.params.id)
+      res
+        .status(200)
+        .json('successfully deleted: ' + dbUser.name)
+    } catch (error) {
+      res
+        .status(500)
+        .json(error)
+    }
   }
+   
   
 };

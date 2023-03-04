@@ -1,7 +1,9 @@
 const router = require('express').Router();
-const { getPetById } = require('../../controllers/pet-controller');
+const { getPetById, getAllPets } = require('../../controllers/pet-controller');
 
-
+router  
+    .route('/')
+    .get(getAllPets);
 
 router
     .route('/:id')

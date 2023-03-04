@@ -1,21 +1,15 @@
 const { Pet, User } = require('../models');
 
 module.exports = {
-    // get all pets
-    getAllPets(req, res) {
-        Pet.find({})
-            .populate({
-                path: 'user',
-            })
-
-            .sort({ _id: -1 })
-            .then(dbPetData => res.json(dbPetData))
-            .catch(err => {
-                console.log(err);
-                res.status(400).json(err);
-            }
-        );
-    },
+    async getAllPets(req,res) {
+     try { const dbPets = await Pet.find({}).populate('owner', 'name').sort({name: -1 })
+      console.log(dbPets)
+      res.json(dbPets)
+    } catch (err) {
+      console.log(err)
+      res.status(400).json(err)
+    }
+  },
 
 
     async getPetById(req, res) {

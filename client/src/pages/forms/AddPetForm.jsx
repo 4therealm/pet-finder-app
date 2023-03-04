@@ -142,17 +142,17 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
               <label htmlFor="color">Color:</label>
               <input type="text" name="color" onChange={handlePetInputChange} />
             </div>
-            {/* <div>
-<label htmlFor="friendly">Friendly:</label>
-<div>
-<input type="radio" id="friendly-yes" name="friendly" value="yes" checked={"yes"} onChange={handlePetInputChange} />
-<label htmlFor="friendly-yes">Yes</label>
-</div>
-<div>
-<input type="radio" id="friendly-no" name="friendly" value="no" checked={"no"} onChange={handlePetInputChange} />
-<label htmlFor="friendly-no">No</label>
-</div>
-</div> */}
+            <div>
+              <label htmlFor="friendly">Friendly:</label>
+              <div>
+                <input type="radio" id="friendly-yes" name="friendly" value="yes" checked={petFormData.friendly==="yes"} onChange={handlePetInputChange} />
+                <label htmlFor="friendly-yes">Yes</label>
+              </div>
+              <div>
+                <input type="radio" id="friendly-no" name="friendly" value="no" checked={petFormData.friendly==="no"} onChange={handlePetInputChange} />
+                <label htmlFor="friendly-no">No</label>
+              </div>
+            </div>
 
             <div>
               <label htmlFor="health">Health:</label>
