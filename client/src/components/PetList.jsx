@@ -8,7 +8,7 @@ const PetAside = ({ pets }) => {
   const handleButtonClick = async (petId) => {
     console.log(petId);
     try {
-      const response = await fetch(`http://localhost:3001/api/pets/${petId}`);
+      const response = await fetch(`http://localhost:3001/api/pet/${petId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

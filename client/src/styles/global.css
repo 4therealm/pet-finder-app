@@ -1,7 +1,7 @@
 
 /* === typography ====== */ 
 
-h1, h2, h3, h4, h5, h6, p, li, td, th, blockquote, label, input, textarea, select, span {
+h1, h2, h3, h4, h5, h6, p, li, td, th, blockquote, label, span {
   color: white;
 }
 
@@ -16,4 +16,14 @@ p, li, td, th, blockquote, label, input, textarea, select {
 
 p {
   margin-bottom: 1rem;
+}
+.modal-body{
+  border: black 1px solid;
+}
+.modal-title{
+  color: black;
+}
+.modal-body p {
+  margin-bottom: 0;
+  color: black;
 }
