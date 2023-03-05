@@ -35,12 +35,12 @@ const useGeoLocation = () => {
   const handleSaveLocation = () => {
     setLoading(true);
     setError(null);
-
+console.log(coords.latitude, coords.longitude)
     if (coords.latitude && coords.longitude) {
       const url = "http://localhost:3001/api/location";
       const data = {
         city,
-        coordinates: [coords.latitude, coords.longitude],
+        coordinates: [`${coords.latitude}, ${coords.longitude}`],
       };
       fetch(url, {
         method: "POST",

@@ -17,13 +17,7 @@ lostPets: [
   }
 ],
 
-},
-{
-    toJSON: {
-      virtuals: true,
-    },
-    id: false,
-  });
+});
 
 const Location = mongoose.model('Location', locationSchema);
 module.exports = Location;
