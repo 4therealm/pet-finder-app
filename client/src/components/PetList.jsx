@@ -9,6 +9,7 @@ const PetAside = ({ pets }) => {
 
 
   const handlePetButtonClick = async (petId) => {
+    console.log(userLocation);
     console.log(petId);
     try {
       const response = await fetch(`http://localhost:3001/api/pet/${petId}`);
@@ -39,8 +40,9 @@ const PetAside = ({ pets }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ isLost: true,
-        lastSeenLocation: userLocation }),
+        lastSeenLocation: userLocation._id }),
       });
+      console.log(userLocation);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }

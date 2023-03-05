@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const { createLocation, getLocations, getLocation, updateLocation, removeLocation, findByCity} = require("../../controllers/location-controller")
+const { createLocation, getLocations, getLocation, updateLocation, removeLocation} = require("../../controllers/location-controller")
 
 router
   .route("/")
@@ -13,7 +13,7 @@ router
   .put(updateLocation)
   .delete(removeLocation)
 
-  router.route("/city/:city").get(findByCity)
+
 
 
 

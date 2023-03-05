@@ -56,15 +56,5 @@ module.exports = {
     }
   },
   
-  async findByCity(req, res) {
-    try{
-      const { city } = req.params;
-      location = await Location.findOne({ city });
-      res.status(200).json(location);
-    } catch (error) {
-      res.status(500).json(error);
-      
-       }
-  }
   
 };
