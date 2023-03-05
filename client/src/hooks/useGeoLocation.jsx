@@ -27,6 +27,7 @@ const useGeoLocation = () => {
           setLoading(false);
         }
       );
+
     } else {
       setError("Geolocation is not supported by this browser.");
       setLoading(false);
@@ -79,6 +80,7 @@ const useGeoLocation = () => {
 
   useEffect(() => {
     if (userLocation) {
+      //userLocation is an array of objects [{city, coordinates, _id}]
       console.log(userLocation);
     }
   }, [userLocation]);

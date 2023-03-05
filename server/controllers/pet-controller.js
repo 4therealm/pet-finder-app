@@ -67,7 +67,6 @@ module.exports = {
   async lostPet(req, res) {
  const {id} = req.params;
  const {isLost, lastSeenLocation} = req.body;
-const locationId = lastSeenLocation._id;
     try {
       const dbPetData = await Pet.findOneAndUpdate(
         { _id: id },
@@ -80,7 +79,7 @@ const locationId = lastSeenLocation._id;
       }
       
       // Find the corresponding location document
-      const location = await Location.findOneById({locationId});
+      const location = await Location.findOne(lastSeenLocation);
       if (!location) {
         res.status(404).json({ message: "No location found for this city!" });
         return;
@@ -90,7 +89,7 @@ const locationId = lastSeenLocation._id;
       location.lostPets.push(dbPetData);
       await location.save();
   
-      res.json(dbPetData);
+      res.json(dbPetData, location);
     } catch (err) {
       console.log(err);
       res.status(400).json(err);

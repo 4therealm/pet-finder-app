@@ -40,14 +40,28 @@ const PetAside = ({ pets }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ isLost: true,
-        lastSeenLocation: userLocation._id }),
+        lastSeenLocation: userLocation}),
       });
-      console.log(userLocation);
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Network response for Pet update was not ok");
       }
       const data = await response.json();
       setPetInfo(data);
+      const { lastSeenLocation } = data;
+      const lastSeenLocationId = lastSeenLocation[0]._id;
+
+      const response2 = await fetch(`http://localhost:3001/api/location/lost/${lastSeenLocationId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response2.ok) {
+        throw new Error("Network response for Location update was not ok");
+      }
+      const data2 = await response2.json();
+      console.table(data2);
     } catch (error) {
       console.log(error);
     }

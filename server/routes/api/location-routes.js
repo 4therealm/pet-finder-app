@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const { createLocation, getLocations, getLocation, updateLocation, removeLocation} = require("../../controllers/location-controller")
+const { createLocation, getLocations, getLocation, updateLocation, removeLocation, addLostPet} = require("../../controllers/location-controller")
 
 router
   .route("/")
@@ -13,6 +13,8 @@ router
   .put(updateLocation)
   .delete(removeLocation)
 
+
+router.route("/lost/:id").put(addLostPet)
 
 
 

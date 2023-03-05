@@ -55,6 +55,20 @@ module.exports = {
       res.status(500).json(error);
     }
   },
-  
+
+  async addLostPet(req, res) {
+    try {
+      const { id } = req.params;
+      const { petId } = req.body;
+
+      const dbLocation = await Location.findById(id);
+      dbLocation.lostPets.push(petId);
+      await dbLocation.save();
+      res.status(200).json(dbLocation);
+    } catch (error) {
+      res.status(500).json(error);
+      
+    }
+  }
   
 };
