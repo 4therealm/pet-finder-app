@@ -41,6 +41,7 @@ const useGeoLocation = () => {
     setError(null);
 
     if (userLocation.city && userLocation.coordinates) {
+      userLocation.coordinates = userLocation.coordinates.map((coord) => Number(coord));
       const url = "http://localhost:3001/api/location";
       const data = {
         city: userLocation.city,
