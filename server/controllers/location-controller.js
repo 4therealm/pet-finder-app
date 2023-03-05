@@ -7,7 +7,8 @@ module.exports = {
     try {
       const { city, coordinates } = req.body;
       const dbLocation = await Location.create({ city, coordinates });
-      res.status(200).json(dbLocation);
+      const savedLocation = await dbLocation.save();
+      res.status(201).json(savedLocation._doc);
     } catch (error) {
       res.status(500).json(error);
     }
@@ -55,5 +56,15 @@ module.exports = {
     }
   },
   
+  async findByCity(req, res) {
+    try{
+      const { city } = req.params;
+      location = await Location.findOne({ city });
+      res.status(200).json(location);
+    } catch (error) {
+      res.status(500).json(error);
+      
+       }
+  }
   
 };

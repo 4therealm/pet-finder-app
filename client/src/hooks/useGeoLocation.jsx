@@ -57,7 +57,9 @@ const useGeoLocation = () => {
       })
         .then((response) => response.json())
         .then((result) => {
-          setUserLocation(result);
+          const { city, coordinates, _id } = result;
+          setUserLocation([{ city, coordinates, _id }]);
+          console.log(result);
           setLoading(false);
         })
         .catch((error) => {
@@ -87,8 +89,9 @@ const useGeoLocation = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data);
-          const cityResult = data.results[0]?.formatted_address || null;
+          console.log(data);
+          const cityResult = data.results[0].address_components[0].long_name || null;
+          console.log(cityResult);
           setCity(cityResult);
           setUserLocation({
             city: cityResult,

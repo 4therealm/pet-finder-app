@@ -65,6 +65,7 @@ module.exports = {
   },
 
   async lostPet(req, res) {
+    console.log(req.body);
     try {
       const dbPetData = await Pet.findOneAndUpdate(
         { _id: req.params.id },
@@ -75,10 +76,23 @@ module.exports = {
         res.status(404).json({ message: "No pet found with this id!" });
         return;
       }
+      
+      // Find the corresponding location document
+      const location = await Location.findOneById('6404fe4b79cb2a282c668223');
+      if (!location) {
+        res.status(404).json({ message: "No location found for this city!" });
+        return;
+      }
+      
+      // Push the dbPetData into the location's lostPets array
+      location.lostPets.push(dbPetData);
+      await location.save();
+  
       res.json(dbPetData);
     } catch (err) {
       console.log(err);
       res.status(400).json(err);
     }
   }
+  
 };

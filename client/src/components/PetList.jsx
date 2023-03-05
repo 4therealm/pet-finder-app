@@ -8,7 +8,7 @@ const PetAside = ({ pets }) => {
   const { userLocation } = useContext(UserContext);
 
 
-  const handleButtonClick = async (petId) => {
+  const handlePetButtonClick = async (petId) => {
     console.log(petId);
     try {
       const response = await fetch(`http://localhost:3001/api/pet/${petId}`);
@@ -30,7 +30,7 @@ const PetAside = ({ pets }) => {
     setModalVisible(false);
   };
 
-  const handleLost = async () => {
+  const handleLostButtonClicked = async () => {
     console.log("lost button clicked");
     try {
       const response = await fetch(`http://localhost:3001/api/pet/${selectedPet}`, {
@@ -61,7 +61,7 @@ const PetAside = ({ pets }) => {
             key={pet._id}
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => handleButtonClick(pet._id)}
+            onClick={() => handlePetButtonClick(pet._id)}
           >
             {pet.name}
           </button>
@@ -104,7 +104,7 @@ const PetAside = ({ pets }) => {
                   Close
                 </button>
                 <button
-                onClick={handleLost}>lost?</button>
+                onClick={handleLostButtonClicked}>lost?</button>
               </div>
             </div>
           </div>
