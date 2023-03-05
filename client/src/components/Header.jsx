@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import cookie from 'js-cookie';
 import { UserContext } from '../App';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import useGeoLocation from './Geolocation'
 
 const Header = () => {
   const { user } = useContext(UserContext);
@@ -11,7 +13,15 @@ const Header = () => {
   };
 
   return (
-    <header className="px-2 pb-0 mb-0" style={{ borderBottom: '1px solid #333' }}>
+    <header className="px-2 pb-0 mb-0 row " >
+      {/* style={{ borderBottom: '1px solid #333' }} */}
+      <div className="d-flex justify-content-between align-items-center">
+        <div className="h2-title d-flex align-items-center">
+          <h2>Pet Finder</h2>
+          <p className="header-p">Find a lost pet near you!</p>
+      </div>
+
+
       <nav className="navbar navbar-dark navbar-expand-md bg-body-secondary" data-bs-theme="dark">
         <div className="container-fluid">
           <button
@@ -48,6 +58,8 @@ const Header = () => {
                 </>
               ) : (
                 <>
+                {/* Insert the name of the city when the user logs in */}
+                  <li>    </li>
                   <li className="nav-item">
                     {/* use a dynamic URL with the user id */}
                     <a className="nav-link" href={`/profile/${user._id}`}>
@@ -65,6 +77,7 @@ const Header = () => {
           </div>
         </div>
       </nav>
+      </div>
     </header>
   );
 };

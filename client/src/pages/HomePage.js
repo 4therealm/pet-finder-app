@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../App';
+import PetAside from '../components/PetList'
 
 const HomePage = () => {
   const { user } = useContext(UserContext);
@@ -7,7 +8,11 @@ const HomePage = () => {
   return (
     <div>
  {user?.name ? (
-        <h2>Hello, {user.name}!</h2>
+        <>
+          <h2 className="petaside-greeting">Hello, {user.name}!</h2>
+          {/* ! Currently the pets are throwing an error when I have them shown here, but this code is ready! */}
+          {/* <PetAside /> */}
+        </>
       ) : (
         <p>Please log in to see your profile.</p>
       )}
