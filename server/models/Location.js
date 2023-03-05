@@ -7,7 +7,7 @@ const locationSchema = new Schema({
     required: true
   },
   coordinates: {
-    type: [Number],
+    type: [Number, Number],
     index: '2dsphere',
     required: true,
   },
@@ -17,7 +17,9 @@ const locationSchema = new Schema({
       ref: 'Pet',
     }
   ],
-});
+},
+// {id: false}
+);
 // Create a geospatial index on the coordinates field
 locationSchema.index({ coordinates: '2dsphere' });
 const Location = mongoose.model('Location', locationSchema);

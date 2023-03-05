@@ -33,10 +33,10 @@ const useGeoLocation = () => {
   };
 
   const saveLocationData = () => {
-    console.log(userLocation)
 
-    console.log(coords)
-    console.log(city)
+    console.log(userLocation.coordinates)
+    console.log(userLocation.city)
+    
     setLoading(true);
     setError(null);
 
@@ -45,8 +45,7 @@ const useGeoLocation = () => {
       const data = {
         city: userLocation.city,
         coordinates: userLocation.coordinates,
-        // city,
-        // coordinates: [`${latitude}, ${longitude}`],
+
       };
       fetch(url, {
         method: "POST",
@@ -87,15 +86,15 @@ const useGeoLocation = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           const cityResult = data.results[0]?.formatted_address || null;
           setCity(cityResult);
           setUserLocation({
             city: cityResult,
             coordinates: [Number(data.results[0].geometry.location.lat), Number(data.results[0].geometry.location.lng)],
           });
-          console.log(cityResult)
-          console.log(userLocation)
+          // console.log(cityResult)
+          // console.log(userLocation)
         })
         .catch((error) => {
           setError(error.message);
