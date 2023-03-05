@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../App";
 
 const PetAside = ({ pets }) => {
   const [selectedPet, setSelectedPet] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [petInfo, setPetInfo] = useState({});
+  const { userLocation } = useContext(UserContext);
+
 
   const handleButtonClick = async (petId) => {
     console.log(petId);
@@ -35,13 +38,13 @@ const PetAside = ({ pets }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ isLost: true }),
+        body: JSON.stringify({ isLost: true,
+        lastSeenLocation: userLocation }),
       });
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.table(data);
       setPetInfo(data);
     } catch (error) {
       console.log(error);

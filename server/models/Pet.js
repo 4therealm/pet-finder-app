@@ -50,12 +50,23 @@ const petSchema = new Schema({
   isLost: {
     type: Boolean,
     default: false
-  }
-  // location: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Location',
-  //   // required: true
-  // }
+  },
+lastSeenLocation: {
+  type: {
+    type: String,
+    default: "Point",
+    enum: ["Point"],
+  },
+  city: {
+    type: String,
+    required: true
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+  },
+},
+
 });
 petSchema.virtual('user', {
   ref: 'User',
