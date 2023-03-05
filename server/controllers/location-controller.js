@@ -3,9 +3,10 @@ const Location = require("../models/Location");
 
 module.exports = {
   async createLocation(req, res) {
+    console.log(req.body)
     try {
-      const { location, coordinates } = req.body;
-      const dbLocation = await Location.create({ location, coordinates });
+      const { city, coordinates } = req.body;
+      const dbLocation = await Location.create({ city, coordinates });
       res.status(200).json(dbLocation);
     } catch (error) {
       res.status(500).json(error);

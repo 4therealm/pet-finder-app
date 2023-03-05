@@ -32,6 +32,38 @@ const useGeoLocation = () => {
     }
   };
 
+  const handleSaveLocation = () => {
+    setLoading(true);
+    setError(null);
+
+    if (coords.latitude && coords.longitude) {
+      const url = "http://localhost:3001/api/location";
+      const data = {
+        city,
+        coordinates: [coords.latitude, coords.longitude],
+      };
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          setUserLocation(result);
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setLoading(false);
+        });
+    } else {
+      setError("Could not save location. Please try again.");
+      setLoading(false);
+    }
+  };
+    
   useEffect(() => {
     getLocation();
   }, []);
@@ -49,12 +81,15 @@ const useGeoLocation = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          const cityResult = data.results[0]?.formatted_address || null;
+          console.log("map geocoding fired");
+          const cityResult = data.results[0]?.address_components[0].long_name || null;
+          // console.log(cityResult);
           setCity(cityResult);
           setUserLocation({
             city: cityResult,
             coordinates: [coords.latitude, coords.longitude],
           });
+          console.log(city);
         })
         .catch((error) => {
           setError(error.message);
@@ -62,11 +97,11 @@ const useGeoLocation = () => {
     }
   }, [coords, setUserLocation]);
 
-  return { loading, error, city, coords, getLocation };
+  return { loading, error, city, coords, getLocation, handleSaveLocation };
 };
 
 const Geolocation = () => {
-  const { loading, error, city, coords, getLocation } = useGeoLocation();
+  const { loading, error, city, coords, getLocation, handleSaveLocation } = useGeoLocation();
 
   if (loading) {
     return <p>Loading...</p>;
@@ -80,6 +115,7 @@ const Geolocation = () => {
     <div>
       <p>Your location: {city}</p>
       <button onClick={getLocation}>Get My Location</button>
+      <button onClick={handleSaveLocation}>Save location</button>
       <p>Latitude: {coords.latitude}</p>
       <p>Longitude: {coords.longitude}</p>
     </div>
