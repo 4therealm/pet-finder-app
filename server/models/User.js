@@ -13,10 +13,6 @@ const userSchema = new Schema({
   name: {
     type: String,
   },
-  location: {
-    type: String,
-    
-  },
   pets: [
     {
       type: Schema.Types.ObjectId,

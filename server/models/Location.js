@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const locationSchema = new Schema({
-location: {
+city: {
   type: String,
   required: true
 },

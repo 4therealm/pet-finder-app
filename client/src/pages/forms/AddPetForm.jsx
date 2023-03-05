@@ -22,7 +22,7 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
   //this is the state that will be updated when the user adds a pet and will be used to display the pets
 
 
-  const [pets,setPets]=useState([])//this is the state that will be updated when the user adds a pet and will be used to display the pets
+  const [setPets]=useState([])//this is the state that will be updated when the user adds a pet and will be used to display the pets
 
   const handlePetInputChange=(e) => {
     // console.log(e.target.name, e.target.value)

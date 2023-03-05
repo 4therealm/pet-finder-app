@@ -3,7 +3,7 @@ import { UpdateUserForm } from "./forms";
 import AddPetForm from "./forms/AddPetForm";
 import PetAside from "../components/PetList";
 import { UserContext } from "../App";
-import {useParams} from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 const ProfilePage = () => {
   const [showUserForm, setShowUserForm] = useState(false);

@@ -1,20 +1,24 @@
 import { useEffect, useState, useMemo, createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import cookie from "js-cookie";
-import { Header, Wrapper } from "./components";
+import { Header, Wrapper, Geolocation } from "./components";
 import { HomePage, LoginPage, ProfilePage, SignupPage } from "./pages";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.css";
 
 const UserContext = createContext({
   user: null,
+  userLocation: null,
   setUser: () => {},
+  setUserLocation: () => {},
+
 });
+
 
 function App() {
   // stateful variable to hold the user object
   const [user, setUser] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
 
   const verifyUser = async () => {
     // get the auth-token cookie
@@ -41,13 +45,15 @@ function App() {
   // memoized value for UserContext
   const userContextValue = useMemo(() => {
     console.log(user);
-    return { user, setUser };
-  }, [user, setUser]);
+    return { user, userLocation, setUser, setUserLocation };
+  }, [user, userLocation, setUser, setUserLocation]);
 
   // useEffect is a hook that runs when the component is mounted
   useEffect(() => {
     verifyUser();
   }, []);
+
+
 
   return (
     <BrowserRouter>
@@ -61,6 +67,7 @@ function App() {
               <Route path="/profile/:id" element={<ProfilePage />} />
               <Route path="/signup" element={<SignupPage />} />
             </Routes>
+            <Geolocation />
           </div>
         </UserContext.Provider>
       </Wrapper>
