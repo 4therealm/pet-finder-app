@@ -63,4 +63,22 @@ module.exports = {
       res.status(400).json(err);
     }
   },
+
+  async lostPet(req, res) {
+    try {
+      const dbPetData = await Pet.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: { ...req.body } },
+        { new: true }
+      );
+      if (!dbPetData) {
+        res.status(404).json({ message: "No pet found with this id!" });
+        return;
+      }
+      res.json(dbPetData);
+    } catch (err) {
+      console.log(err);
+      res.status(400).json(err);
+    }
+  }
 };

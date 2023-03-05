@@ -27,6 +27,28 @@ const PetAside = ({ pets }) => {
     setModalVisible(false);
   };
 
+  const handleLost = async () => {
+    console.log("lost button clicked");
+    try {
+      const response = await fetch(`http://localhost:3001/api/pet/${selectedPet}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isLost: true }),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.table(data);
+      setPetInfo(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   return (
     <aside>
       <h2>Pet List</h2>
@@ -78,6 +100,8 @@ const PetAside = ({ pets }) => {
                 >
                   Close
                 </button>
+                <button
+                onClick={handleLost}>lost?</button>
               </div>
             </div>
           </div>

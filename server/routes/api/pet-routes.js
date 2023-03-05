@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { getPetById, getAllPets, updatePet, deletePet } = require('../../controllers/pet-controller');
+const { getPetById, getAllPets, updatePet, deletePet, lostPet } = require('../../controllers/pet-controller');
 
 router  
   .route('/')
@@ -10,5 +10,7 @@ router
     .get(getPetById)
     .put(updatePet)
     .delete(deletePet);
+
+router.route('/lost/:id').put(lostPet);
 
 module.exports = router;
