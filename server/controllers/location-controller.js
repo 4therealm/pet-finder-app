@@ -60,15 +60,15 @@ module.exports = {
     try {
       const { id } = req.params;
       const { petId } = req.body;
-
+  
       const dbLocation = await Location.findById(id);
       dbLocation.lostPets.push(petId);
       await dbLocation.save();
-      res.status(200).json(dbLocation);
+      res.status(200).json({ location: dbLocation });
     } catch (error) {
       res.status(500).json(error);
-      
     }
   }
+  
   
 };

@@ -39,33 +39,45 @@ const PetAside = ({ pets }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ isLost: true,
-        lastSeenLocation: userLocation}),
+        body: JSON.stringify({
+          isLost: true,
+          lastSeenLocation: userLocation,
+        }),
       });
       if (!response.ok) {
         throw new Error("Network response for Pet update was not ok");
       }
       const data = await response.json();
       setPetInfo(data);
+  
+      // Check if location exists before adding lost pet
       const { lastSeenLocation } = data;
-      const lastSeenLocationId = lastSeenLocation[0]._id;
-
-      const response2 = await fetch(`http://localhost:3001/api/location/lost/${lastSeenLocationId}`, {
+      console.log("Last seen location:", lastSeenLocation);
+      const locationResponse = await fetch(`http://localhost:3001/api/location/${lastSeenLocation[0]._id}`);
+      if (!locationResponse.ok) {
+        throw new Error("Network response for Location lookup was not ok");
+      }
+      const locationData = await locationResponse.json();
+      console.log("Location data:", locationData);
+  
+      // Add pet to lostPets array in location document
+      const response2 = await fetch(`http://localhost:3001/api/location/lost/${lastSeenLocation[0]._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ petId: data._id }),
       });
       if (!response2.ok) {
         throw new Error("Network response for Location update was not ok");
       }
       const data2 = await response2.json();
-      console.table(data2);
+      console.log("Pet data:", data2);
     } catch (error) {
       console.log(error);
     }
   };
+  
 
 
   return (
