@@ -32,10 +32,10 @@ const petSchema = new Schema({
     type: String,
     // required: true
   },
-  // friendly: {
-  //   type: Boolean,
-  //   // default: true
-  // },
+  friendly: {
+    type: Boolean,
+    // default: true
+  },
   health: {
     type: String
   },
@@ -47,6 +47,10 @@ const petSchema = new Schema({
     ref: 'User',
     required: true
   },
+  isLost: {
+    type: Boolean,
+    default: false
+  }
   // location: {
   //   type: Schema.Types.ObjectId,
   //   ref: 'Location',
