@@ -105,7 +105,63 @@ const useGeoLocation = () => {
 };
 
 const Geolocation = () => {
-  const { loading, error, city, coords, getLocation, handleSaveLocation } = useGeoLocation();
+  const [searchValue, setSearchValue] = useState("");
+  const [locationData, setLocationData] = useState(null);
+  const [coords, setCoords] = useState({ latitude: null, longitude: null });
+  const [city, setCity] = useState(null);
+
+
+  const getLocationData = async (location) => {
+    console.log(location);
+    const isCoordinates = location.match(/^(-?\d+(\.\d+)?),\s*(-?\d+(\.\d+)?)$/);
+    const isZip = location.match(/^\d{5}(?:[-\s]\d{4})?$/);
+    let address = location;
+    if (isCoordinates) {
+      const [latitude, longitude] = location.split(",");
+      address = `${latitude},${longitude}`;
+    } else if (isZip) {
+      address = location;
+    } else {
+      address = encodeURIComponent(location);
+    }
+  
+    const url = `https://google-maps-geocoding.p.rapidapi.com/geocode/json?address=${address}&language=en`;
+  
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key": "b6a308ea18msh6870fa17d267db8p158239jsn25a211e1184a",
+          "X-RapidAPI-Host": "google-maps-geocoding.p.rapidapi.com",
+        },
+      });
+      const data = await response.json();
+      setLocationData(data.results[0]);
+
+      const dbresponse = await fetch("http://localhost:3001/api/location", {
+        method: "POST",
+        body: JSON.stringify({
+          city: data.results[0].address_components[0].long_name,
+          coordinates: [Number(data.results[0].geometry.location.lat), Number(data.results[0].geometry.location.lng)],
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const dbdata = await dbresponse.json();
+      console.log(dbdata);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  const handleSearch = () => {
+    console.log(searchValue);
+    getLocationData(searchValue);
+    setSearchValue("");
+  };
+  
+  const { loading, error, getLocation, handleSaveLocation } = useGeoLocation();
 
   if (loading) {
     return <p>Loading...</p>;
@@ -115,15 +171,27 @@ const Geolocation = () => {
     return <p>Error: {error}</p>;
   }
 
-  return (
+ return (
+  <div>
+    <p>Your location: {city}</p>
     <div>
-      <p>Your location: {city}</p>
       <button onClick={getLocation}>Get My Location</button>
       <button onClick={handleSaveLocation}>Save location</button>
-      <p>Latitude: {coords.latitude}</p>
-      <p>Longitude: {coords.longitude}</p>
     </div>
-  );
+    <div>
+      <input
+        type="text"
+        placeholder="Search for a location"
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
+    </div>
+    {loading && <p>Loading...</p>}
+    {error && <p>Error: {error}</p>}
+  </div>
+);
+
 };
 
 export default Geolocation;

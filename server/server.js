@@ -3,6 +3,8 @@ const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
 const cors = require('cors');
+const Mongoose=require('mongoose')
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -12,6 +14,9 @@ app.use(cors({
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+Mongoose.set('debug', true)
+
 
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
