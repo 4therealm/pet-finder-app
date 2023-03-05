@@ -54,21 +54,6 @@ module.exports = {
       res.status(500).json(error);
     }
   },
-//this is intended to be used when someone finds a pet that isnt in the lostPets array...i think
-  async addPetToLostPet(req, res) {
-    console.log("addPetToLostPet");
-    try {
-      const { id } = req.params;
-      const { petId } = req.body;
-      const location = await Location.findById(id);
-      location.lostPets.push(petId);
-      await location.save();
-      console.log(location.lostPets.name);
-      res.status(200).json(location);
-    } catch (error) {
-      res.status(500).json(error);
-    }
-  }
   
   
 };
