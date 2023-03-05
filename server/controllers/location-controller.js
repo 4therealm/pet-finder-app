@@ -3,16 +3,19 @@ const Location = require("../models/Location");
 
 module.exports = {
   async createLocation(req, res) {
-    console.log(req.body)
     try {
       const { city, coordinates } = req.body;
+      const existingLocation = await Location.findOne({ city, coordinates });
+      if (existingLocation) {
+        return res.status(400).json('Location already exists');
+      }
       const dbLocation = await Location.create({ city, coordinates });
       res.status(200).json(dbLocation);
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500).json('Server error');
     }
   },
-
+  
   async getLocations(req, res) {
     try {
       const dbLocations = await Location.find({});

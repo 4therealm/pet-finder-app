@@ -32,37 +32,41 @@ const useGeoLocation = () => {
     }
   };
 
-  const handleSaveLocation = () => {
+  const handleSaveLocation = async () => {
     setLoading(true);
     setError(null);
-console.log(coords.latitude, coords.longitude)
+    console.log(coords.latitude, coords.longitude)
+  const {latitude, longitude} = coords;
     if (coords.latitude && coords.longitude) {
       const url = "http://localhost:3001/api/location";
-      const data = {
-        city,
-        coordinates: [`${coords.latitude}, ${coords.longitude}`],
-      };
-      fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          setUserLocation(result);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error.message);
-          setLoading(false);
+  
+      
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify({
+            city,
+            coordinates: [Number(latitude), Number(longitude)],
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
+        
+  
+        const result = await response.json();
+        setUserLocation(result);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
     } else {
       setError("Could not save location. Please try again.");
       setLoading(false);
     }
   };
+  
     
   useEffect(() => {
     getLocation();

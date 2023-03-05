@@ -57,12 +57,7 @@ const petSchema = new Schema({
   //   // required: true
   // }
 });
-petSchema.virtual('user', {
-  ref: 'User',
-  localField: 'owner',
-  foreignField: '_id',
-  justOne: true
-});
+
 
 // petSchema.virtual('location', {
 //   ref: 'Location',
