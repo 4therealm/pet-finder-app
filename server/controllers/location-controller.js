@@ -7,7 +7,8 @@ module.exports = {
     try {
       const { city, coordinates } = req.body;
       const dbLocation = await Location.create({ city, coordinates });
-      res.status(200).json(dbLocation);
+      const savedLocation = await dbLocation.save();
+      res.status(201).json(savedLocation._doc);
     } catch (error) {
       res.status(500).json(error);
     }
@@ -54,6 +55,20 @@ module.exports = {
       res.status(500).json(error);
     }
   },
+
+  async addLostPet(req, res) {
+    try {
+      const { id } = req.params;
+      const { petId } = req.body;
+  
+      const dbLocation = await Location.findById(id);
+      dbLocation.lostPets.push(petId);
+      await dbLocation.save();
+      res.status(200).json({ location: dbLocation });
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
   
   
 };

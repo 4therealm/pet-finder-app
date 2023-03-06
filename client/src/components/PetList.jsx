@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../App";
 
 const PetAside = ({ pets }) => {
   const [selectedPet, setSelectedPet] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [petInfo, setPetInfo] = useState({});
+  const { userLocation } = useContext(UserContext);
 
-  const handleButtonClick = async (petId) => {
+
+  const handlePetButtonClick = async (petId) => {
+    console.log(userLocation);
     console.log(petId);
     try {
       const response = await fetch(`http://localhost:3001/api/pet/${petId}`);
@@ -27,6 +31,55 @@ const PetAside = ({ pets }) => {
     setModalVisible(false);
   };
 
+  const handleLostButtonClicked = async () => {
+    console.log("lost button clicked");
+    try {
+      const response = await fetch(`http://localhost:3001/api/pet/${selectedPet}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          isLost: true,
+          lastSeenLocation: userLocation,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Network response for Pet update was not ok");
+      }
+      const data = await response.json();
+      setPetInfo(data);
+  
+      // Check if location exists before adding lost pet
+      const { lastSeenLocation } = data;
+      console.log("Last seen location:", lastSeenLocation);
+      const locationResponse = await fetch(`http://localhost:3001/api/location/${lastSeenLocation[0]._id}`);
+      if (!locationResponse.ok) {
+        throw new Error("Network response for Location lookup was not ok");
+      }
+      const locationData = await locationResponse.json();
+      console.log("Location data:", locationData);
+  
+      // Add pet to lostPets array in location document
+      const response2 = await fetch(`http://localhost:3001/api/location/lost/${lastSeenLocation[0]._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ petId: data._id }),
+      });
+      if (!response2.ok) {
+        throw new Error("Network response for Location update was not ok");
+      }
+      const data2 = await response2.json();
+      console.log("Pet data:", data2);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+
+
   return (
     <aside>
       <h2>Pet List</h2>
@@ -36,7 +89,7 @@ const PetAside = ({ pets }) => {
             key={pet._id}
             type="button"
             className="btn btn-outline-secondary"
-            onClick={() => handleButtonClick(pet._id)}
+            onClick={() => handlePetButtonClick(pet._id)}
           >
             {pet.name}
           </button>
@@ -78,6 +131,8 @@ const PetAside = ({ pets }) => {
                 >
                   Close
                 </button>
+                <button
+                onClick={handleLostButtonClicked}>lost?</button>
               </div>
             </div>
           </div>

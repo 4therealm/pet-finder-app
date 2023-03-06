@@ -7,6 +7,7 @@ const useGeoLocation = () => {
   const [city, setCity] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [locationData, setLocationData] = useState({});
 
   const getLocation = () => {
     setLoading(true);
@@ -26,6 +27,7 @@ const useGeoLocation = () => {
           setLoading(false);
         }
       );
+
     } else {
       setError("Geolocation is not supported by this browser.");
       setLoading(false);
@@ -34,18 +36,18 @@ const useGeoLocation = () => {
 
   const saveLocationData = () => {
 
-    console.log(userLocation.coordinates)
-    console.log(userLocation.city)
+    console.log(locationData.coordinates)
+    console.log(locationData.city)
     
     setLoading(true);
     setError(null);
 
-    if (userLocation.city && userLocation.coordinates) {
-      userLocation.coordinates = userLocation.coordinates.map((coord) => Number(coord));
+    if (locationData.city && locationData.coordinates) {
+      locationData.coordinates = locationData.coordinates.map((coord) => Number(coord));
       const url = "http://localhost:3001/api/location";
       const data = {
-        city: userLocation.city,
-        coordinates: userLocation.coordinates,
+        city: locationData.city,
+        coordinates: locationData.coordinates,
 
       };
       fetch(url, {
@@ -57,7 +59,9 @@ const useGeoLocation = () => {
       })
         .then((response) => response.json())
         .then((result) => {
-          setUserLocation(result);
+          const { city, coordinates, _id } = result;
+          setUserLocation([{ city, coordinates, _id }]);
+      
           setLoading(false);
         })
         .catch((error) => {
@@ -75,6 +79,13 @@ const useGeoLocation = () => {
   }, []);
 
   useEffect(() => {
+    if (userLocation) {
+      //userLocation is an array of objects [{city, coordinates, _id}]
+      console.log(userLocation);
+    }
+  }, [userLocation]);
+
+  useEffect(() => {
     if (coords.latitude && coords.longitude) {
       const url = `https://google-maps-geocoding.p.rapidapi.com/geocode/json?latlng=${coords.latitude},${coords.longitude}&result_type=locality&language=en`;
 
@@ -87,10 +98,11 @@ const useGeoLocation = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data);
-          const cityResult = data.results[0]?.formatted_address || null;
+          console.log(data);
+          const cityResult = data.results[0].address_components[0].long_name || null;
+          console.log(cityResult);
           setCity(cityResult);
-          setUserLocation({
+          setLocationData({
             city: cityResult,
             coordinates: [Number(data.results[0].geometry.location.lat), Number(data.results[0].geometry.location.lng)],
           });

@@ -4,6 +4,7 @@ import { UserContext } from "../App";
 
 const Geolocation = () => {
   const { loading, error, city, coords, getLocation, saveLocationData } = useGeoLocation();
+  const { setUserLocation, userLocation } = useContext(UserContext);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -17,6 +18,7 @@ const Geolocation = () => {
     <div>
       
       <p>Your location: {city}</p>
+      {/* <p>location id: {userLocation._id}</p> */}
       <button onClick={getLocation}>Get My Location</button>
       <button onClick={saveLocationData}>Save location</button>
       <p>Latitude: {coords.latitude}</p>

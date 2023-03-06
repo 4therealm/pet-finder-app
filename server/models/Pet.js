@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const petSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   type: {
     type: String,
@@ -16,7 +16,7 @@ const petSchema = new Schema({
   },
   gender: {
     type: String,
-    enum: ['male', 'female'],
+    enum: ["male", "female"],
     // required: true
   },
   age: {
@@ -25,7 +25,7 @@ const petSchema = new Schema({
   },
   size: {
     type: String,
-    enum: ['small', 'medium', 'large'],
+    enum: ["small", "medium", "large"],
     // required: true
   },
   color: {
@@ -37,45 +37,46 @@ const petSchema = new Schema({
     // default: true
   },
   health: {
-    type: String
+    type: String,
   },
   notes: {
-    type: String
+    type: String,
   },
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: "User",
+    required: true,
   },
   isLost: {
     type: Boolean,
-    default: false
-  }
-  // location: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'Location',
-  //   // required: true
-  // }
+    default: false,
+  },
+  lastSeenLocation: {
+    type: {
+      type: String,
+      default: "Point",
+      enum: ["Point"],
+    },
+    city: {
+      type: String,
+      
+    },
+    coordinates: {
+      type: [Number],
+      
+    },
+  },
 });
-petSchema.virtual('user', {
-  ref: 'User',
-  localField: 'owner',
-  foreignField: '_id',
-  justOne: true
+petSchema.virtual("user", {
+  ref: "User",
+  localField: "owner",
+  foreignField: "_id",
+  justOne: true,
 });
 
-// petSchema.virtual('location', {
-//   ref: 'Location',
-//   localField: 'location',
-//   foreignField: '_id',
-//   justOne: true
-// });
-const Pet = mongoose.model('Pet', petSchema);
+const Pet = mongoose.model("Pet", petSchema);
 
 module.exports = Pet;
-
-
-
 
 //potential code for location implementation
 
@@ -99,7 +100,6 @@ module.exports = Pet;
 // petSchema.index({ location: "2dsphere" });
 
 // module.exports = mongoose.model("Pet", petSchema);
-
 
 // petSchema.virtual("distance").get(function () {
 //   const [lng, lat] = this.location.coordinates;
@@ -126,4 +126,3 @@ module.exports = Pet;
 //   .where("distance")
 //   .lt(10) // Filter pets within 10 km of the user's location
 //   .exec();
-
