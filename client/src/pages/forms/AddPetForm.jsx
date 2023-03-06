@@ -2,8 +2,8 @@ import React,{ useState } from "react"
 import { useAppCtx } from '../../utils/AppContext';
 
 
-export default function AddPetForm({handleAddPet,setShowPetForm}) {
-  const {user}=useAppCtx
+export default function AddPetForm({ handleAddPet, setShowPetForm }) {
+  const { user } = useAppCtx
 
   //this is the state that will be updated when the user changes the input fields in the add pet form
   const [petFormData,setPetFormData]=useState({

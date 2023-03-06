@@ -33,45 +33,7 @@ const useGeoLocation = () => {
       setError("Geolocation is not supported by this browser.");
       setLoading(false);
     }
-
-    if (coords.latitude && coords.longitude) {
-      const url = `https://google-maps-geocoding.p.rapidapi.com/geocode/json?latlng=${coords.latitude},${coords.longitude}&result_type=locality&language=en`;
-
-      fetch(url, {
-        method: "GET",
-        headers: {
-          "X-RapidAPI-Key": "b6a308ea18msh6870fa17d267db8p158239jsn25a211e1184a",
-          "X-RapidAPI-Host": "google-maps-geocoding.p.rapidapi.com",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log(data);
-          const cityResult = data.results[0].address_components[0].long_name || null;
-          // console.log(cityResult);
-          setCity(cityResult);
-          setLocationData({
-            city: cityResult,
-            coordinates: [Number(data.results[0].geometry.location.lat), Number(data.results[0].geometry.location.lng)],
-          });
-      console.log(locationData.city)
-        })
-        .catch((error) => {
-          setError(error.message);
-          setLoading(false);
-        }
-        );
-        if (city) {
-          fetch(`http://localhost:3001/api/location/${city}`)
-            .then((response) => response.json())
-            .then((data) => { 
-              console.log(data)
-
-        }
-        )
-        }
-    }
-      };
+  };
 
   const saveLocationData = () => {
 
@@ -117,7 +79,12 @@ const useGeoLocation = () => {
     getLocation();
   }, []);
 
-
+  useEffect(() => {
+    if (userLocation) {
+      //userLocation is an array of objects [{city, coordinates, _id}]
+      console.log(userLocation);
+    }
+  }, [userLocation]);
 
   useEffect(() => {
     if (coords.latitude && coords.longitude) {

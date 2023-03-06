@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import cookie from 'js-cookie';
 import { useAppCtx } from '../utils/AppContext';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 const Header = () => {
-  const { user, location, setLocation } = useAppCtx()
+  const { user, location } = useAppCtx()
 
   const logout = () => {
     cookie.remove('auth-token');

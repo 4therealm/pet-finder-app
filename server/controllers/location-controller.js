@@ -37,6 +37,18 @@ module.exports = {
       res.status(500).json({ error: "Server error" });
     }
   },
+
+  async searchLocationsByCity(req, res) {
+    const {city } = req.params;
+    try {
+      const dbLocations = await Location.find({ city: { $regex: city, $options: 'i' } });
+      res.status(200).json(dbLocations);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json(null);
+    }
+  },
+
   //put('/api/locations/:id')
   async updateLocation(req, res) {
     try {

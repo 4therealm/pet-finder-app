@@ -28,6 +28,7 @@ const LoginPage = (props) => {
 //if the query is not ok, set the signup result to fail
     if( result && !result.err && result.data && result.data.token ){
       setLoginResult("success")
+      window.location.href = '/';
       // set the cookie if the login is successful
       // the cookie will expire in 3 days
       cookie.set("auth-token", result.data.token, { expires: 3 })
