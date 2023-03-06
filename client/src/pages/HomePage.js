@@ -1,18 +1,19 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../contexts/UserContext';
+import { useAppCtx } from '../utils/AppContext';
 import PetAside from '../components/PetList';
 import Feed from '../components/Feed'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 const HomePage = () => {
-  const { user } = useContext(UserContext);
+  const { user, location, setLocation } = useAppCtx()
 
   return (
     <div>
- {user?.name ? (
+ {user ? (
         <div style={{border: "2px solid blue"}}className='container-fluid'>
-          <h2 className="petaside-greeting">Hello, {user.name}!</h2>
+          <p>logged in</p>
+          {/* <h2 className="petaside-greeting">Hello, {user}!</h2> */}
 
           <Feed />
 

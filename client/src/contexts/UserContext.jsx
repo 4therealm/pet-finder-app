@@ -9,38 +9,18 @@ export const useUserContext = () => useContext(UserContext);// used to access th
 
 export const UserProvider = ({children}) => {
   // the state variables set the user and user location
-  console.log("user context");
-  const [user, setUser] = useState(null);
-  const [userLocation, setUserLocation] = useState(null);
+  // console.log("user context");
 
-  const verifyUser = async () => {
-    const authCookie = cookie.get("auth-token")
-    if( authCookie ){
-      const query = await fetch("/api/user/verify", {
-        method: "post",
-        body: JSON.stringify({}),
-        headers: {
-          "Content-Type": "application/json",
-          "Auth-Token": authCookie
-        }
-      })
-      const result = await query.json()
-      if( result ){
-        setUser(result)
-      }
-    }
-  }
+ 
 
-  useEffect(() => {
-    verifyUser()
-  },[])
-
+ 
+ 
 
 
 
 
   return (
-    <UserContext.Provider value={{user, userLocation, setUserLocation,}}>
+    <UserContext.Provider>
       {children}
     </UserContext.Provider>
   );

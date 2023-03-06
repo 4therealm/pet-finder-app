@@ -5,6 +5,7 @@ import { HomePage, LoginPage, ProfilePage, SignupPage } from "./pages";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.css";
 import LostPets from "./components/LostPets"
+import {AppProvider} from "./utils/AppContext"
 
 
 
@@ -15,9 +16,10 @@ function App() {
 
 
   return (
+    <AppProvider>
     <BrowserRouter>
       <Wrapper>
-        <UserProvider   >
+     
           <Header />
           <div className="pt-3 px-4">
             <Routes>
@@ -29,9 +31,10 @@ function App() {
             {/* <Geolocation /> */}
           </div>
           {/* <LostPets /> */}
-        </UserProvider>
+      
       </Wrapper>
     </BrowserRouter>
+    </AppProvider>
   );
 }
 
