@@ -6,7 +6,7 @@ require("dotenv").config();
 
 module.exports = {
 
-  
+  //post('/api/users')
   async createUser({ body }, res) {
     const { email, password, name, location } = body;
     // Check if the user already exists
@@ -27,7 +27,9 @@ module.exports = {
     // Return the user
     res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location });
   },
+
   // the user is updated by the id
+  //put('/api/users/:id')
   async updateUser({ body, params }, res) {
     const { email, password, name, location } = body;
 
@@ -57,7 +59,7 @@ module.exports = {
     // Return the user
     res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location });
   },
-
+//post)('/api/users/auth)
   async authUser({ body }, res) {
     // Find the user by the email address
     const user = await User.findOne({
@@ -88,7 +90,7 @@ module.exports = {
       //primarily to test the token
       .json({ error: null, data: { user, token } });
   },
-
+//post('/api/users/verify')
   async verifyUser(req, res) {
     // Get the token from the header
     const token = req.headers["auth-token"];
@@ -109,7 +111,7 @@ module.exports = {
 // Return the user
     return res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location });
   },
-
+//get('/api/users')
   async getAllUsers(req, res) {
     try {
       const dbUser = await User.find({})
@@ -124,6 +126,7 @@ module.exports = {
   },
 
   //this is the route that is called when the user clicks on the profile button
+  //get('/api/users/:id')
   async getUserById(req, res) {
     try {
       const dbUser = await User.findById(req.params.id)
@@ -138,36 +141,13 @@ module.exports = {
     }
   },
 //this is the route that is called when the user adds a pet
+
   async createPet(req, res) {
     const userId = req.params.id;
     try {
-      const {
-        name,
-        type,
-        description,
-        breed,
-        age,
-        gender,
-        size,
-        color,
-        friendly,
-        health,
-        notes,
-        owner,
+      const {name, type, description, breed, age, gender, size, color, friendly, health, notes, owner,
       } = req.body;
-      const dbPet = await Pet.create({
-        name,
-        type,
-        description,
-        breed,
-        age,
-        gender,
-        size,
-        color,
-        friendly,
-        health,
-        notes,
-        owner,
+      const dbPet = await Pet.create( {name, type, description, breed, age, gender, size, color, friendly, health, notes, owner,
       });
       if (!dbPet) {
         throw new Error("Failed to create pet");
@@ -185,7 +165,7 @@ module.exports = {
       res.status(500).json(error);
     }
   },
-
+//delete('/api/users/:id')
  async deleteUser(req, res) {
     try {
       const dbUser = await User.findByIdAndDelete(req.params.id)

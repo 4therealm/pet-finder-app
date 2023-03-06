@@ -2,8 +2,11 @@
 const Location = require("../models/Location");
 
 module.exports = {
+
+  
+  //post('/api/locations')
   async createLocation(req, res) {
-    console.log(req.body)
+    console.log(req.body);
     try {
       const { city, coordinates } = req.body;
       const dbLocation = await Location.create({ city, coordinates });
@@ -14,6 +17,7 @@ module.exports = {
     }
   },
 
+  //get('/api/locations')
   async getLocations(req, res) {
     try {
       const dbLocations = await Location.find({});
@@ -22,18 +26,18 @@ module.exports = {
       res.status(500).json(error);
     }
   },
-
+  //get('/api/locations/:id')
   async getLocation(req, res) {
     try {
       const { id } = req.params;
-      const dbLocation = await Location.findById(id).populate('lostPets');
+      const dbLocation = await Location.findById(id).populate("lostPets");
       res.status(200).json(dbLocation);
     } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Server error' });
+      res.status(500).json({ error: "Server error" });
     }
   },
-  
+  //put('/api/locations/:id')
   async updateLocation(req, res) {
     try {
       const { id } = req.params;
@@ -46,6 +50,7 @@ module.exports = {
       res.status(500).json(error);
     }
   },
+  //delete('/api/locations/:id')
   async removeLocation(req, res) {
     try {
       const { id } = req.params;
@@ -55,12 +60,12 @@ module.exports = {
       res.status(500).json(error);
     }
   },
-
+  //put('/api/locations/lost/:id')
   async addLostPet(req, res) {
     try {
       const { id } = req.params;
       const { petId } = req.body;
-  
+
       const dbLocation = await Location.findById(id);
       dbLocation.lostPets.push(petId);
       await dbLocation.save();
@@ -68,7 +73,5 @@ module.exports = {
     } catch (error) {
       res.status(500).json(error);
     }
-  }
-  
-  
+  },
 };

@@ -10,7 +10,7 @@ router.route('/verify').post(verifyUser);
 router.route('/:id').get(getUserById);
 router.route('/:id').put(updateUser);
 router.route('/:id').delete(deleteUser);
-router.route('/:id/pets').post(createPet);
+router.route('/:id/pet').post(createPet);
 
 
 

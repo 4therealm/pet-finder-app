@@ -1,0 +1,110 @@
+[
+  {
+    "lastSeenLocation": [
+      {
+        "city": "Brooklyn",
+        "coordinates": [
+          40.6781784,
+          -73.9441579
+        ],
+        "_id": "640f9bfa23996b3e5892bb3b"
+      }
+    ],
+    "isLost": true,
+    "_id": "640f9bc323996b3e5892bb38",
+    "name": "Buddy",
+    "owner": {
+      "pets": [
+        "640f9bfa23996b3e5892bb3b",
+        "640f9bc323996b3e5892bb38"
+      ],
+      "_id": "640f9ae523996b3e5892bb35",
+      "email": "jane@example.com",
+      "password": "$2b$10$15.HWJG6RX5U6ynPgtB7peU6J1u9n28kLj1rJ7bzHbWpDIO7cukb2",
+      "name": "Jane Doe",
+      "__v": 0
+    },
+    "__v": 0
+  },
+  {
+    "lastSeenLocation": [
+      {
+        "city": "Los Angeles",
+        "coordinates": [
+          34.0522342,
+          -118.2436849
+        ],
+        "_id": "640f9c8923996b3e5892bb41"
+      }
+    ],
+    "isLost": true,
+    "_id": "640f9c1823996b3e5892bb3e",
+    "name": "Milo",
+    "owner": {
+      "pets": [
+        "640f9c8923996b3e5892bb41",
+        "640f9c1823996b3e5892bb3e"
+      ],
+      "_id": "640f9b8923996b3e5892bb3b",
+      "email": "john@example.com",
+      "password": "$2b$10$0ek7ATe1Gc17W8V0Lq3MS.7oM.aE.LzUQUJvUwmOyD6V0U6/nJhmu",
+      "name": "John Doe",
+      "__v": 0
+    },
+    "__v": 0
+  },
+  {
+    "lastSeenLocation": [
+      {
+        "city": "Lakeville",
+        "coordinates": [
+          44.6496868,
+          -93.24271999999999
+        ],
+        "_id": "64052e95e1cb4a53007e1229"
+      }
+    ],
+    "isLost": true,
+    "_id": "64052e0de1cb4a53007e1217",
+    "name": "toby",
+    "owner": {
+      "pets": [
+        "64052db3b6cac54d38ea7aa3",
+        "64052e0de1cb4a53007e1217"
+      ],
+      "_id": "64052672295f7c6c88aa0b6f",
+      "email": "max@gmail.com",
+      "password": "$2b$10$68LkqQKsRZZdx5KLNSa/j..pSUmMbKVHPjBb.QFiU8TmT1YzgZLua",
+      "name": "maxwell",
+      "__v": 0
+    },
+    "__v": 0
+  },
+  {
+    "lastSeenLocation": [
+      {
+        "city": "San Francisco",
+        "coordinates": [
+          37.7749,
+          -122.4194
+        ],
+        "_id": "64052e95e1cb4a53007e1229"
+      }
+    ],
+    "isLost": false,
+    "_id": "64052e0de1cb4a53007e1218",
+    "name": "fluffy",
+    "owner": {
+      "pets": [
+        "64052db3b6cac54d38ea7aa3",
+        "64052e0de1cb4a53007e1218"
+      ],
+      "_id": "64052672295f7c6c88aa0b6f",
+      "email": "max@gmail.com",
+      "password": "$2b$10$68LkqQKsRZZdx5KLNSa/j..pSUmMbKVHPjBb.QFiU8TmT1YzgZLua",
+      "name": "maxwell",
+      "__v": 0
+    },
+    "__v": 0
+  }
+]
