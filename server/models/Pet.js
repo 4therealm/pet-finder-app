@@ -59,11 +59,11 @@ const petSchema = new Schema({
     },
     city: {
       type: String,
-      required: true,
+      
     },
     coordinates: {
       type: [Number],
-      required: true,
+      
     },
   },
 });
