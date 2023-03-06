@@ -1,51 +1,24 @@
-import React, { useState, useContext, useEffect } from "react";
-import { UserContext } from "../App";
-
-const getLostPets = async () => {
-  try {
-    const response = await fetch(`http://localhost:3001/api/pet/lost`);
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const allLostPets = await response.json();
-    console.table(allLostPets);
-    return allLostPets;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
-};
+import React from "react";
+import useLostPets from "../hooks/useLostPets";
 
 const LostPets = () => {
-  // const [selectedPet, setSelectedPet] = useState(null);
-  // const [modalVisible, setModalVisible] = useState(false);
-  // const [petInfo, setPetInfo] = useState({});
-  // const { userLocation } = useContext(UserContext);
-  const [lostPets, setLostPets] = useState([]);
-
-  useEffect(() => {
-    const fetchLostPets = async () => {
-      const allLostPets = await getLostPets();
-      console.log(allLostPets);
-      if (allLostPets) {
-        setLostPets(allLostPets);
-      }
-    };
-    fetchLostPets();
-  }, []);
+  const { lostPets } = useLostPets();
 
   return (
-    <div>
-      <h1>Lost Pets</h1>
+    <>
       {lostPets.map((pet) => (
         <div key={pet._id}>
-          <h2>{pet.name}</h2>
+          <h2>Name: {pet.name}</h2>
+          <p>Type {pet.type}</p>
+          <p>Breed: {pet.breed}</p>
+          <p>Description: {pet.description}</p>
+          <p>is friendly?{pet.friendly}</p>
+          <p>Age: {pet.age}</p>
+          <p>last seen location: {pet.lastSeenLocation[0].city}, {pet.lastSeenLocation[0].coordinates}</p>
         </div>
       ))}
-      </div>
+    </>
   );
 };
-      
-
 
 export default LostPets;
