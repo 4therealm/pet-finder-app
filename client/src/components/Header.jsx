@@ -24,7 +24,7 @@ const Header = () => {
 
       <div className="d-flex justify-content-center align-items-center position-relative mx-auto col-auto ">
           {/* Insert the name of the city when the user logs in */}
-          <p style={{marginRight: "10rem"}}>Your Location: {useGeoLocation.city}</p>
+          {/* <p style={{marginRight: "10rem"}}>Your Location: {useGeoLocation.city}</p> */}
       </div>
 
                       

@@ -17,15 +17,16 @@ const getLostPets = async () => {
 };
 
 const LostPets = () => {
-  const [selectedPet, setSelectedPet] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [petInfo, setPetInfo] = useState({});
-  const { userLocation } = useContext(UserContext);
+  // const [selectedPet, setSelectedPet] = useState(null);
+  // const [modalVisible, setModalVisible] = useState(false);
+  // const [petInfo, setPetInfo] = useState({});
+  // const { userLocation } = useContext(UserContext);
   const [lostPets, setLostPets] = useState([]);
 
   useEffect(() => {
     const fetchLostPets = async () => {
       const allLostPets = await getLostPets();
+      console.log(allLostPets);
       if (allLostPets) {
         setLostPets(allLostPets);
       }
@@ -39,26 +40,12 @@ const LostPets = () => {
       {lostPets.map((pet) => (
         <div key={pet._id}>
           <h2>{pet.name}</h2>
-          <button onClick={() => setSelectedPet(pet)}>View Details</button>
         </div>
       ))}
-      {selectedPet && (
-        <div>
-          <h2>{selectedPet.name}</h2>
-          <p>{selectedPet.description}</p>
-          <p>Location: {selectedPet.lastSeenLocation}</p>
-          <button onClick={() => setModalVisible(true)}>Contact Owner</button>
-        </div>
-      )}
-      {modalVisible && (
-        <div>
-          <h2>Contact Owner</h2>
-          <p>{petInfo.owner.email}</p>
-          <button onClick={() => setModalVisible(false)}>Close</button>
-        </div>
-      )}
-    </div>
+      </div>
   );
 };
+      
+
 
 export default LostPets;

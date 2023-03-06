@@ -1,10 +1,11 @@
 import { useEffect, useState, useMemo, createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import cookie from "js-cookie";
-import { Header, Wrapper, Geolocation, Feed } from "./components";
+import { Header, Wrapper, Geolocation, Feed, lostPets } from "./components";
 import { HomePage, LoginPage, ProfilePage, SignupPage } from "./pages";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.css";
+import LostPets from "./components/LostPets"
 
 const UserContext = createContext({
   user: null,
@@ -67,8 +68,9 @@ function App() {
               <Route path="/profile/:id" element={<ProfilePage />} />
               <Route path="/signup" element={<SignupPage />} />
             </Routes>
-            {/* <Geolocation /> */}
+            <Geolocation />
           </div>
+          <LostPets />
         </UserContext.Provider>
       </Wrapper>
     </BrowserRouter>
