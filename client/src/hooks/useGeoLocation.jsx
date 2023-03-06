@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../App";
+import { UserContext } from "../contexts/UserContext";
 
 const useGeoLocation = () => {
   const { setUserLocation, userLocation } = useContext(UserContext);
@@ -98,9 +98,9 @@ const useGeoLocation = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           const cityResult = data.results[0].address_components[0].long_name || null;
-          console.log(cityResult);
+          // console.log(cityResult);
           setCity(cityResult);
           setLocationData({
             city: cityResult,

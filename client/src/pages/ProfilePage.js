@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { UpdateUserForm } from "./forms";
 import AddPetForm from "./forms/AddPetForm";
 import PetAside from "../components/PetList";
-import { UserContext } from "../App";
+import { UserContext } from "../contexts/UserContext";
 import { useParams } from "react-router-dom"
 
 const ProfilePage = () => {
@@ -13,7 +13,7 @@ const ProfilePage = () => {
   const {id} = useParams()
 
   useEffect(() => {
-    console.log(id)
+    // console.log(id)
     const getPetList = async () => {
       try {
         const response = await fetch(`http://localhost:3001/api/user/${id}`);
@@ -22,7 +22,7 @@ const ProfilePage = () => {
         }
         const data = await response.json();
         setPets(data.pets);
-        console.log(data.pets);
+        // console.log(data.pets);
       } catch (error) {
         console.error(error);
         // show an error message to the user

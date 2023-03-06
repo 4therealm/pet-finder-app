@@ -1,6 +1,6 @@
 import  useGeoLocation  from "../hooks/useGeoLocation";
 import { useContext } from "react";
-import { UserContext } from "../App";
+import { UserContext } from "../contexts/UserContext";
 
 const Geolocation = () => {
   const { loading, error, city, coords, getLocation, saveLocationData } = useGeoLocation();

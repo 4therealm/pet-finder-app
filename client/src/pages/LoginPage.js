@@ -3,7 +3,7 @@ import { useState } from "react"
 import cookie from "js-cookie"
 
 const LoginPage = (props) => {
-  console.log(props)
+  // console.log(props)
 
   const defForm = { email: "", password: "" }
   const [ formData, setFormData ] = useState(defForm)

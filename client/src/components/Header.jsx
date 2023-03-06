@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import cookie from 'js-cookie';
-import { UserContext } from '../App';
+import { UserContext } from '../contexts/UserContext';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 

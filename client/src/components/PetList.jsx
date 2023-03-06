@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { UserContext } from "../App";
+import { UserContext } from "../contexts/UserContext";
 
 const PetAside = ({ pets }) => {
   const [selectedPet, setSelectedPet] = useState(null);
@@ -9,15 +9,15 @@ const PetAside = ({ pets }) => {
 
 
   const handlePetButtonClick = async (petId) => {
-    console.log(userLocation);
-    console.log(petId);
+    // console.log(userLocation);
+    // console.log(petId);
     try {
       const response = await fetch(`http://localhost:3001/api/pet/${petId}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      console.table(data);
+      // console.table(data);
       setPetInfo(data);
       setSelectedPet(petId);
       setModalVisible(true);
@@ -58,7 +58,7 @@ const PetAside = ({ pets }) => {
         throw new Error("Network response for Location lookup was not ok");
       }
       const locationData = await locationResponse.json();
-      console.log("Location data:", locationData);
+      // console.log("Location data:", locationData);
   
       // Add pet to lostPets array in location document
       const response2 = await fetch(`http://localhost:3001/api/location/lost/${lastSeenLocation[0]._id}`, {
@@ -72,7 +72,7 @@ const PetAside = ({ pets }) => {
         throw new Error("Network response for Location update was not ok");
       }
       const data2 = await response2.json();
-      console.log("Pet data:", data2);
+      // console.log("Pet data:", data2);
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../App';
+import { UserContext } from '../contexts/UserContext';
 import PetAside from '../components/PetList';
 import Feed from '../components/Feed'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
