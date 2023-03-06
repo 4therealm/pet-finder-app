@@ -1,15 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { UpdateUserForm } from "./forms";
 import AddPetForm from "./forms/AddPetForm";
 import PetAside from "../components/PetList";
-import { UserContext } from "../contexts/UserContext";
+import { useAppCtx } from '../utils/AppContext';
+
 import { useParams } from "react-router-dom"
 
 const ProfilePage = () => {
   const [showUserForm, setShowUserForm] = useState(false);
   const [showPetForm, setShowPetForm] = useState(false);
   const [pets, setPets] = useState([]);
-  const { user } = useContext(UserContext);
+  const { user } = useAppCtx();
   const {id} = useParams()
 
   useEffect(() => {

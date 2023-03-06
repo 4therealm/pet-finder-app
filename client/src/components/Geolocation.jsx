@@ -1,10 +1,10 @@
 import  useGeoLocation  from "../hooks/useGeoLocation";
 import { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { useAppCtx } from "../utils/AppContext";
 
 const Geolocation = () => {
   const { loading, error, city, coords, getLocation, saveLocationData } = useGeoLocation();
-  const { setUserLocation, userLocation } = useContext(UserContext);
+  const { setUserLocation, userLocation } = useAppCtx();
 
   if (loading) {
     return <p>Loading...</p>;

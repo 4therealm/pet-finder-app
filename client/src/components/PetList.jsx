@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { useAppCtx } from '../utils/AppContext';
+
 
 const PetAside = ({ pets }) => {
   const [selectedPet, setSelectedPet] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [petInfo, setPetInfo] = useState({});
-  const { userLocation } = useContext(UserContext);
+  const { userLocation } = useAppCtx();
 
 
   const handlePetButtonClick = async (petId) => {

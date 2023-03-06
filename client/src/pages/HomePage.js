@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useAppCtx } from '../utils/AppContext';
 import PetAside from '../components/PetList';
 import Feed from '../components/Feed'

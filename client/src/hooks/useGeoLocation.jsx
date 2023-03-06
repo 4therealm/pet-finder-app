@@ -1,8 +1,9 @@
-import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import { useState, useEffect } from "react";
+import { useAppCtx } from '../utils/AppContext';
+
 
 const useGeoLocation = () => {
-  const { setUserLocation, userLocation } = useContext(UserContext);
+  const { setUserLocation, userLocation } = useAppCtx
   const [coords, setCoords] = useState({ latitude: null, longitude: null });
   const [city, setCity] = useState(null);
   const [loading, setLoading] = useState(false);

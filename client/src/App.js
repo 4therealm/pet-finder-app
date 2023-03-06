@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserProvider } from "./contexts/UserContext";
+
 import { Header, Wrapper, Geolocation, Feed, lostPets } from "./components";
 import { HomePage, LoginPage, ProfilePage, SignupPage } from "./pages";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,7 +16,7 @@ function App() {
 
 
   return (
-    <AppProvider>
+  <AppProvider>
     <BrowserRouter>
       <Wrapper>
      
@@ -34,7 +34,7 @@ function App() {
       
       </Wrapper>
     </BrowserRouter>
-    </AppProvider>
+   </AppProvider>
   );
 }
 
