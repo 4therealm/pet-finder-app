@@ -37,8 +37,8 @@ const LoginPage = (props) => {
   }
 
   return (
-    <>
-      <h1>Login Page</h1>
+    <div style={{ width: "20vw", margin: "0px auto"}}>
+      <h1 style={{textAlign: "center"}}>Login Page</h1>
 
       <form className="form mb-3">
         <div className="form-group">
@@ -64,8 +64,8 @@ const LoginPage = (props) => {
           />
         </div>
 
-        <div className="form-group mt-2">
-          <button className="btn btn-primary" onClick={handleFormSubmit}>Log Me In!</button>
+        <div className="form-group mt-2 d-flex justify-content-center">
+          <button className="btn btn-primary" style={{ textAlign: "center" }} onClick={handleFormSubmit}>Log Me In!</button>
         </div>
       </form>
 
@@ -80,7 +80,7 @@ const LoginPage = (props) => {
           Login failed!
         </div>
       )}
-    </>
+    </div>
   )
 
 }
