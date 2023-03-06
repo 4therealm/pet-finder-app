@@ -40,8 +40,8 @@ const SignupPage = (props) => {
 
 
   return (
-    <>
-      <h1>Signup Page</h1>
+    <div style={{ width: "20vw", margin: "0px auto"}}>
+      <h1 style={{textAlign: "center"}}>Signup Page</h1>
 
       <form className="form mb-3">
         <div className="form-group">
@@ -88,8 +88,8 @@ const SignupPage = (props) => {
               onChange={handleInputChange}
             />
           </div>
-        <div className="form-group mt-2">
-          <button className="btn btn-primary" onClick={handleFormSubmit}>Sign Me Up!</button>
+        <div className="form-group mt-2 d-flex justify-content-center">
+          <button className="btn btn-primary" style={{ textAlign: "center" }} onClick={handleFormSubmit}>Sign Me Up!</button>
         </div>
       </form>
 
@@ -104,7 +104,7 @@ const SignupPage = (props) => {
           Signup failed!
         </div>
       )}
-    </>
+    </div>
   )
 }
 

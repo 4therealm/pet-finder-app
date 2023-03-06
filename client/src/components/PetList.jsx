@@ -81,7 +81,7 @@ const PetAside = ({ pets }) => {
 
 
   return (
-    <aside>
+    <aside className="col-8">
       <h2>Pet List</h2>
       <div className="btn-group-vertical">
         {pets.map((pet) => (
