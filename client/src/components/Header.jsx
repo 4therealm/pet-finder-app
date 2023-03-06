@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import cookie from 'js-cookie';
 import { UserContext } from '../App';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import useGeoLocation from './Geolocation'
+
 
 const Header = () => {
   const { user } = useContext(UserContext);
