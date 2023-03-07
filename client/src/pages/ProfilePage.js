@@ -4,7 +4,7 @@ import AddPetForm from "./forms/AddPetForm";
 import PetAside from "../components/PetList";
 import { useAppCtx } from '../utils/AppContext';
 import { useParams } from "react-router-dom";
-
+import { usePetList } from "../hooks/usePetList";
 const ProfilePage = () => {
   const [activeForm, setActiveForm] = useState(null);
   const { user } = useAppCtx();
@@ -69,7 +69,7 @@ const ProfilePage = () => {
       )}
       {activeForm === "pet" && (
         <>
-          <AddPetForm />
+          <AddPetForm user={user} />
           <button className="btn btn-primary" onClick={handleFormCancel}>
             Cancel
           </button>

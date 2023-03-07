@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAppCtx } from '../utils/AppContext';
-import PetAside from '../components/PetList';
+// import PetAside from '../components/PetList';
 import Feed from '../components/Feed'
+import LostPets from '../components/LostPets';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -12,13 +13,11 @@ const HomePage = () => {
     <div>
  {user ? (
         <div style={{border: "2px solid blue"}}className='container-fluid'>
-          <p>logged in</p>
           {/* <h2 className="petaside-greeting">Hello, {user}!</h2> */}
 
           <Feed />
 
-          {/* ! Currently the pets are throwing an error when I have them shown here, but this code is ready! */}
-          {/* <PetAside /> */}
+          <LostPets />
         </div>
       ) : (
         <p>Please log in to see your profile.</p>

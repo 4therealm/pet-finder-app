@@ -8,7 +8,7 @@ module.exports = {
 
   //post('/api/users')
   async createUser({ body }, res) {
-    const { email, password, name, location } = body;
+    const { email, password, name, phone } = body;
     // Check if the user already exists
     const salt = await bcrypt.genSalt(10);
     // Hash the password
@@ -18,20 +18,20 @@ module.exports = {
       email: email,
       password: hashedPassword,
       name: name,
-      location: location };
+      phone: phone };
     // Create the user
     const user = await User.create(userToInsert);
     // if the user is not created, return an error
     if (!user)
       return res.status(400).json({ message: "Unable to create user" });
     // Return the user
-    res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location });
+    res.status(200).json({ _id: user._id, email: user.email, name: user.name, phone: user.phone });
   },
 
   // the user is updated by the id
   //put('/api/users/:id')
   async updateUser({ body, params }, res) {
-    const { email, password, name, location } = body;
+    const { email, password, name, phone } = body;
 
     // Find the user by the id
     let userToUpdate = { email: email };
@@ -43,7 +43,7 @@ module.exports = {
       // Update the user
       //is there a way to do something like the input change in react?
       //({...formData, [e.target.name]: e.target.value}) like this?
-      userToUpdate = { ...userToUpdate, password: hashedPassword, name: name, location: location };
+      userToUpdate = { ...userToUpdate, password: hashedPassword, name: name, phone: phone };
     }
 
     const user = await User.updateOne(
@@ -57,7 +57,7 @@ module.exports = {
     if (!user)
       return res.status(400).json({ message: "Unable to update user" });
     // Return the user
-    res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location });
+    res.status(200).json({ _id: user._id, email: user.email, name: user.name, phone: user.phone });
   },
 //post)('/api/users/auth)
 async authUser({ body }, res) {
@@ -92,7 +92,7 @@ async verifyUser(req, res){
   const user = await User.findById(isVerified.id)
   if( !user ) return res.status(401).json({msg: "un-authorized"})
   
-  return res.status(200).json({ _id: user._id, email: user.email})
+  return res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location})
 },
 //get('/api/users')
   async getAllUsers(req, res) {

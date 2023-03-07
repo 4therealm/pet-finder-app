@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Header, Wrapper, Feed, Geolocation } from "./components";
+import { Header, Wrapper, Feed,} from "./components";
 import { HomePage, LoginPage, ProfilePage, SignupPage } from "./pages";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.css";
@@ -16,7 +16,6 @@ function App() {
     <BrowserRouter>
       <Wrapper>
         <Header />
-          <Geolocation />
           <div className="pt-3 px-4">
             <Routes>
               <Route path="/" element={<HomePage />} />

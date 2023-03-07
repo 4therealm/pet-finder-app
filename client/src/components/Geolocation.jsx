@@ -1,10 +1,12 @@
 import  useGeoLocation  from "../hooks/useGeoLocation";
 import { useAppCtx } from "../utils/AppContext";
 
-const Geolocation = () => {
-  const { loading, error, city, coords, getLocation, saveLocationData } = useGeoLocation();
-  const { userLocation } = useAppCtx();
 
+const Geolocation = () => {
+  const { loading, error } = useGeoLocation();
+  const { userLocation } = useAppCtx();
+  
+//we could put a cool loading animation here
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -15,13 +17,11 @@ const Geolocation = () => {
 
   return (
     <div>
-      
-      <p>Your location: {city}</p>
-      {/* <p>location id: {userLocation._id}</p> */}
-      <button onClick={getLocation}>Get My Location</button>
-      <button onClick={saveLocationData}>Save location</button>
-      <p>Latitude: {coords.latitude}</p>
-      <p>Longitude: {coords.longitude}</p>
+      {userLocation ? (
+      <p style={{marginRight: "10rem"}} >{userLocation[0].city}</p>
+      ) : (
+      <p>Location not found</p>
+      )}
     </div>
   );
 };

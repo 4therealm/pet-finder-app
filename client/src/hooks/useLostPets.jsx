@@ -10,7 +10,7 @@ const useLostPets = () => {
         throw new Error("Network response was not ok");
       }
       const allLostPets = await response.json();
-      // console.table(allLostPets);
+      console.table(allLostPets);
       return allLostPets;
     } catch (error) {
       console.log(error);
