@@ -2,6 +2,9 @@ const router = require('express').Router();
 
 const { authUser, createUser, updateUser, verifyUser, getUserById, createPet, getAllUsers, deleteUser } = require('../../controllers/user-controller');
 
+const { sendSMS } = require('../../controllers/twilio-controller');
+
+router.route('/sendsms').post(sendSMS);
 // Declare the routes that point to the controllers above
 router.route('/').post(createUser);
 router.route('/').get(getAllUsers);

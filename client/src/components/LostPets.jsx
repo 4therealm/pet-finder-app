@@ -2,10 +2,11 @@
 import React,{useState} from "react"
 import useLostPets from "../hooks/useLostPets"
 import {useAppCtx} from "../utils/AppContext"
-
+import SendSMS  from "./SendSMS"
 const LostPets=() => {
   const {lostPets}=useLostPets()
   const [expandedPet,setExpandedPet]=useState(null)
+  const [ownerPhone,setOwnerPhone]=useState(null)
   const {user, userLocation}=useAppCtx()
   const handleExpandPet=(petId) => {
     if(petId===expandedPet) {
@@ -25,6 +26,8 @@ const LostPets=() => {
   }
 
   const handleContactOwner=(e) => {
+    setOwnerPhone(e.target.value)
+    console.log(ownerPhone)
     e.stopPropagation()
     console.log(
     `${user.name} wants to contact you about your lost pet.\n
@@ -79,6 +82,8 @@ const LostPets=() => {
           </div>
         </div>
       ))}
+      {ownerPhone&&<SendSMS phone={ownerPhone} />
+      }
     </div>
   )
 }
