@@ -7,7 +7,7 @@ export const useAppCtx = () => useContext(AppContext)
 
 export const AppProvider = ({children}) => {
   const [ user, setUser ] = useState(null)
-  const [location, setLocation] = useState('doom')
+  const [userLocation, setUserLocation] = useState()
 
   const verifyUser = async () => {
     const authCookie = cookie.get("auth-token")
@@ -21,7 +21,6 @@ export const AppProvider = ({children}) => {
         }
       })
       const result = await query.json()
-      console.log('result', result)
       if( result ){
         setUser(result)
       }
@@ -31,10 +30,11 @@ export const AppProvider = ({children}) => {
   useEffect(() => {
     verifyUser()
   },[])
+  
 
 
   return (
-    <AppContext.Provider value={{ user, location, setLocation }}>
+    <AppContext.Provider value={{ user, userLocation, setUserLocation }}>
       {children}
     </AppContext.Provider>
   )

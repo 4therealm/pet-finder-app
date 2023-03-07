@@ -60,6 +60,7 @@ const useGeoLocation = () => {
       })
         .then((response) => response.json())
         .then((result) => {
+          console.log(result);
           const { city, coordinates, _id } = result;
           setUserLocation([{ city, coordinates, _id }]);
       
