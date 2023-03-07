@@ -6,8 +6,7 @@ import {useAppCtx} from "../utils/AppContext"
 const LostPets=() => {
   const {lostPets}=useLostPets()
   const [expandedPet,setExpandedPet]=useState(null)
-  const {user}=useAppCtx()
-  console.log(user)
+  const {user, userLocation}=useAppCtx()
   const handleExpandPet=(petId) => {
     if(petId===expandedPet) {
       setExpandedPet(null)
@@ -24,6 +23,17 @@ const LostPets=() => {
       return "http://lorempixel.com/200/200/animals"
     }
   }
+
+  const handleContactOwner=(e) => {
+    e.stopPropagation()
+    console.log(
+    `${user.name} wants to contact you about your lost pet.\n
+    a message will be sent to  ${e.target.value}\n
+    the user's location is ${userLocation[0].city}, ${userLocation[0].coordinates}`)
+    console.log(e.target.value)
+    console.log(userLocation[0].coordinates)
+  }
+
 
   return (
     <div className="row">
@@ -59,11 +69,9 @@ const LostPets=() => {
                     Last Seen Location: {pet.lastSeenLocation[0].city},{" "}
                     {pet.lastSeenLocation[0].coordinates}
                     <br />
-                    {/* Owner: {pet.owner[0].name}
+                    Owner: {pet.owner.name}
                     <br />
-                    Phone: {pet.owner[0].phone}
-                    <br />
-                    Email: {pet.owner[0].email} */}
+                    <button onClick={handleContactOwner} className="ContactOwnerBtn" value={pet.owner.phone}>contact owner</button>
                   </p>
                 </div>
               )}
