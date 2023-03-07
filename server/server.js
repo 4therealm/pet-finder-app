@@ -4,7 +4,7 @@ const db = require('./config/connection');
 const routes = require('./routes');
 const cors = require('cors');
 const twilio = require('twilio');
-const {env}=require('process')
+const dotenv = require('dotenv').config()
 
 
 const app = express();
