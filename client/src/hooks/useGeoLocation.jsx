@@ -1,76 +1,78 @@
-import { useState, useEffect, useContext } from "react";
-import { UserContext } from "../App";
+import { useState, useEffect } from "react";
+import { useAppCtx } from "../utils/AppContext";
 
 const useGeoLocation = () => {
-  const { setUserLocation, userLocation } = useContext(UserContext);
+  const { setUserLocation, userLocation } = useAppCtx();
   const [coords, setCoords] = useState({ latitude: null, longitude: null });
   const [city, setCity] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [locationData, setLocationData] = useState({});
 
-  const getLocation = () => {
+  const getLocation = async () => {
     setLoading(true);
     setError(null);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCoords({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-          setLoading(false);
-        },
-        (error) => {
-          setError(error.message);
-          setLoading(false);
-        }
-      );
+    try {
+      const position = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => resolve(position),
+          (error) => reject(error)
+        );
+      });
 
-    } else {
-      setError("Geolocation is not supported by this browser.");
+      const { latitude, longitude } = position.coords;
+      setCoords({ latitude, longitude });
+
+      const url = `https://google-maps-geocoding.p.rapidapi.com/geocode/json?latlng=${latitude},${longitude}&result_type=locality&language=en`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key": "b6a308ea18msh6870fa17d267db8p158239jsn25a211e1184a",
+          "X-RapidAPI-Host": "google-maps-geocoding.p.rapidapi.com",
+        },
+      });
+
+      const data = await response.json();
+      const city = data.results[0].address_components[0].long_name || null;
+      setCity(city);
+    } catch (error) {
+      setError(error.message);
+    } finally {
       setLoading(false);
     }
   };
 
-  const saveLocationData = () => {
+  const getUserLocation = async (latitude, longitude) => {
+    const data = { city, coordinates: [latitude, longitude] };
+    try {
+      const locationResponse = await fetch(
+        `http://localhost:3001/api/location/city/${city}`
+      );
 
-    console.log(locationData.coordinates)
-    console.log(locationData.city)
-    
-    setLoading(true);
-    setError(null);
+      const locationData = await locationResponse.json();
 
-    if (locationData.city && locationData.coordinates) {
-      locationData.coordinates = locationData.coordinates.map((coord) => Number(coord));
-      const url = "http://localhost:3001/api/location";
-      const data = {
-        city: locationData.city,
-        coordinates: locationData.coordinates,
+      if (locationData.length === 0) {
+        const postResponse = await fetch(
+          "http://localhost:3001/api/location",
+          {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      };
-      fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((result) => {
-          const { city, coordinates, _id } = result;
-          setUserLocation([{ city, coordinates, _id }]);
-      
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error.message);
-          setLoading(false);
-        });
-    } else {
-      setError("Could not save location. Please try again.");
-      setLoading(false);
+        const result = await postResponse.json();
+        const { city, coordinates, _id } = result[0];
+        setUserLocation([{ city, coordinates, _id }]);
+      } else {
+        const { city, coordinates, _id } = locationData[0];
+        setUserLocation([{ city, coordinates, _id }]);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -79,43 +81,12 @@ const useGeoLocation = () => {
   }, []);
 
   useEffect(() => {
-    if (userLocation) {
-      //userLocation is an array of objects [{city, coordinates, _id}]
-      console.log(userLocation);
+    if (city && coords.latitude && coords.longitude) {
+      getUserLocation(coords.latitude, coords.longitude);
     }
-  }, [userLocation]);
+  }, [city, coords.latitude, coords.longitude]);
 
-  useEffect(() => {
-    if (coords.latitude && coords.longitude) {
-      const url = `https://google-maps-geocoding.p.rapidapi.com/geocode/json?latlng=${coords.latitude},${coords.longitude}&result_type=locality&language=en`;
-
-      fetch(url, {
-        method: "GET",
-        headers: {
-          "X-RapidAPI-Key": "b6a308ea18msh6870fa17d267db8p158239jsn25a211e1184a",
-          "X-RapidAPI-Host": "google-maps-geocoding.p.rapidapi.com",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          const cityResult = data.results[0].address_components[0].long_name || null;
-          console.log(cityResult);
-          setCity(cityResult);
-          setLocationData({
-            city: cityResult,
-            coordinates: [Number(data.results[0].geometry.location.lat), Number(data.results[0].geometry.location.lng)],
-          });
-          // console.log(cityResult)
-          // console.log(userLocation)
-        })
-        .catch((error) => {
-          setError(error.message);
-        });
-    }
-  }, [coords, setUserLocation]);
-
-  return { loading, error, city, coords, getLocation, saveLocationData };
+  return { coords, city, loading, error, userLocation };
 };
 
 export default useGeoLocation;

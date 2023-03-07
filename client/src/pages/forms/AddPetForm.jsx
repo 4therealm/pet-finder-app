@@ -1,9 +1,10 @@
-import React,{useState,useContext} from "react"
-import {UserContext} from "../../App"
+import React,{useState} from "react"
+import {useAppCtx} from '../../utils/AppContext'
+
 
 export default function AddPetForm({handleAddPet,setShowPetForm}) {
-  const {user}=useContext(UserContext)
-
+  const {user}=useAppCtx()
+  const id=user._id
   //this is the state that will be updated when the user changes the input fields in the add pet form
   const [petFormData,setPetFormData]=useState({
     name: "",
@@ -17,23 +18,25 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
     friendly: "",
     health: "",
     notes: "",
-    owner: user,
+
   })
   //this is the state that will be updated when the user adds a pet and will be used to display the pets
 
 
-  const [setPets]=useState([])//this is the state that will be updated when the user adds a pet and will be used to display the pets
+  const [pets,setPets]=useState([])
+  //this is the state that will be updated when the user adds a pet and will be used to display the pets
 
   const handlePetInputChange=(e) => {
-    // console.log(e.target.name, e.target.value)
+    console.log(e.target.name, e.target.value)
     setPetFormData({...petFormData,[e.target.name]: e.target.value})
   }
+
 
   const handleSubmit=async (event) => {
     event.preventDefault()
     try {
       console.log(petFormData)
-      const query=await fetch(`http://localhost:3001/api/user/${user._id}/pet`,{
+      const query=await fetch(`http://localhost:3001/api/user/${id}/pet`,{
         method: "post",
         body: JSON.stringify(petFormData),
         headers: {
@@ -42,11 +45,9 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
       })
       const result=await query.json()
       console.log(result)
-      if(!result.data) {
+      if(!result) {
         throw new Error("Failed to add pet")
       }
-
-      handleAddPet(petFormData)
       setPets((Pets) => [...Pets,petFormData]) // add the new pet to the pets array
       setPetFormData({
         name: "",
@@ -60,7 +61,7 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
         friendly: "",
         health: "",
         notes: "",
-        owner: "",
+  
       })
       setShowPetForm(false)
     } catch(error) {
@@ -132,7 +133,7 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
             <div>
               <label htmlFor="size">Size:</label>
               <select name="size" onChange={handlePetInputChange}>
-                <option value={"small"}>Small</option>
+                <option value="small">Small</option>
                 <option value="medium">Medium</option>
                 <option value="large">Large</option>
               </select>

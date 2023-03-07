@@ -13,6 +13,10 @@ const userSchema = new Schema({
   name: {
     type: String,
   },
+  phone: {
+    type: String,
+  },
+
   pets: [
     {
       type: Schema.Types.ObjectId,

@@ -10,7 +10,7 @@ const useLostPets = () => {
         throw new Error("Network response was not ok");
       }
       const allLostPets = await response.json();
-      console.table(allLostPets);
+      console.log(allLostPets);
       return allLostPets;
     } catch (error) {
       console.log(error);
@@ -21,7 +21,7 @@ const useLostPets = () => {
   useEffect(() => {
     const fetchLostPets = async () => {
       const allLostPets = await getLostPets();
-      console.log(allLostPets);
+      // console.log(allLostPets);
       if (allLostPets) {
         setLostPets(allLostPets);
       }

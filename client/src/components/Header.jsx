@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import cookie from 'js-cookie';
-import { UserContext } from '../App';
+import { useAppCtx } from '../utils/AppContext';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
+import Geolocation from './Geolocation';
 
 const Header = () => {
-  const { user } = useContext(UserContext);
+  const { user, userlocation } = useAppCtx()
 
   const logout = () => {
     cookie.remove('auth-token');
@@ -23,6 +22,7 @@ const Header = () => {
       </div>
 
       <div className="d-flex justify-content-center align-items-center position-relative mx-auto col-auto ">
+          <Geolocation />
           {/* Insert the name of the city when the user logs in */}
           {/* <p style={{marginRight: "10rem"}}>Your Location: {useGeoLocation.city}</p> */}
       </div>
@@ -51,7 +51,7 @@ const Header = () => {
                   Home
                 </a>
               </li>
-
+           
               {!user ? (
                 <>
                   <li className="nav-item">

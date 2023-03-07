@@ -1,83 +1,82 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { UpdateUserForm } from "./forms";
 import AddPetForm from "./forms/AddPetForm";
 import PetAside from "../components/PetList";
-import { UserContext } from "../App";
-import { useParams } from "react-router-dom"
-
+import { useAppCtx } from '../utils/AppContext';
+import { useParams } from "react-router-dom";
+import { usePetList } from "../hooks/usePetList";
 const ProfilePage = () => {
-  const [showUserForm, setShowUserForm] = useState(false);
-  const [showPetForm, setShowPetForm] = useState(false);
+  const [activeForm, setActiveForm] = useState(null);
+  const { user } = useAppCtx();
+  const { id } = useParams();
+
+  const [loading, setLoading] = useState(false);
   const [pets, setPets] = useState([]);
-  const { user } = useContext(UserContext);
-  const {id} = useParams()
 
   useEffect(() => {
-    console.log(id)
     const getPetList = async () => {
       try {
+        setLoading(true);
         const response = await fetch(`http://localhost:3001/api/user/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch pets");
         }
         const data = await response.json();
         setPets(data.pets);
-        console.log(data.pets);
       } catch (error) {
         console.error(error);
         // show an error message to the user
+      } finally {
+        setLoading(false);
       }
     };
-    
-  
+
     getPetList();
-  }, []);
-  
+  }, [id]);
+
+  const handleFormCancel = () => {
+    setActiveForm(null);
+  };
 
   return (
     <>
-      {/* <h1>Hello, {user.name}</h1> */}
       <PetAside pets={pets} />
-      {!showUserForm && (
+      {!activeForm && (
         <button
           className="btn btn-primary"
-          onClick={() => setShowUserForm(true)}
+          onClick={() => setActiveForm("user")}
         >
           Update information
         </button>
       )}
-      {showUserForm && (
+      {activeForm === "user" && (
         <div className="UpdateUserForm">
           <UpdateUserForm />
-          <button
-            className="btn btn-primary"
-            onClick={() => setShowUserForm(false)}
-          >
+          <button className="btn btn-primary" onClick={handleFormCancel}>
             Cancel
           </button>
         </div>
       )}
 
       <h2>Your Pets</h2>
-      {!showPetForm && (
+      {!activeForm && (
         <button
           className="btn btn-primary"
-          onClick={() => setShowPetForm(true)}
+          onClick={() => setActiveForm("pet")}
         >
           Add Pet
         </button>
       )}
-      {showPetForm && (
+      {activeForm === "pet" && (
         <>
-          <AddPetForm setPets={setPets} pets={pets} />
-          <button
-            className="btn btn-primary"
-            onClick={() => setShowPetForm(false)}
-          >
+          <AddPetForm user={user} />
+          <button className="btn btn-primary" onClick={handleFormCancel}>
             Cancel
           </button>
         </>
       )}
+
+      {loading && <p>Loading...</p>}
     </>
   );
 };
