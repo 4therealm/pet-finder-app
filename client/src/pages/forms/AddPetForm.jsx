@@ -4,8 +4,7 @@ import {useAppCtx} from '../../utils/AppContext'
 
 export default function AddPetForm({handleAddPet,setShowPetForm}) {
   const {user}=useAppCtx()
-  console.log(user)
-const {id}=user
+  const id=user._id
   //this is the state that will be updated when the user changes the input fields in the add pet form
   const [petFormData,setPetFormData]=useState({
     name: "",
@@ -19,7 +18,7 @@ const {id}=user
     friendly: "",
     health: "",
     notes: "",
-    owner: id,
+
   })
   //this is the state that will be updated when the user adds a pet and will be used to display the pets
 
@@ -28,15 +27,16 @@ const {id}=user
   //this is the state that will be updated when the user adds a pet and will be used to display the pets
 
   const handlePetInputChange=(e) => {
-    // console.log(e.target.name, e.target.value)
+    console.log(e.target.name, e.target.value)
     setPetFormData({...petFormData,[e.target.name]: e.target.value})
   }
+
 
   const handleSubmit=async (event) => {
     event.preventDefault()
     try {
       console.log(petFormData)
-      const query=await fetch(`http://localhost:3001/api/user/${user._id}/pet`,{
+      const query=await fetch(`http://localhost:3001/api/user/${id}/pet`,{
         method: "post",
         body: JSON.stringify(petFormData),
         headers: {
@@ -61,7 +61,7 @@ const {id}=user
         friendly: "",
         health: "",
         notes: "",
-        owner: id,
+  
       })
       setShowPetForm(false)
     } catch(error) {

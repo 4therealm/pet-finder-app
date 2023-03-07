@@ -128,9 +128,9 @@ async verifyUser(req, res){
   async createPet(req, res) {
     const userId = req.params.id;
     try {
-      const {name, type, description, breed, age, gender, size, color, friendly, health, notes, owner,
+      const {name, type, description, breed, age, gender, size, color, friendly, health, notes
       } = req.body;
-      const dbPet = await Pet.create( {name, type, description, breed, age, gender, size, color, friendly, health, notes, owner,
+      const dbPet = await Pet.create( {name, type, description, breed, age, gender, size, color, friendly, health, notes, owner: userId
       });
       if (!dbPet) {
         throw new Error("Failed to create pet");
