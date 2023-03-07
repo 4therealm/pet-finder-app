@@ -4,7 +4,7 @@ const { authUser, createUser, updateUser, verifyUser, getUserById, createPet, ge
 
 const { sendSMS } = require('../../controllers/twilio-controller');
 
-router.route('/sendsms').post(sendSMS);
+router.route('/send-sms').post(sendSMS);
 // Declare the routes that point to the controllers above
 router.route('/').post(createUser);
 router.route('/').get(getAllUsers);

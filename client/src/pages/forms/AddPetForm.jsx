@@ -5,7 +5,7 @@ import {useAppCtx} from '../../utils/AppContext'
 export default function AddPetForm({handleAddPet,setShowPetForm}) {
   const {user}=useAppCtx()
   console.log(user)
-
+const {id}=user
   //this is the state that will be updated when the user changes the input fields in the add pet form
   const [petFormData,setPetFormData]=useState({
     name: "",
@@ -19,7 +19,7 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
     friendly: "",
     health: "",
     notes: "",
-    owner: "",
+    owner: id,
   })
   //this is the state that will be updated when the user adds a pet and will be used to display the pets
 
@@ -61,7 +61,7 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
         friendly: "",
         health: "",
         notes: "",
-        owner: user,
+        owner: id,
       })
       setShowPetForm(false)
     } catch(error) {
