@@ -24,7 +24,7 @@ export default function SendSMS({ownerPhone}) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to:ownerPhone,
+          to: '+16124170269',
           body,
         }),
       });

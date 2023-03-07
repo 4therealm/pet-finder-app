@@ -27,13 +27,14 @@ const LostPets=() => {
 
   const handleContactOwner=(e) => {
     setOwnerPhone(e.target.value)
-    console.log(ownerPhone)
+
     e.stopPropagation()
     console.log(
     `${user.name} wants to contact you about your lost pet.\n
     a message will be sent to  ${e.target.value}\n
     the user's location is ${userLocation[0].city}, ${userLocation[0].coordinates}`)
     console.log(e.target.value)
+    console.log('+' + ownerPhone)
     console.log(userLocation[0].coordinates)
   }
 
