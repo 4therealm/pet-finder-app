@@ -75,7 +75,11 @@ async authUser({ body }, res) {
 
   const token = jwt.sign({
     email: user.email,
-    id: user._id
+    id: user._id,
+    sameSite: "none",
+    secure: true,
+    
+
   }, process.env.JWT_SECRET)
 
   res.header("auth-token", token).json({ error: null, data: { user, token }})

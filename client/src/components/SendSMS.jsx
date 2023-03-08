@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppCtx } from '../utils/AppContext';
 
 export default function SendSMS(phone) {
