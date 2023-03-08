@@ -1,39 +1,50 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
-const { authUser, createUser, updateUser, verifyUser, getUserById, createPet, getAllUsers, deleteUser } = require('../../controllers/user-controller');
+const {
+  authUser,
+  createUser,
+  updateUser,
+  verifyUser,
+  getUserById,
+  createPet,
+  getAllUsers,
+  deleteUser,
+} = require("../../controllers/user-controller");
 
-const { sendSMS } = require('../../controllers/twilio-controller');
+const { sendSMS } = require("../../controllers/twilio-controller");
 
-const User = require('../../models/User') 
+const User = require("../../models/User");
 
-router.route('/send-sms').post(sendSMS);
+router.route("/send-sms").post(sendSMS);
 // Declare the routes that point to the controllers above
-router.route('/').post(createUser);
-router.route('/').get(getAllUsers);
+router.route("/").post(createUser);
+router.route("/").get(getAllUsers);
 
-router.put('/:userId', async (req, res) => {
-    console.log("Hitting the route?")
-    const userId = req.params.userId;
-    const { url } = req.body.profileImage;
-  
-    try {
-      const user = await User.findOneAndUpdate(
-        { _id: userId },
-        { profileImage: url },
-        { new: true }
-      );
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      console.log(user);
-      res.status(200).json({ message: 'Profile image updated successfully', user });
-    } catch (error) {
-      console.error('Error updating profile image:', error);
-      res.status(500).json({ message: 'Server error' });
+router.put("/:userId", async (req, res) => {
+  console.log("Hitting the route?");
+  const userId = req.params.userId;
+  const { url } = req.body.profileImage;
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      { profileImage: url },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-  });
+
+    console.log(user);
+    res
+      .status(200)
+      .json({ message: "Profile image updated successfully", user });
+  } catch (error) {
+    console.error("Error updating profile image:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 //! Original
 // router.put(`/api/user/:userId`, async (req, res) => {
@@ -51,14 +62,11 @@ router.put('/:userId', async (req, res) => {
 //     res.json(updateUser);
 // });
 
-
-router.route('/auth').post(authUser);
-router.route('/verify').post(verifyUser);
-router.route('/:id').get(getUserById);
-router.route('/:id').put(updateUser);
-router.route('/:id').delete(deleteUser);
-router.route('/:id/pet').post(createPet);
-
-
+router.route("/auth").post(authUser);
+router.route("/verify").post(verifyUser);
+router.route("/:id").get(getUserById);
+router.route("/:id").put(updateUser);
+router.route("/:id").delete(deleteUser);
+router.route("/:id/pet").post(createPet);
 
 module.exports = router;

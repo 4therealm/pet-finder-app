@@ -32,7 +32,7 @@ export const AppProvider = ({children}) => {
     verifyUser()
   }, [])
 
-
+//update user
   return (
     <AppContext.Provider value={{ user, userLocation, setUserLocation }}>
       {children}
