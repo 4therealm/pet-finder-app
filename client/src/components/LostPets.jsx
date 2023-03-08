@@ -10,8 +10,8 @@ const LostPets=() => {
   const {user,userLocation}=useAppCtx()
   const handleExpandPet=(pet) => {
 
-    setOwnerPhone('+1' + pet.owner.phone)
-    console.log('ownerPhone: ' + ownerPhone)
+    setOwnerPhone('+1'+pet.owner.phone)
+
     if(pet._id===expandedPet) {
       setExpandedPet(null)
     } else {
@@ -30,24 +30,14 @@ const LostPets=() => {
 
   const handleContactOwner=(e) => {
     setOwnerPhone(e.target.value)
-
     e.stopPropagation()
-    console.log(
-      `${user.name} wants to contact you about your lost pet.\n
-    a message will be sent to  ${e.target.value}\n
-    the user's location is ${userLocation[0].city}, ${userLocation[0].coordinates}`)
-    console.log(e.target.value)
-
   }
 
-  useEffect(() => {
-    console.log(ownerPhone)
-  },[handleContactOwner])
 
   return (
     <div className="row">
       {lostPets.map((pet) => (
-        <div key={pet._id} className="col-md-4 mb-3">
+        <div key={pet._id} className="col-md-3 mb-3">
           <div
             className={`card ${expandedPet===pet._id? "expanded":""} lostPetCard`}
             onClick={() => handleExpandPet(pet)}

@@ -30,7 +30,9 @@ export default function SendSMS(phone) {
           body: `${user.name} wants to contact you about your lost pet.\n
           a message will be sent to  ${phone.phone}\n
           the user's location is ${userLocation[0].city}, ${userLocation[0].coordinates}\n
-          ${body}`,
+          ${body}
+          if you would like to contact them for further information, please call them at ${user.phone}
+          `,
         }),
       });
   
