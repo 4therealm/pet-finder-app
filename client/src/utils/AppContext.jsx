@@ -21,6 +21,7 @@ export const AppProvider = ({children}) => {
         }
       })
       const result = await query.json()
+      console.log(result)
       if( result ){
         console.log('verified')
         setUser(result)
@@ -32,7 +33,7 @@ export const AppProvider = ({children}) => {
     verifyUser()
   }, [])
 
-
+//update user
   return (
     <AppContext.Provider value={{ user, userLocation, setUserLocation }}>
       {children}

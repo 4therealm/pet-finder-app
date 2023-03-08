@@ -71,7 +71,7 @@ const useGeoLocation=() => {
         const result=await postResponse.json()
         console.log(result)
         const {city,coordinates,_id}=result[0]
-        setUserLocation([{city,coordinates,_id}])
+        setUserLocation([{city,coordinates}])
       } else {
         const {city,coordinates,_id}=locationData[0]
         setUserLocation([{city,coordinates,_id}])
