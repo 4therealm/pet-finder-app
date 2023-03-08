@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppCtx } from '../utils/AppContext';
 
-export default function SendSMS({ownerPhone}) {
+export default function SendSMS(phone) {
   const { userLocation, user } = useAppCtx();
-  const [to, setTo] = useState(ownerPhone);
   const [body, setBody] = useState('');
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(null);
+  // const [to, setTo] = useState(null);
 
+
+  
   async function handleSend(e) {
     e.stopPropagation();
     e.preventDefault();
@@ -16,7 +18,7 @@ export default function SendSMS({ownerPhone}) {
     setSending(true);
     setSent(false);
     setError(null);
-
+  
     try {
       const response = await fetch('http://localhost:3001/api/user/send-sms', {
         method: 'POST',
@@ -24,15 +26,20 @@ export default function SendSMS({ownerPhone}) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to:ownerPhone,
-          body,
+          to: phone.phone,
+          body: `${user.name} wants to contact you about your lost pet.\n
+          a message will be sent to  ${phone.phone}\n
+          the user's location is ${userLocation[0].city}, ${userLocation[0].coordinates}\n
+          ${body}
+          if you would like to contact them for further information, please call them at ${user.phone}
+          `,
         }),
       });
-
+  
       if (!response.ok) {
         throw new Error('Failed to send SMS');
       }
-
+  
       setSent(true);
     } catch (err) {
       console.error(err);
@@ -41,6 +48,7 @@ export default function SendSMS({ownerPhone}) {
       setSending(false);
     }
   }
+  
 
 
 

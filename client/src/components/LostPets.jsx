@@ -1,18 +1,21 @@
 
-import React,{useState} from "react"
+import React,{useState,useEffect} from "react"
 import useLostPets from "../hooks/useLostPets"
 import {useAppCtx} from "../utils/AppContext"
-import SendSMS  from "./SendSMS"
+import SendSMS from "./SendSMS"
 const LostPets=() => {
   const {lostPets}=useLostPets()
   const [expandedPet,setExpandedPet]=useState(null)
   const [ownerPhone,setOwnerPhone]=useState(null)
-  const {user, userLocation}=useAppCtx()
-  const handleExpandPet=(petId) => {
-    if(petId===expandedPet) {
+  const {user,userLocation}=useAppCtx()
+  const handleExpandPet=(pet) => {
+
+    setOwnerPhone('+1'+pet.owner.phone)
+
+    if(pet._id===expandedPet) {
       setExpandedPet(null)
     } else {
-      setExpandedPet(petId)
+      setExpandedPet(pet._id)
     }
   }
   const getImage=(petType) => {
@@ -27,24 +30,17 @@ const LostPets=() => {
 
   const handleContactOwner=(e) => {
     setOwnerPhone(e.target.value)
-    console.log(ownerPhone)
     e.stopPropagation()
-    console.log(
-    `${user.name} wants to contact you about your lost pet.\n
-    a message will be sent to  ${e.target.value}\n
-    the user's location is ${userLocation[0].city}, ${userLocation[0].coordinates}`)
-    console.log(e.target.value)
-    console.log(userLocation[0].coordinates)
   }
 
 
   return (
     <div className="row">
       {lostPets.map((pet) => (
-        <div key={pet._id} className="col-md-4 mb-3">
+        <div key={pet._id} className="col-md-3 mb-3">
           <div
             className={`card ${expandedPet===pet._id? "expanded":""} lostPetCard`}
-            onClick={() => handleExpandPet(pet._id)}
+            onClick={() => handleExpandPet(pet)}
           >
             <div className="card-img-container">
               <img
@@ -72,9 +68,10 @@ const LostPets=() => {
                     Last Seen Location: {pet.lastSeenLocation[0].city},{" "}
                     {pet.lastSeenLocation[0].coordinates}
                     <br />
-                    Owner: {pet.owner.name}
+                    Owner: {pet.owner.name}, {pet.owner.phone}
+
                     <br />
-                    <button onClick={handleContactOwner} className="ContactOwnerBtn" value={pet.owner.phone}>contact owner</button>
+                    <button onClick={handleContactOwner} className="ContactOwnerBtn" value={'+1'+pet.owner.phone}>contact owner</button>
                   </p>
                 </div>
               )}
