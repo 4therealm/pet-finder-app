@@ -31,7 +31,7 @@ export const AppProvider = ({children}) => {
   useEffect(() => {
     verifyUser()
   }, [])
-  
+
 
   return (
     <AppContext.Provider value={{ user, userLocation, setUserLocation }}>
