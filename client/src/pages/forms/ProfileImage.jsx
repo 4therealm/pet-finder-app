@@ -16,22 +16,6 @@ export default function ProfileImage() {
 
     //!Original -> This should work with no other function. See the end of the this video for base solution that works:
     //! https://www.youtube.com/watch?v=Y-VgaRwWS3o&ab_channel=PedroTech
-
-    // const uploadImage = () => {
-    //     try {
-    //     const formData = new FormData();
-    //     formData.append("file", imageSelected);
-
-    //     formData.append("upload_preset", "fxbnekpl");
-
-    //     Axios.post("https://api.cloudinary.com/v1_1/diwhrgwml/image/upload", formData)
-    //     .then((response) => {
-    //         console.log(response);
-    //     })
-    //     } catch(err) {
-    //         console.log(err);
-    //     }
-    // }
     
     //The get user ID from server
     const getUser = async (user_id) => {
@@ -69,7 +53,6 @@ export default function ProfileImage() {
             const updatedUser = await response.json();
             
             setUserUrl(cld.url(publicId))
-            //Why didn't we use "user.profileImage"
             console.log(userUrl)
 
             console.log(cld.url(publicId))
@@ -94,28 +77,7 @@ export default function ProfileImage() {
             console.log(err);
         }
     }
-    
-
-    //T!Original
-    // const uploadImage = async () => {
-    //     try {
-    //         const formData = new FormData();
-    //         formData.append("file", imageSelected);
-    //         formData.append("upload_preset", "fxbnekpl");
-        
-    //         Axios.post("https://api.cloudinary.com/v1_1/diwhrgwml/image/upload", formData)
-    //             .then((response) => {
-    //             const publicId = response.data.public_id;
-    //             console.log(`Image uploaded successfully! public_id: ${publicId}`);
-    //             getUser(user_id);
-    //             updateUser(user_id, publicId);
-    //         });
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // }
       
-
     return (
         <div style={{border: "2px solid red", color: "white"}}>
             <div >Test?</div>
