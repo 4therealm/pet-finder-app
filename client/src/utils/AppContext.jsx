@@ -21,6 +21,7 @@ export const AppProvider = ({children}) => {
         }
       })
       const result = await query.json()
+      console.log(result)
       if( result ){
         console.log('verified')
         setUser(result)
