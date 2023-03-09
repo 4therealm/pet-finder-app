@@ -18,27 +18,33 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
   //Assigning the uses id to 'id' for ease
   const id=user._id
 
-
+  //State for displaying the URL for the pet image
   const [petUrl, setPetUrl] = useState(null);
 
   //Responsible for uploading the image
   const uploadImage = async () => {
     try {
+        //We need to use 'fromData' for the image in order to upload it
         const formData = new FormData();
         formData.append("file", imageSelected);
+
+        //The following is standard for Cloudinary
         formData.append("upload_preset", "fxbnekpl");
     
         const response = await Axios.post("https://api.cloudinary.com/v1_1/diwhrgwml/image/upload", formData);
+
+        //getting the image_id (aka public_id)
         const publicId = response.data.public_id;
-        console.log(`Image uploaded successfully! public_id: ${publicId}`);
+
+        //Returning the full url of the image from Cloudinary
         return cld.url(publicId);
     } catch (err) {
         console.log(err);
     }
 }
 
-
-  //this is the state that will be updated when the user changes the input fields in the add pet form
+  //This is the state that will be updated when the user changes the input fields in the add pet form
+  //! Note how we do not include the 'owner' field here, even though it is required. We add it in later by hand/force
   const [newPet,setNewPet]=useState({
     name: "",
     type: "",
@@ -54,32 +60,40 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
     petImageUrl: ""
   })
 
-
+  //The function that activates when the user clicks "Add Pet"
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      const petImageUrl = await uploadImage(); // Wait for the image to upload
+      const petImageUrl = await uploadImage(); // Wait for the image to upload. We need to do this to get all the data from the user before we begin to add it to the model
       setNewPet({
         ...newPet,
+        // Here we add in the user id by force
         owner: id,
-        petImageUrl: petImageUrl // Update the petImageUrl state with the uploaded image URL
+
+        //Adding the petImageUrl from state 
+        petImageUrl: petImageUrl
       });
 
-      console.log({...newPet, petImageUrl})
-      console.log(id);
+      //Adding a pet to the user who is logged in
       const query=await fetch(`http://localhost:3001/api/user/pet/${id}`,{
         method: "post",
-        body: JSON.stringify({...newPet, owner: id, petImageUrl}), // Include the uploaded image URL
+        body: JSON.stringify({...newPet, 
+          owner: id, 
+          petImageUrl}), //We need to include all the necessary data in the body
         headers: {
           "Content-Type": "application/json"
         }
       })
+
       const result=await query.json()
+
+      //Just checking to see the final result of the Pet object
       console.log(result)
       if(!result) {
         throw new Error("Failed to add pet")
       }
-      // setPets((Pets) => [...Pets,petFormData]) // add the new pet to the pets array
+
+      //Resetting the fields when/if the user wants to add another pet
       setNewPet({
         name: "",
         type: "",
@@ -94,9 +108,13 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
         notes: "",
         petImageUrl: ""
       });
+      //Updating the HomePage state
       handleAddPet(result)
 
+      //Setting the current local state to the image url
       setPetUrl(cld.url(petImageUrl))
+
+      //Testing to see if the enitre url is being used
       console.log(petUrl)
     } catch(error) {
       console.error(error)
@@ -237,9 +255,6 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
             <div style={{border: "2px solid red", color: "white"}}>
               <div >Test?</div>
               <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/>
-              {/* <button onClick={uploadImage}>Upload Image</button> */}
-
-              {/* <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId="https://res.cloudinary.com/diwhrgwml/image/upload/v1678210889/ngigb7ymkblvjr3topyh.png"/> */}
 
               {petUrl && <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId={petUrl}/>}
 
