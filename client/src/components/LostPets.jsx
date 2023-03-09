@@ -44,7 +44,7 @@ const LostPets=() => {
           >
             <div className="card-img-container">
               <img
-                src={pet.type==="dog"? "https://place-puppy.com/300x200":"https://placekitten.com/300/200"}
+                src={pet.petImageUrl? pet.petImageUrl:getImage(pet.type)}
                 className="card-img-top"
                 alt={pet.name}
               />
