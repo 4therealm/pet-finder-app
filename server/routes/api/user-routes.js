@@ -6,7 +6,7 @@ const {
   updateUser,
   verifyUser,
   getUserById,
-  createPet,
+
   getAllUsers,
   deleteUser,
 } = require("../../controllers/user-controller");

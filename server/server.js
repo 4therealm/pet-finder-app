@@ -8,11 +8,11 @@ require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-app.use(
-  cors({
-    origin: "https://pet-finder-application.herokuapp.com/", // replace with the domain of your client-side app
-  })
-);
+// app.use(
+//   cors({
+//     origin: "https://pet-finder-application.herokuapp.com/", // replace with the domain of your client-side app
+//   })
+// );
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
