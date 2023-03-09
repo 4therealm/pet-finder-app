@@ -129,29 +129,29 @@ async verifyUser(req, res){
   },
 //this is the route that is called when the user adds a pet
 
-  // async createPet(req, res) {
-  //   const userId = req.params.id;
-  //   try {
-  //     const {name, type, description, breed, age, gender, size, color, friendly, health, notes
-  //     } = req.body;
-  //     const dbPet = await Pet.create( {name, type, description, breed, age, gender, size, color, friendly, health, notes, owner: userId
-  //     });
-  //     if (!dbPet) {
-  //       throw new Error("Failed to create pet");
-  //     }
-  //     const dbUser = await User.findByIdAndUpdate(
-  //       { _id: userId },
-  //       { $push: { pets: dbPet._id } }
-  //     );
-  //     if (!dbUser) {
-  //       throw new Error("Failed to update user");
-  //     }
-  //     res.status(200).json(`dbPet: ${dbPet} dbUser: ${dbUser}`);
-  //   } catch (error) {
-  //     console.log(error);
-  //     res.status(500).json(error);
-  //   }
-  // },
+  async createPet(req, res) {
+    const userId = req.params.id;
+    try {
+      const {name, type, description, breed, age, gender, size, color, friendly, health, notes
+      } = req.body;
+      const dbPet = await Pet.create( {name, type, description, breed, age, gender, size, color, friendly, health, notes, owner: userId
+      });
+      if (!dbPet) {
+        throw new Error("Failed to create pet");
+      }
+      const dbUser = await User.findByIdAndUpdate(
+        { _id: userId },
+        { $push: { pets: dbPet._id } }
+      );
+      if (!dbUser) {
+        throw new Error("Failed to update user");
+      }
+      res.status(200).json(`dbPet: ${dbPet} dbUser: ${dbUser}`);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json(error);
+    }
+  },
 //delete('/api/users/:id')
  async deleteUser(req, res) {
     try {

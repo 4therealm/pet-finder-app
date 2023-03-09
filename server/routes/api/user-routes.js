@@ -6,7 +6,7 @@ const {
   updateUser,
   verifyUser,
   getUserById,
-
+createPet,
   getAllUsers,
   deleteUser,
 } = require("../../controllers/user-controller");
@@ -66,6 +66,6 @@ router.route('/verify').post(verifyUser);
 router.route('/:id').get(getUserById);
 router.route('/:id').put(updateUser);
 router.route('/:id').delete(deleteUser);
-// router.route('/:id/pet').post(createPet);
+router.route('/:id/pet').post(createPet);
 
 module.exports = router;
