@@ -11,7 +11,7 @@ const {
   deleteUser,
 } = require("../../controllers/user-controller");
 
-const { sendSMS } = require("../../controllers/twilio-controller");
+const { sendSMS } = require("../../controllers/Twilio-controller");
 
 const { User, Pet } = require('../../models') 
 
