@@ -13,7 +13,7 @@ const PetAside=({pets}) => {
     // console.log(userLocation);
     // console.log(petId);
     try {
-      const response=await fetch(`http://localhost:3001/api/pet/${petId}`)
+      const response=await fetch(`/api/pet/${petId}`)
       if(!response.ok) {
         throw new Error("Network response was not ok")
       }

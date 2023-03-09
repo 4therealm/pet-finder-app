@@ -51,14 +51,14 @@ const useGeoLocation=() => {
     const data={city,coordinates: [latitude,longitude]}
     try {
       const locationResponse=await fetch(
-        `http://localhost:3001/api/location/city/${city}`
+        `/api/location/city/${city}`
       )
 
       const locationData=await locationResponse.json()
 
       if(locationData.length===0) {
         const postResponse=await fetch(
-          "http://localhost:3001/api/location",
+          "/api/location",
           {
             method: "POST",
             body: JSON.stringify(data),

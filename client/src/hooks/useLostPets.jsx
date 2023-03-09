@@ -5,7 +5,7 @@ const useLostPets = () => {
 
   const getLostPets = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/pet/lost`);
+      const response = await fetch(`/api/pet/lost`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
