@@ -20,7 +20,7 @@ export default function SendSMS(phone) {
     setError(null);
   
     try {
-      const response = await fetch('http://localhost:3001/api/user/send-sms', {
+      const response = await fetch('/api/user/send-sms', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

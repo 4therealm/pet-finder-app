@@ -35,7 +35,7 @@ const PetAside=({pets}) => {
   const handleLostButtonClicked=async () => {
     console.log("lost button clicked")
     try {
-      const response=await fetch(`http://localhost:3001/api/pet/${selectedPet}`,{
+      const response=await fetch(`/api/pet/${selectedPet}`,{
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -54,7 +54,7 @@ const PetAside=({pets}) => {
       // Check if location exists before adding lost pet
       const {lastSeenLocation}=data
       console.log("Last seen location:",lastSeenLocation)
-      const locationResponse=await fetch(`http://localhost:3001/api/location/${lastSeenLocation[0]._id}`)
+      const locationResponse=await fetch(`/api/location/${lastSeenLocation[0]._id}`)
       if(!locationResponse.ok) {
         throw new Error("Network response for Location lookup was not ok")
       }
@@ -62,7 +62,7 @@ const PetAside=({pets}) => {
       console.log("Location data:", locationData);
 
       // Add pet to lostPets array in location document
-      const response2=await fetch(`http://localhost:3001/api/location/lost/${lastSeenLocation[0]._id}`,{
+      const response2=await fetch(`/api/location/lost/${lastSeenLocation[0]._id}`,{
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
