@@ -19,7 +19,7 @@ module.exports = {
 async getLostPets(req, res) {
   try {
     const dbPets = await Pet.find({ isLost: "true" }).populate('owner', 'name phone').sort({ name: -1 });
-    console.log(dbPets);
+
     res.json(dbPets);
   } catch (err) {
     console.log(err);

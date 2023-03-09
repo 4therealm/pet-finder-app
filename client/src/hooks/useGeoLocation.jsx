@@ -1,59 +1,63 @@
-import { useState, useEffect } from "react";
-import { useAppCtx } from "../utils/AppContext";
+import {useState,useEffect} from "react"
+import {useAppCtx} from "../utils/AppContext"
 
-const useGeoLocation = () => {
-  const { setUserLocation, userLocation } = useAppCtx();
-  const [coords, setCoords] = useState({ latitude: null, longitude: null });
-  const [city, setCity] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+const useGeoLocation=() => {
+  const {setUserLocation,userLocation}=useAppCtx()
+  const [coords,setCoords]=useState({latitude: null,longitude: null})
+  const [city,setCity]=useState(null)
+  const [loading,setLoading]=useState(false)
+  const [error,setError]=useState(null)
 
-  const getLocation = async () => {
-    setLoading(true);
-    setError(null);
+  //--------------------this is the function that gets the user's location
+  //it uses the navigator.geolocation.getCurrentPosition method
+  //it also uses the google maps geocoding api to get the city name
+  const getLocation=async () => {
+    setLoading(true)
+    setError(null)
 
     try {
-      const position = await new Promise((resolve, reject) => {
+      const position=await new Promise((resolve,reject) => {
         navigator.geolocation.getCurrentPosition(
           (position) => resolve(position),
           (error) => reject(error)
-        );
-      });
+        )
+      })
 
-      const { latitude, longitude } = position.coords;
-      setCoords({ latitude, longitude });
+      const {latitude,longitude}=position.coords
+      setCoords({latitude,longitude})
 
-      const url = `https://google-maps-geocoding.p.rapidapi.com/geocode/json?latlng=${latitude},${longitude}&result_type=locality&language=en`;
+      const url=`https://google-maps-geocoding.p.rapidapi.com/geocode/json?latlng=${latitude},${longitude}&result_type=locality&language=en`
 
-      const response = await fetch(url, {
+      const response=await fetch(url,{
         method: "GET",
         headers: {
           "X-RapidAPI-Key": "b6a308ea18msh6870fa17d267db8p158239jsn25a211e1184a",
           "X-RapidAPI-Host": "google-maps-geocoding.p.rapidapi.com",
         },
-      });
+      })
 
-      const data = await response.json();
-      const city = data.results[0].address_components[0].long_name || null;
-      setCity(city);
-    } catch (error) {
-      setError(error.message);
+      const data=await response.json()
+      const city=data.results[0].address_components[0].long_name||null
+      setCity(city)
+    } catch(error) {
+      setError(error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
-
-  const getUserLocation = async (latitude, longitude) => {
-    const data = { city, coordinates: [latitude, longitude] };
+  }
+//--------------------this is the function that is called in the useEffect hook
+//it checks if the city is already in the database, if not it adds it
+  const getUserLocation=async (latitude,longitude) => {
+    const data={city,coordinates: [latitude,longitude]}
     try {
-      const locationResponse = await fetch(
+      const locationResponse=await fetch(
         `http://localhost:3001/api/location/city/${city}`
-      );
+      )
 
-      const locationData = await locationResponse.json();
+      const locationData=await locationResponse.json()
 
-      if (locationData.length === 0) {
-        const postResponse = await fetch(
+      if(locationData.length===0) {
+        const postResponse=await fetch(
           "http://localhost:3001/api/location",
           {
             method: "POST",
@@ -62,31 +66,32 @@ const useGeoLocation = () => {
               "Content-Type": "application/json",
             },
           }
-        );
-
-        const result = await postResponse.json();
-        const { city, coordinates, _id } = result[0];
-        setUserLocation([{ city, coordinates, _id }]);
+        )
+//generate unique id then i dont need to wait for db connections
+        const result=await postResponse.json()
+        console.log(result)
+        const {city,coordinates,_id}=result[0]
+        setUserLocation([{city,coordinates}])
       } else {
-        const { city, coordinates, _id } = locationData[0];
-        setUserLocation([{ city, coordinates, _id }]);
+        const {city,coordinates,_id}=locationData[0]
+        setUserLocation([{city,coordinates,_id}])
       }
-    } catch (error) {
-      console.error(error);
+    } catch(error) {
+      console.error(error)
     }
-  };
+  }
 
   useEffect(() => {
-    getLocation();
-  }, []);
+    getLocation()
+  },[])
 
   useEffect(() => {
-    if (city && coords.latitude && coords.longitude) {
-      getUserLocation(coords.latitude, coords.longitude);
+    if(city&&coords.latitude&&coords.longitude) {
+      getUserLocation(coords.latitude,coords.longitude)
     }
-  }, [city, coords.latitude, coords.longitude]);
+  },[city,coords.latitude,coords.longitude])
 
-  return { coords, city, loading, error, userLocation };
-};
+  return {coords,city,loading,error,userLocation}
+}
 
-export default useGeoLocation;
+export default useGeoLocation

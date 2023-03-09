@@ -75,7 +75,11 @@ async authUser({ body }, res) {
 
   const token = jwt.sign({
     email: user.email,
-    id: user._id
+    id: user._id,
+    sameSite: "none",
+    secure: true,
+    
+
   }, process.env.JWT_SECRET)
 
   res.header("auth-token", token).json({ error: null, data: { user, token }})
@@ -92,7 +96,7 @@ async verifyUser(req, res){
   const user = await User.findById(isVerified.id)
   if( !user ) return res.status(401).json({msg: "un-authorized"})
   
-  return res.status(200).json({ _id: user._id, email: user.email, name: user.name, location: user.location})
+  return res.status(200).json({ _id: user._id, email: user.email, name: user.name, phone: user.phone, profileImage: user.profileImage})
 },
 //get('/api/users')
   async getAllUsers(req, res) {
