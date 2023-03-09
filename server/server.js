@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 app.use(
   cors({
-    origin: "http://localhost:3000", // replace with the domain of your client-side app
+    origin: "https://pet-finder-application.herokuapp.com/", // replace with the domain of your client-side app
   })
 );
 

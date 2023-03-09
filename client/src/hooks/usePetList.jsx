@@ -3,7 +3,7 @@ import { useAppCtx } from "../utils/AppContext";
 export const usePetList = async (userId) => {
   const { user } = useAppCtx();
   try {
-    const response = await fetch(`http://localhost:3001/api/user/${user.id}`);
+    const response = await fetch(`/api/user/${user.id}`);
     if (!response.ok) {
       throw new Error("Failed to fetch pets");
     }
