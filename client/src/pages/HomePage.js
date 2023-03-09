@@ -20,11 +20,10 @@ const HomePage = () => {
     <div>
  {user ? (
         <div style={{border: "2px solid blue"}}className='container-fluid'>
-          {/* <h2 className="petaside-greeting">Hello, {user}!</h2> */}
 
           <Feed />
           <LostPets />
-          <AddPetForm handleAddPet={handleAddPet} />
+          {/* <AddPetForm handleAddPet={handleAddPet} /> */}
         </div>
       ) : (
         <p>Please log in to see your profile.</p>

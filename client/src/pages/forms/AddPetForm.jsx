@@ -4,6 +4,8 @@ import { Image } from 'cloudinary-react';
 import Axios from 'axios';
 import cloudinary from 'cloudinary-core';
 
+//! Add the following to any component to use:
+    /* <AddPetForm handleAddPet={handleAddPet} /> */
 
 export default function AddPetForm({handleAddPet, setShowPetForm}) {
   //We need to manage the state of the image
@@ -252,12 +254,11 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
               })} />
             </div>
 
-            <div style={{border: "2px solid red", color: "white"}}>
-              <div >Test?</div>
+            <div style={{color: "white"}}>
               <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/>
 
+              {/* If the petImage exists (if it was successfully uploaded), display the image */}
               {petUrl && <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId={petUrl}/>}
-
             </div>
 
             <button type="submit" className="btn btn-primary mt-2">

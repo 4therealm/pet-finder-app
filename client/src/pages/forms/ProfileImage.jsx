@@ -88,8 +88,7 @@ export default function ProfileImage() {
     }
       
     return (
-        <div style={{border: "2px solid red", color: "white"}}>
-            <div >Test?</div>
+        <div style={{color: "white"}}>
             <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/>
             <button onClick={uploadImage}>Upload Image</button>
 
