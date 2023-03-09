@@ -1,4 +1,7 @@
 const router = require("express").Router();
+const { User, Pet } = require('../../models')
+
+
 const {
   getPetById,
   getAllPets,

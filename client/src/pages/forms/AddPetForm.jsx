@@ -1,55 +1,102 @@
 import React,{useState} from "react"
 import {useAppCtx} from '../../utils/AppContext'
+import { Image } from 'cloudinary-react';
+import Axios from 'axios';
+import cloudinary from 'cloudinary-core';
 
+//! Add the following to any component to use:
+    /* <AddPetForm handleAddPet={handleAddPet} /> */
 
-export default function AddPetForm({handleAddPet,setShowPetForm}) {
+export default function AddPetForm({handleAddPet, setShowPetForm}) {
+  //We need to manage the state of the image
+  const [imageSelected, setImageSelected] = useState('');
+
+  //The full path to the Cloudinary Website
+  const cld = new cloudinary.Cloudinary({cloud_name: 'diwhrgwml'});
+
+  //Grabbing the 'user' Model from AppContext.jsx
   const {user}=useAppCtx()
+
+  //Assigning the uses id to 'id' for ease
   const id=user._id
-  //this is the state that will be updated when the user changes the input fields in the add pet form
-  const [petFormData,setPetFormData]=useState({
+
+  //State for displaying the URL for the pet image
+  const [petUrl, setPetUrl] = useState(null);
+
+  //Responsible for uploading the image
+  const uploadImage = async () => {
+    try {
+        //We need to use 'fromData' for the image in order to upload it
+        const formData = new FormData();
+        formData.append("file", imageSelected);
+
+        //The following is standard for Cloudinary
+        formData.append("upload_preset", "fxbnekpl");
+    
+        const response = await Axios.post("https://api.cloudinary.com/v1_1/diwhrgwml/image/upload", formData);
+
+        //getting the image_id (aka public_id)
+        const publicId = response.data.public_id;
+
+        //Returning the full url of the image from Cloudinary
+        return cld.url(publicId);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+  //This is the state that will be updated when the user changes the input fields in the add pet form
+  //! Note how we do not include the 'owner' field here, even though it is required. We add it in later by hand/force
+  const [newPet,setNewPet]=useState({
     name: "",
     type: "",
     breed: "",
     description: "",
     age: "",
     gender: "",
-    size: "",
+    size: "small",
     color: "",
     friendly: "",
     health: "",
     notes: "",
-
+    petImageUrl: ""
   })
-  //this is the state that will be updated when the user adds a pet and will be used to display the pets
 
-
-  const [pets,setPets]=useState([])
-  //this is the state that will be updated when the user adds a pet and will be used to display the pets
-
-  const handlePetInputChange=(e) => {
-    console.log(e.target.name, e.target.value)
-    setPetFormData({...petFormData,[e.target.name]: e.target.value})
-  }
-
-
-  const handleSubmit=async (event) => {
+  //The function that activates when the user clicks "Add Pet"
+  const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      console.log(petFormData)
-      const query=await fetch(`http://localhost:3001/api/user/${id}/pet`,{
+      const petImageUrl = await uploadImage(); // Wait for the image to upload. We need to do this to get all the data from the user before we begin to add it to the model
+      setNewPet({
+        ...newPet,
+        // Here we add in the user id by force
+        owner: id,
+
+        //Adding the petImageUrl from state 
+        petImageUrl: petImageUrl
+      });
+
+      //Adding a pet to the user who is logged in
+      const query=await fetch(`http://localhost:3001/api/user/pet/${id}`,{
         method: "post",
-        body: JSON.stringify(petFormData),
+        body: JSON.stringify({...newPet, 
+          owner: id, 
+          petImageUrl}), //We need to include all the necessary data in the body
         headers: {
           "Content-Type": "application/json"
         }
       })
+
       const result=await query.json()
+
+      //Just checking to see the final result of the Pet object
       console.log(result)
       if(!result) {
         throw new Error("Failed to add pet")
       }
-      setPets((Pets) => [...Pets,petFormData]) // add the new pet to the pets array
-      setPetFormData({
+
+      //Resetting the fields when/if the user wants to add another pet
+      setNewPet({
         name: "",
         type: "",
         breed: "",
@@ -61,13 +108,21 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
         friendly: "",
         health: "",
         notes: "",
-  
-      })
-      setShowPetForm(false)
+        petImageUrl: ""
+      });
+      //Updating the HomePage state
+      handleAddPet(result)
+
+      //Setting the current local state to the image url
+      setPetUrl(cld.url(petImageUrl))
+
+      //Testing to see if the enitre url is being used
+      console.log(petUrl)
     } catch(error) {
       console.error(error)
     }
   }
+
   return (
     <div className="AddPetForm">
       <div className="row">
@@ -80,9 +135,11 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
                 type="text"
                 className="form-control"
                 name="name"
-                value={petFormData.name}
-
-                onChange={handlePetInputChange}
+                value={newPet.name}
+                onChange={(event) => setNewPet({
+                  ...newPet,
+                  name: event.target.value
+                })}
               />
             </div>
             <div className="form-group mb-2">
@@ -92,9 +149,11 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
                 type="text"
                 className="form-control"
                 name="type"
-                value={petFormData.type}
-
-                onChange={handlePetInputChange}
+                value={newPet.type}
+                onChange={(event) => setNewPet({
+                  ...newPet,
+                  type: event.target.value
+                })}
               />
             </div>
             <div className="form-group mb-2">
@@ -103,9 +162,11 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
                 type="text"
                 className="form-control"
                 name="breed"
-                value={petFormData.breed}
-
-                onChange={handlePetInputChange}
+                value={newPet.breed}
+                onChange={(event) => setNewPet({
+                  ...newPet,
+                  breed: event.target.value
+                })}
               />
             </div>
             <div className="form-group mb-2">
@@ -114,15 +175,22 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
                 type="text"
                 className="form-control"
                 name="age"
-                value={petFormData.age}
-
-                onChange={handlePetInputChange}
+                value={newPet.age}
+                onChange={(event) => setNewPet({
+                  ...newPet,
+                  age: event.target.value
+                })}
               />
             </div>
 
             <div>
               <label htmlFor="gender">Gender:</label>
-              <select name="gender" onChange={handlePetInputChange}>
+              <select name="gender" 
+              onChange={(event) => setNewPet({
+                ...newPet,
+                gender: event.target.value
+              })}
+              >
                 <option value="">Select</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -132,7 +200,11 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
 
             <div>
               <label htmlFor="size">Size:</label>
-              <select name="size" onChange={handlePetInputChange}>
+              <select name="size" 
+              onChange={(event) => setNewPet({
+                  ...newPet,
+                  size: event.target.value
+                })}>
                 <option value="small">Small</option>
                 <option value="medium">Medium</option>
                 <option value="large">Large</option>
@@ -141,28 +213,54 @@ export default function AddPetForm({handleAddPet,setShowPetForm}) {
 
             <div>
               <label htmlFor="color">Color:</label>
-              <input type="text" name="color" onChange={handlePetInputChange} />
+              <input type="text" name="color" 
+              onChange={(event) => setNewPet({
+                  ...newPet,
+                  color: event.target.value
+                })} />
             </div>
             <div>
               <label htmlFor="friendly">Friendly:</label>
               <div>
-                <input type="radio" id="friendly-yes" name="friendly" value="yes" checked={petFormData.friendly==="yes"} onChange={handlePetInputChange} />
+                <input type="radio" id="friendly-yes" name="friendly" value="yes" checked={newPet.friendly==="yes"} onChange={(event) => setNewPet({
+                  ...newPet,
+                  friendly: event.target.value
+                })} />
                 <label htmlFor="friendly-yes">Yes</label>
               </div>
               <div>
-                <input type="radio" id="friendly-no" name="friendly" value="no" checked={petFormData.friendly==="no"} onChange={handlePetInputChange} />
+                <input type="radio" id="friendly-no" name="friendly" value="no" checked={newPet.friendly==="no"} 
+                onChange={(event) => setNewPet({
+                  ...newPet,
+                  friendly: event.target.value
+                })} />
                 <label htmlFor="friendly-no">No</label>
               </div>
             </div>
 
             <div>
               <label htmlFor="health">Health:</label>
-              <input type="text" name="health" onChange={handlePetInputChange} />
+              <input type="text" name="health" onChange={(event) => setNewPet({
+                  ...newPet,
+                  health: event.target.value
+                })} />
             </div>
             <div>
               <label htmlFor="notes">Notes:</label>
-              <input type="text" name="notes" onChange={handlePetInputChange} />
+              <input type="text" name="notes" 
+              onChange={(event) => setNewPet({
+                ...newPet,
+                notes: event.target.value
+              })} />
             </div>
+
+            <div style={{color: "white"}}>
+              <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/>
+
+              {/* If the petImage exists (if it was successfully uploaded), display the image */}
+              {petUrl && <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId={petUrl}/>}
+            </div>
+
             <button type="submit" className="btn btn-primary mt-2">
               Add Pet
             </button>

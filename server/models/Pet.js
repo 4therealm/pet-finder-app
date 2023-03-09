@@ -26,7 +26,7 @@ const petSchema = new Schema({
   size: {
     type: String,
     enum: ["small", "medium", "large"],
-    // required: true
+    default: "small"
   },
   color: {
     type: String,
@@ -50,6 +50,9 @@ const petSchema = new Schema({
   isLost: {
     type: Boolean,
     default: false,
+  },
+  petImageUrl: {
+    type: String,
   },
   lastSeenLocation: {
     type: {

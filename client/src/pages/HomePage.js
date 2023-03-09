@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppCtx } from '../utils/AppContext';
 // import PetAside from '../components/PetList';
 import Feed from '../components/Feed'
 import LostPets from '../components/LostPets';
+import AddPetForm from '../pages/forms/AddPetForm'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 const HomePage = () => {
   const { user, location, setLocation } = useAppCtx()
 
+  const [pets, setPets] = useState([]);
+
+  const handleAddPet = (pet) => {
+    setPets((pets) => [...pets, pet])
+  }
+
   return (
     <div>
  {user ? (
         <div style={{border: "2px solid blue"}}className='container-fluid'>
-          {/* <h2 className="petaside-greeting">Hello, {user}!</h2> */}
 
           <Feed />
-
           <LostPets />
+          {/* <AddPetForm handleAddPet={handleAddPet} /> */}
         </div>
       ) : (
         <p>Please log in to see your profile.</p>
