@@ -3,6 +3,7 @@ import {useAppCtx} from '../../utils/AppContext'
 import { Image } from 'cloudinary-react';
 import Axios from 'axios';
 import cloudinary from 'cloudinary-core';
+import { stateMachine, ImageRecognizer } from '../../components/ImageRecognition'
 
 //! Add the following to any component to use:
     /* <AddPetForm handleAddPet={handleAddPet} /> */

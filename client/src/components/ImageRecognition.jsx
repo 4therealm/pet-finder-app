@@ -151,4 +151,4 @@ function ImageRecognizer() {
   );
 }
 
-export default ImageRecognizer;
+export { ImageRecognizer, stateMachine };

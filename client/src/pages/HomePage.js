@@ -5,7 +5,7 @@ import Feed from '../components/Feed'
 import LostPets from '../components/LostPets';
 import AddPetForm from '../pages/forms/AddPetForm'
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import ImageRecognizer from '../components/ImageRecognition';
+import { ImageRecognizer } from '../components/ImageRecognition';
 
 
 const HomePage = () => {
