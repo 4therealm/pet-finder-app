@@ -77,7 +77,7 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
       });
 
       //Adding a pet to the user who is logged in
-      const query=await fetch(`http://localhost:3001/api/user/pet/${id}`,{
+      const query=await fetch(`/api/user/pet/${id}`,{
         method: "post",
         body: JSON.stringify({...newPet, 
           owner: id, 

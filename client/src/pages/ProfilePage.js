@@ -17,7 +17,7 @@ const ProfilePage = () => {
     const getPetList = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:3001/api/user/${id}`);
+        const response = await fetch(`/api/user/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch pets");
         }
