@@ -1,27 +1,27 @@
 import React, { useState, useRef, useReducer } from "react";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 
+const stateMachine = {
+    //stateMachine below is the 'main hub' for the stages that the image recognizer needs to take.
+    //  First we set the initial state to 'initial'
+    //  'next' is a trigger that brings the state to the next step. When you call next, the state changes.
+    //  The 'on' allows for other events to trigger state transitions.
+    // Notice how the
+
+    //The reducer function is used as the 'assembly line' to change the StateMachine to whatever state we want it to be.
+  initial: "initial",
+  states: {
+    initial: { on: { next: "loadingModel" } },
+    loadingModel: { on: { next: "modelReady" } },
+    modelReady: { on: { next: "imageReady" } },
+    // In this stage, the 'showImage' property is set to true to indicate that am image is ready to be displayed
+    imageReady: { on: { next: "identifying" }, showImage: true },
+    identifying: { on: { next: "complete" } },
+    complete: { on: { next: "modelReady" }, showImage: true, showResults: true }
+  }
+};
+
 function ImageRecognizer() {
-      const stateMachine = {
-        //stateMachine below is the 'main hub' for the stages that the image recognizer needs to take.
-        //  First we set the initial state to 'initial'
-        //  'next' is a trigger that brings the state to the next step. When you call next, the state changes.
-        //  The 'on' allows for other events to trigger state transitions.
-        // Notice how the
-
-        //The reducer function is used as the 'assembly line' to change the StateMachine to whatever state we want it to be.
-      initial: "initial",
-      states: {
-        initial: { on: { next: "loadingModel" } },
-        loadingModel: { on: { next: "modelReady" } },
-        modelReady: { on: { next: "imageReady" } },
-        // In this stage, the 'showImage' property is set to true to indicate that am image is ready to be displayed
-        imageReady: { on: { next: "identifying" }, showImage: true },
-        identifying: { on: { next: "complete" } },
-        complete: { on: { next: "modelReady" }, showImage: true, showResults: true }
-      }
-    };
-
     //State used to control the image recognition model
     const [model, setModel] = useState(null);
 
