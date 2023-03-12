@@ -1,14 +1,16 @@
-import React,{useState} from "react"
-import {useAppCtx} from '../../utils/AppContext'
+import React,{ useState, useEffect } from "react"
+import {useAppCtx} from '../utils/AppContext'
 import { Image } from 'cloudinary-react';
 import Axios from 'axios';
 import cloudinary from 'cloudinary-core';
-import { stateMachine, ImageRecognizer } from '../../components/ImageRecognition'
+import { ImageRecognizer } from './ImageRecognition'
+import { useStateMachineContext } from "../utils/stateMachine";
 
-//! Add the following to any component to use:
-    /* <AddPetForm handleAddPet={handleAddPet} /> */
 
-export default function AddPetForm({handleAddPet, setShowPetForm}) {
+const AddPetPage = ({handleAddPet, setShowPetForm}) => {
+  //Bringing data from the 'stateMachine' to control the steps of the image recognition
+  const { stateMachine, next } = useStateMachineContext();
+
   //We need to manage the state of the image
   const [imageSelected, setImageSelected] = useState('');
 
@@ -62,6 +64,11 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
     notes: "",
     petImageUrl: ""
   })
+
+  //This triggers the next state of 'stateMachine' when the user enters the page
+  useEffect(() => {
+    stateMachine.next();
+  }, [stateMachine]);
 
   //The function that activates when the user clicks "Add Pet"
   const handleSubmit = async (event) => {
@@ -255,8 +262,14 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
               })} />
             </div>
 
+            {/* Where the user uploads the image */}
             <div style={{color: "white"}}>
+              {/* <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/> */}
+              {/* Pass the ImageURL from the 'ImageRecognition' to setImageSelected, which is passed in to the upload image function, which can eventually be saved to the "cld.url(publicId)" */}
               <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/>
+
+
+              <ImageRecognizer stateMachine={stateMachine} />
 
               {/* If the petImage exists (if it was successfully uploaded), display the image */}
               {petUrl && <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId={petUrl}/>}
@@ -271,3 +284,5 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
     </div>
   )
 }
+
+export default AddPetPage;

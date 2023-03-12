@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { UpdateUserForm } from "./forms";
-import AddPetForm from "./forms/AddPetForm";
+import AddPetForm from "../components/AddPetPage";
 import PetAside from "../components/PetList";
 import { useAppCtx } from '../utils/AppContext';
 import { useParams } from "react-router-dom";
