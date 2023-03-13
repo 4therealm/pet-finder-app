@@ -134,6 +134,7 @@ function ImageRecognizer() {
         <ul style={{textAlign: 'center', listStyleType: 'none'}}>
 
             {/* The 'results' variable is actually an object */}
+            <p style={{textDecoration: "underline"}}>Here are the results with the likelyhood of breed:</p>
           {results.map(({ className, probability }) => (
             <li key={className}>{`${className}: %${(probability * 100).toFixed(
               2

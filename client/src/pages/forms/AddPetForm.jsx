@@ -3,6 +3,7 @@ import {useAppCtx} from '../../utils/AppContext'
 import { Image } from 'cloudinary-react';
 import Axios from 'axios';
 import cloudinary from 'cloudinary-core';
+import ImageRecognizer from "../../components/ImageRecognition";
 
 //! Add the following to any component to use:
     /* <AddPetForm handleAddPet={handleAddPet} /> */
@@ -111,7 +112,7 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
         petImageUrl: ""
       });
       //Updating the HomePage state
-      handleAddPet(result)
+      // handleAddPet(result)
 
       //Setting the current local state to the image url
       setPetUrl(cld.url(petImageUrl))
@@ -124,148 +125,155 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
   }
 
   return (
-    <div className="AddPetForm">
-      <div className="row">
-        <div className="col-6">
+    <div className="d-flex justify-content-evenly align-items-center">
+      <div className="AddPetForm col-4 100vw d-flex justify-content-center" style={{border: "solid blue 2px"}}>
+        <div className="row">
+          <div style={{margin: "0px auto"}}>
 
-          <form onSubmit={handleSubmit} className="mb-2">
-            <div className="form-group mb-2">
-              <label>Name</label>
-              <input
-                type="text"
-                className="form-control"
-                name="name"
-                value={newPet.name}
-                onChange={(event) => setNewPet({
-                  ...newPet,
-                  name: event.target.value
-                })}
-              />
-            </div>
-            <div className="form-group mb-2">
-              <label>Type</label>
-              <input
+            <form onSubmit={handleSubmit} className="mb-2">
+              <div className="form-group">
+                <label>Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  value={newPet.name}
+                  onChange={(event) => setNewPet({
+                    ...newPet,
+                    name: event.target.value
+                  })}
+                />
+              </div>
+              <div className="form-group mb-2">
+                <label>Type</label>
+                <input
 
-                type="text"
-                className="form-control"
-                name="type"
-                value={newPet.type}
-                onChange={(event) => setNewPet({
-                  ...newPet,
-                  type: event.target.value
-                })}
-              />
-            </div>
-            <div className="form-group mb-2">
-              <label>Pet Breed</label>
-              <input
-                type="text"
-                className="form-control"
-                name="breed"
-                value={newPet.breed}
-                onChange={(event) => setNewPet({
-                  ...newPet,
-                  breed: event.target.value
-                })}
-              />
-            </div>
-            <div className="form-group mb-2">
-              <label>Age</label>
-              <input
-                type="text"
-                className="form-control"
-                name="age"
-                value={newPet.age}
-                onChange={(event) => setNewPet({
-                  ...newPet,
-                  age: event.target.value
-                })}
-              />
-            </div>
+                  type="text"
+                  className="form-control"
+                  name="type"
+                  value={newPet.type}
+                  onChange={(event) => setNewPet({
+                    ...newPet,
+                    type: event.target.value
+                  })}
+                />
+              </div>
+              <div className="form-group mb-2">
+                <label>Pet Breed</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="breed"
+                  value={newPet.breed}
+                  onChange={(event) => setNewPet({
+                    ...newPet,
+                    breed: event.target.value
+                  })}
+                />
+              </div>
+              <div className="form-group mb-2">
+                <label>Age</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="age"
+                  value={newPet.age}
+                  onChange={(event) => setNewPet({
+                    ...newPet,
+                    age: event.target.value
+                  })}
+                />
+              </div>
 
-            <div>
-              <label htmlFor="gender">Gender:</label>
-              <select name="gender" 
-              onChange={(event) => setNewPet({
-                ...newPet,
-                gender: event.target.value
-              })}
-              >
-                <option value="">Select</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="size">Size:</label>
-              <select name="size" 
-              onChange={(event) => setNewPet({
-                  ...newPet,
-                  size: event.target.value
-                })}>
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="color">Color:</label>
-              <input type="text" name="color" 
-              onChange={(event) => setNewPet({
-                  ...newPet,
-                  color: event.target.value
-                })} />
-            </div>
-            <div>
-              <label htmlFor="friendly">Friendly:</label>
               <div>
-                <input type="radio" id="friendly-yes" name="friendly" value="yes" checked={newPet.friendly==="yes"} onChange={(event) => setNewPet({
+                <label htmlFor="gender">Gender:</label>
+                <select name="gender" 
+                onChange={(event) => setNewPet({
                   ...newPet,
-                  friendly: event.target.value
-                })} />
-                <label htmlFor="friendly-yes">Yes</label>
+                  gender: event.target.value
+                })}
+                >
+                  <option value="">Select</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="size">Size:</label>
+                <select name="size" 
+                onChange={(event) => setNewPet({
+                    ...newPet,
+                    size: event.target.value
+                  })}>
+                  <option value="small">Small</option>
+                  <option value="medium">Medium</option>
+                  <option value="large">Large</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="color">Color:</label>
+                <input type="text" name="color" 
+                onChange={(event) => setNewPet({
+                    ...newPet,
+                    color: event.target.value
+                  })} />
               </div>
               <div>
-                <input type="radio" id="friendly-no" name="friendly" value="no" checked={newPet.friendly==="no"} 
+                <label htmlFor="friendly">Friendly:</label>
+                <div>
+                  <input type="radio" id="friendly-yes" name="friendly" value="yes" checked={newPet.friendly==="yes"} onChange={(event) => setNewPet({
+                    ...newPet,
+                    friendly: event.target.value
+                  })} />
+                  <label htmlFor="friendly-yes">Yes</label>
+                </div>
+                <div>
+                  <input type="radio" id="friendly-no" name="friendly" value="no" checked={newPet.friendly==="no"} 
+                  onChange={(event) => setNewPet({
+                    ...newPet,
+                    friendly: event.target.value
+                  })} />
+                  <label htmlFor="friendly-no">No</label>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="health">Health:</label>
+                <input type="text" name="health" onChange={(event) => setNewPet({
+                    ...newPet,
+                    health: event.target.value
+                  })} />
+              </div>
+              <div>
+                <label htmlFor="notes">Notes:</label>
+                <input type="text" name="notes" 
                 onChange={(event) => setNewPet({
                   ...newPet,
-                  friendly: event.target.value
+                  notes: event.target.value
                 })} />
-                <label htmlFor="friendly-no">No</label>
               </div>
-            </div>
 
-            <div>
-              <label htmlFor="health">Health:</label>
-              <input type="text" name="health" onChange={(event) => setNewPet({
-                  ...newPet,
-                  health: event.target.value
-                })} />
-            </div>
-            <div>
-              <label htmlFor="notes">Notes:</label>
-              <input type="text" name="notes" 
-              onChange={(event) => setNewPet({
-                ...newPet,
-                notes: event.target.value
-              })} />
-            </div>
+              <div style={{color: "white"}}>
+                <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/>
 
-            <div style={{color: "white"}}>
-              <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/>
+                {/* If the petImage exists (if it was successfully uploaded), display the image */}
+                {petUrl && <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId={petUrl}/>}
+              </div>
 
-              {/* If the petImage exists (if it was successfully uploaded), display the image */}
-              {petUrl && <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId={petUrl}/>}
-            </div>
-
-            <button type="submit" className="btn btn-primary mt-2">
-              Add Pet
-            </button>
-          </form>
+              <button type="submit" className="btn btn-primary mt-2">
+                Add Pet
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
+
+      <div className="col-5" style={{border: "2px solid blue", textAlign: 'center'}}>
+         <h2>Need a reminder of the breed? No worries, click here!</h2>
+         <ImageRecognizer />
       </div>
     </div>
   )
