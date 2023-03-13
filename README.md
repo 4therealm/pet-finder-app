@@ -1,33 +1,72 @@
-# MERN Auth Starter
+#  PawPrints: The Ultimate Pet Finder App 🐶🐍😿🐹🐢
 
-This is a small MERN authentication package for my students. Recently updated to incorporate React v18.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## The Authentication Process
-
-### Someone signs up as a user
-- They fill out a form with name, email, password, etc. 
-- This form is submitted 
-- Our Express API receives this request
-- Based on the password, we create a salt and a hash for the user record
-- We delete the password, then save the salt and hash w/ other user info
-- Done!
+### "Find your lost pet with ease using **PawPrints** - the ultimate pet finder app. Create a pet profile, report them missing, and track their location with GPS technology. Join our community and reunite with your furry friend today!"
 
 
-### Someone attempts to login
-- They fill out a login form with their email and password 
-- This form is submitted
-- Our Express API receives this request
-- First we verify the user exists based on email address
-- Then we compare the password against the salt and hash
-- If all matches, we have a valid login
-- We create a token which will be sent back to the browser in the response header
+## Links
 
-In React:
-  - If the login is successful, we'll receive a token value back 
-  - We will set the token as a cookie
+- Source Code [Source Code](https://github.com/4therealm/pet-finder-app)
 
 
-### Someone is accessing any page on our site and we want to see if they're logged in
-- We look to see if we have a token stored as a cookie. If not, we know they're not logged in. If a login is required, we send them to the login page.
 
-- If we do have a token, we need to make sure this token, and the user it belongs to, is still valid. So we query the api to verify the token and user are still valid.
+## Description 🐶🐍😿🐹🐢🔍
+
+### **The Pet Finder App helps pet owners locate their lost pets quickly and efficiently!** 
+<br/>**Create a profile for your pet with their name, breed, age, and photo, and report them as missing through the app.** <br/>_The app uses GPS technology to track both your and your pet's location_, so you can easily reunite with your furry friend. Others in the area can also report sightings through the app, notifying you immediately. <br/>**Join our community and reunite with your lost pet joyfully!**
+
+## Table of Contents 📖
+- [Usage](#usage-🔑) 
+- [License](#license-📝)
+- [Mock up](#mock-up) 
+- [Things We Learned](#things-we-learned-📚)
+- [Sources](#sources)
+- [Team](#team-👨‍👩‍👧‍👦)
+- [RoadMap](#roadmap-🧭)
+
+## Usage 🔑
+* `Create a profile for your pet with their name, breed, age, and photo.`
+
+* `Report your missing pet through the app to alert other users in the area.`
+
+* `The app's GPS technology tracks your and your pet's location, making it easy to reunite with your furry friend.`
+
+* `Other users can report sightings through the app, notifying you immediately.`
+
+* `Join our community and joyfully reunite with your lost pet!`
+
+## License 📝
+'click the license badge at the beginning of the document to get more info'
+
+## Mock-Up 
+![name here](pic of page/here/.png)
+
+
+
+## Things We Learned 📚
+* `Building a fully functional web application including client-side and server-side from start to finish`
+* `Working together as a group, utilizing our strengths to code the different parts of the site,troubleshooting as a team`
+
+## Sources
+
+* [Material UI](https://mui.com/)
+* []()
+
+
+## Team 👨‍👩‍👧‍👦
+
+- [https://github.com/4therealm](https://github.com/4therealm)
+
+- [https://github.com/Kenny4297](https://github.com/Kenny4297)
+
+- [https://github.com/ElizabethGonzalez11](https://github.com/ElizabethGonzalez11)
+
+- [https://github.com/EshuShango](https://github.com/EshuShango)
+
+
+## RoadMap 🧭
+ * `Refactor code to be more efficient` 
+ * `Make UI "prettier"` 
+ * `Continued improvements to make the app more user friendly` 
+ 
