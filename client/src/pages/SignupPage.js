@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 
 const SignupPage = () => {
@@ -8,7 +9,7 @@ const SignupPage = () => {
   const [passwordIsValid, setPasswordIsValid] = useState(true);
   const [nameIsValid, setNameIsValid] = useState(true);
   const [phoneIsValid, setPhoneIsValid] = useState(true);
-  const [formIsValid, setFormIsValid] = useState(true);
+  const [formIsValid, setFormIsValid] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/i;
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
@@ -64,15 +65,15 @@ const SignupPage = () => {
   return (
     <div style={{ width: "20vw", margin: "0px auto" }}>
       <h1 style={{ textAlign: "center" }}>Signup Page</h1>
-
-      <form className="form mb-3">
+  
+      <form className="form mb-3" onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label>Email Address</label>
           <input
             type="text"
             name="email"
             placeholder="john@gmail.com"
-            className="form-control"
+            className={`form-control ${!emailIsValid ? "is-invalid" : ""}`}
             value={formData.email}
             onChange={handleInputChange}
             onBlur={validateEmail}
@@ -81,29 +82,29 @@ const SignupPage = () => {
             <div className="invalid-feedback">Please enter a valid email address</div>
           )}
         </div>
-
+  
         <div className="form-group">
           <label>Password</label>
           <input
             type="password"
             name="password"
-            className={`form-control ${!passwordIsValid ? "is-valid" : ""}`}
+            className={`form-control ${!passwordIsValid ? "is-invalid" : ""}`}
             value={formData.password}
             onChange={handleInputChange}
             onBlur={validatePassword}
           />
           {!passwordIsValid && (
             <div className="invalid-feedback">
-            Please enter a password with at least 6 characters, including at least one uppercase letter, one lowercase letter, and one number
-          </div>
+              Please enter a password with at least 6 characters, including at least one uppercase letter, one lowercase letter, and one number
+            </div>
           )}
         </div>
-
+  
         <div className="form-group mb-2">
           <label>Name</label>
           <input
             type="text"
-            className={`form-control ${!nameIsValid ? "is-valid" : ""}`}
+            className={`form-control ${!nameIsValid ? "is-invalid" : ""}`}
             name="name"
             value={formData.name}
             onChange={handleInputChange}
@@ -113,11 +114,11 @@ const SignupPage = () => {
             <div className="invalid-feedback">Please enter a valid name</div>
           )}
         </div>
-
+  
         <div className="form-group mb-2">
           <label>Phone</label>
           <input
-            type="phone"
+            type="tel"
             className={`form-control ${!phoneIsValid ? "is-invalid" : ""}`}
             name="phone"
             value={formData.phone}
@@ -139,26 +140,19 @@ const SignupPage = () => {
           </button>
         </div>
       </form>
-
+  
       {signupResult === "success" && (
-        <div
-          className="alert alert-success"
-          role="alert"
-        >
+        <div className="alert alert-success" role="alert">
           Signup successful!
         </div>
       )}
-
+  
       {signupResult === "fail" && (
-        <div
-          className="alert alert-danger"
-          role="alert"
-        >
+        <div className="alert alert-danger" role="alert">
           Signup failed!
         </div>
       )}
     </div>
   );
-};
-
-export default SignupPage;
+      };  
+      export default SignupPage;
