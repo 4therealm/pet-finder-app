@@ -6,32 +6,36 @@ import Geolocation from './Geolocation';
 import { Image } from 'cloudinary-react';
 
 const Header = () => {
-  const { user, userlocation } = useAppCtx();
+  const { user, userlocation, getUser } = useAppCtx();
 
-  const { userProfileImage, setUserProfileImage } = useState(null);
+  const [userProfileImage, setUserProfileImage] = useState(null);
 
   console.log(userProfileImage);
-  console.log(user);
-  // console.log(user.profileImage);
+  // console.log(user._id)
+  // console.log(user.profileImage)  
 
   const logout = () => {
     cookie.remove('auth-token');
     window.location.href = '/';
   };
 
+  // if( !user ) return <></>
+
+
   //Getting the users profile image if one exists
-  const fetchUserProfileImage = async () => {
-    const query = await fetch(`/api/user/profileImage/${user._id}`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    const data = await query.json()
-    const userProfileImage = data.profileImage;
-    console.log(userProfileImage)
-    setUserProfileImage(userProfileImage);
-  }
+  // const fetchUserProfileImage = async () => {
+  //   const query = await fetch(`/api/user/profileImage/${user._id}`, {
+  //     method: 'GET',
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   })
+  //   const data = await query.json()
+  //   console.log(data)
+  //   const userProfileImage = data.profileImage;
+  //   setUserProfileImage(userProfileImage);
+  //   console.log(userProfileImage);
+  // }
 
   return (
     <header className="px-2 pb-0 mb-0 row d-flex justify-context-between" >
@@ -44,7 +48,7 @@ const Header = () => {
       </div>
 
       <div className="d-flex justify-content-center align-items-center position-relative mx-auto col-auto ">
-          <Geolocation />
+          {/* <Geolocation /> */}
           {/* Insert the name of the city when the user logs in */}
           {/* <p style={{marginRight: "10rem"}}>Your Location: {useGeoLocation.city}</p> */}
       </div>
@@ -102,12 +106,12 @@ const Header = () => {
                     </a>
                   </li>
                   
-                  {!userProfileImage ?( 
-                  <li>
+                  {!user.profileImage ?( 
+                  <li className='nav-item'>
                     <a className="nav-link" href='/profileImage'>Add a profile Image!</a>
-                  </li>) : ( <p>test test?</p> ) }
+                  </li>) : ( <img src={user.profileImage} alt="The users profile pic" style={{width: "47vh", borderRadius: "50px"}} /> ) }
                 </>
-                // <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId={userProfileImage} />
+                
               )}
             </ul>
           </div>
