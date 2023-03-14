@@ -66,7 +66,7 @@ export default function SendSMS(phone) {
         <label htmlFor="message-body">Message body:</label>
         <textarea id="message-body" value={body} onChange={handleChangeBody} />
       </div>
-      <button disabled={sending} onClick={handleSend}>Send SMS</button>
+      <button className="btn btn-primary btn-dark btn-rounded" disabled={sending} onClick={handleSend}>Send SMS</button>
       {sent && <div>Message sent!</div>}
       {error && <div>Error sending message: {error}</div>}
     </div>

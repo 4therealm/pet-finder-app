@@ -69,4 +69,5 @@
  * `Refactor code to be more efficient` 
  * `Make UI "prettier"` 
  * `Continued improvements to make the app more user friendly` 
+ * `TODO: add a Feed, which would run Ads for pet foods, item, Health Care and Donations etc (this could be for potential sponsorship and/or paid ads to generate funds etc)"`
  

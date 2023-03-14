@@ -50,7 +50,7 @@ const LostPets = () => {
               <img  style={{
                 // height: 400 / 2,
                 // width: 400 / 2,
-                borderRadius: 200 / 4,
+                borderRadius: 800 / 4,
               }}
                 src={pet.petImageUrl ? pet.petImageUrl : getImage(pet.type)}
                 className="card-img-top"
@@ -78,9 +78,13 @@ const LostPets = () => {
                     <br />
                     Owner: {pet.owner.name}, {pet.owner.phone}
                     <br />
-                    <button
+                    <button  style={{
+                // height: 400 / 2,
+                // width: 400 / 2,
+                // borderRadius: 800 / 4,
+              }}
                       onClick={handleContactOwner}
-                      className="ContactOwnerBtn"
+                      className="btn btn-rounded btn-dark  ContactOwnerBtn"
                       value={"+1" + pet.owner.phone}
                     >
                       contact owner
