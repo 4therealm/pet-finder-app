@@ -36,7 +36,7 @@ const Header = () => {
 
       <div className="d-flex justify-content-center align-items-center position-relative mx-auto col-auto ">
 
-          {/* <Geolocation /> */}
+          <Geolocation />
           {/* Insert the name of the city when the user logs in */}
           {/* <p style={{marginRight: "10rem"}}>Your Location: {useGeoLocation.city}</p> */}
 

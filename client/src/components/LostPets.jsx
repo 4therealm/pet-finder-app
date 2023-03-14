@@ -12,14 +12,17 @@ const LostPets = () => {
   // eslint-disable-next-line
   const { user, userLocation } = useAppCtx();
   const handleExpandPet = (pet) => {
+    console.log("Pet clicked:", pet);
     setOwnerPhone("+1" + pet.owner.phone);
-
+  
     if (pet._id === expandedPet) {
       setExpandedPet(null);
     } else {
       setExpandedPet(pet._id);
     }
+    console.log("Expanded pet:", expandedPet);
   };
+  
   const getImage = (petType) => {
     if (petType === "dog") {
       return "https://placedog.net/200/200";
