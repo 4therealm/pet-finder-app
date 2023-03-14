@@ -76,6 +76,36 @@ async getLostPets(req, res) {
       res.status(400).json(err);
     }
   },
+  // Route for updating a lost pet
+  async updateLostPet(req, res) {
+    try {
+      const { id } = req.params;
+  
+      // Find the pet by id
+      const dbPetData = await Pet.findById(id);
+      if (!dbPetData) {
+        res.status(404).json({ message: "No pet found with this id!" });
+        return;
+      }
+  
+      // Set isLost field to false and reset lastSeenLocation
+      dbPetData.isLost = false;
+      dbPetData.lastSeenLocation = {
+        type: "Point",
+        coordinates: [0, 0]
+      };
+  
+      // Save the updated pet to the database
+      const updatedPet = await dbPetData.save();
+  
+      res.json(updatedPet);
+    } catch (err) {
+      console.log(err);
+      res.status(400).json(err);
+    }
+  },
+  
+
 
   //delete('/api/pet/:id')
   async deletePet(req, res) {
