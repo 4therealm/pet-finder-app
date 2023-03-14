@@ -35,7 +35,7 @@ export const AppProvider = ({children}) => {
     verifyUser()
   }, [])
 
-  if( !ready ) window.location.href = '/login';
+  // if( !ready ) window.location.href = '/login';
 
 
   return (

@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useEffect, useState} from "react"
 import {useAppCtx} from '../../utils/AppContext'
 import { Image } from 'cloudinary-react';
 import Axios from 'axios';
@@ -21,7 +21,7 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
   console.log(user)
 
   //Assigning the uses id to 'id' for ease
-  const id=user._id
+const [id,setId]=useState("")
 
   //State for displaying the URL for the pet image
   const [petUrl, setPetUrl] = useState(null);
@@ -126,6 +126,9 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
       console.error(error)
     }
   }
+  useEffect(() => {
+    user &&setId(user._id)
+  }, [user])
 
   return (
     <div className="d-flex justify-content-evenly align-items-start">
