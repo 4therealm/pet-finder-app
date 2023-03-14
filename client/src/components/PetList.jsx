@@ -78,6 +78,45 @@ const PetAside=({pets}) => {
       console.log(error)
     }
   }
+  const handleFoundButtonClicked = async () => {
+    console.log("found button clicked");
+    try {
+      const response = await fetch(`/api/pet/found/${selectedPet}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          isLost: false,
+          lastSeenLocation: { type: "Point", coordinates: [0, 0] }
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Network response for Pet update was not ok");
+      }
+      const data = await response.json();
+      setPetInfo(data);
+  
+      // Remove pet from lostPets array in location document
+      const { lastSeenLocation } = data;
+      console.log("Last seen location:", lastSeenLocation);
+      const response2 = await fetch(`/api/location/lost/${lastSeenLocation[0]._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ petId: data._id }),
+      });
+      if (!response2.ok) {
+        throw new Error("Network response for Location update was not ok");
+      }
+      const data2 = await response2.json();
+      console.log("Pet data:", data2);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
 
 
@@ -134,6 +173,9 @@ const PetAside=({pets}) => {
                 </button>
                 <button
                   onClick={handleLostButtonClicked}>lost?</button>
+                <button
+                  onClick={handleFoundButtonClicked}>found?</button>
+
               </div>
             </div>
           </div>
