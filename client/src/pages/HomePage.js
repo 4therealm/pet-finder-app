@@ -23,7 +23,7 @@ const HomePage = () => {
         <div style={{border: "2px solid blue"}}className='container-fluid'>
           <Feed />
           <LostPets />
-          <Link to='/addPetForm'>Add a lost pet</Link>
+          <Link to='/addPetForm' >Add a lost pet</Link>
         </div>
       ) : (
         <p>Please log in to see your profile.</p>
