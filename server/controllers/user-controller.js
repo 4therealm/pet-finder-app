@@ -116,11 +116,10 @@ async verifyUser(req, res){
   //get('/api/users/:id')
   async getUserById(req, res) {
     try {
-      const dbUser = await User.findById(req.params.id)
-      .populate('pets')
+      const dbUser = await User.findById(req.params.id).populate('pets')
       res
         .status(200)
-        .json(dbUser)
+        .json({ result: "success", user: dbUser})
     } catch (error) {
       res
         .status(500)
