@@ -8,6 +8,7 @@ function Feed() {
             <p>Feed Item 1</p>
             <p>Feed Item 2</p>
             <p>Feed Item 3</p>
+            
         </div>
     )
 };

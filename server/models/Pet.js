@@ -58,24 +58,15 @@ const petSchema = new Schema({
     type: {
       type: String,
       default: "Point",
-      enum: ["Point"],
-    },
-    city: {
-      type: String,
-      
+      enum: ["Point"]
     },
     coordinates: {
       type: [Number],
-      
-    },
-  },
+      default: [0, 0]
+    }
+  }
 });
-petSchema.virtual("user", {
-  ref: "User",
-  localField: "owner",
-  foreignField: "_id",
-  justOne: true,
-});
+
 
 const Pet = mongoose.model("Pet", petSchema);
 

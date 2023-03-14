@@ -86,9 +86,7 @@ router.put('/:userId', async (req, res) => {
 
 router.route('/auth').post(authUser);
 router.route('/verify').post(verifyUser);
-router.route('/:id').get(getUserById);
-router.route('/:id').put(updateUser);
-router.route('/:id').delete(deleteUser);
+router.route('/:id').get(getUserById).put(updateUser).delete(deleteUser);
 router.route('/:id/pet').post(createPet);
 
 module.exports = router;
