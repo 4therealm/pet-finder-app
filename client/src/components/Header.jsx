@@ -1,14 +1,10 @@
 
 import cookie from "js-cookie";
 import { useAppCtx } from "../utils/AppContext";
+import { useState, useEffect } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Geolocation from "./Geolocation";
-// import Tabs from '@mui/material/Tabs';
-// import Tab from '@mui/material/Tab';
-// import Box from '@mui/material/Box';
-// import Button from "@mui/material/Button";
-// import Menu from "@mui/material/Menu";
-// import MenuItem from "@mui/material/MenuItem";
+
 
 
 const Header = () => {
