@@ -8,7 +8,8 @@ export const useAppCtx = () => useContext(AppContext)
 export const AppProvider = ({children}) => {
   const [ user, setUser ] = useState(null)
   const [userLocation, setUserLocation] = useState()
-
+  const [ ready, setReady ] = useState(false)
+  
   const verifyUser = async () => {
     const authCookie = cookie.get("auth-token")
     if( authCookie ){
@@ -20,20 +21,23 @@ export const AppProvider = ({children}) => {
           "Auth-Token": authCookie
         }
       })
-      const result = await query.json()
-      console.log(result)
-      if( result ){
-        console.log('verified')
-        setUser(result)
-      }
-    }
+      const foundUser = await query.json()
+      setUser(foundUser)
+      setReady(true)
+    // } else {
+    //   window.location.href = '/login';
+    // }
   }
-
+}
+  
   useEffect(() => {
+    console.log("use effect called")
     verifyUser()
   }, [])
 
-//update user
+  // if( !ready ) window.location.href = '/login';
+
+
   return (
     <AppContext.Provider value={{ user, userLocation, setUserLocation }}>
       {children}

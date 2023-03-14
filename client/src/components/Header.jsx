@@ -1,15 +1,26 @@
+
 import cookie from "js-cookie";
 import { useAppCtx } from "../utils/AppContext";
+import { useState, useEffect } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Geolocation from "./Geolocation";
 
+
 const Header = () => {
-  const { user, userlocation } = useAppCtx();
+  const { user, userlocation, getUser } = useAppCtx();
+
+  const [userProfileImage, setUserProfileImage] = useState(null);
+
+  console.log(userProfileImage);
+  // console.log(user._id)
+  // console.log(user.profileImage)  
+
 
   const logout = () => {
     cookie.remove("auth-token");
     window.location.href = "/";
   };
+
 
   return (
     <header className="px-2 pb-0 mb-0 row d-flex justify-context-between">
@@ -24,9 +35,11 @@ const Header = () => {
       </div>
 
       <div className="d-flex justify-content-center align-items-center position-relative mx-auto col-auto ">
-        <Geolocation />
-        {/* Insert the name of the city when the user logs in */}
-        {/* <p style={{marginRight: "10rem"}}>Your Location: {useGeoLocation.city}</p> */}
+
+          {/* <Geolocation /> */}
+          {/* Insert the name of the city when the user logs in */}
+          {/* <p style={{marginRight: "10rem"}}>Your Location: {useGeoLocation.city}</p> */}
+
       </div>
 
       <nav
@@ -80,7 +93,13 @@ const Header = () => {
                       Logout
                     </a>
                   </li>
+                  
+                  {!user.profileImage ?( 
+                  <li className='nav-item'>
+                    <a className="nav-link" href='/profileImage'>Add a profile Image!</a>
+                  </li>) : ( <img src={user.profileImage} alt="The users profile pic" style={{width: "47vh", borderRadius: "50px"}} /> ) }
                 </>
+                
               )}
             </ul>
           </div>

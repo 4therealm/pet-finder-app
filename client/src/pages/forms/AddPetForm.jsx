@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useEffect, useState} from "react"
 import {useAppCtx} from '../../utils/AppContext'
 import { Image } from 'cloudinary-react';
 import Axios from 'axios';
@@ -18,8 +18,10 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
   //Grabbing the 'user' Model from AppContext.jsx
   const {user}=useAppCtx()
 
+  console.log(user)
+
   //Assigning the uses id to 'id' for ease
-  const id=user._id
+const [id,setId]=useState("")
 
   //State for displaying the URL for the pet image
   const [petUrl, setPetUrl] = useState(null);
@@ -40,6 +42,7 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
         const publicId = response.data.public_id;
 
         //Returning the full url of the image from Cloudinary
+        console.log(cld.url(publicId))
         return cld.url(publicId);
     } catch (err) {
         console.log(err);
@@ -68,6 +71,8 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
     event.preventDefault()
     try {
       const petImageUrl = await uploadImage(); // Wait for the image to upload. We need to do this to get all the data from the user before we begin to add it to the model
+      setPetUrl(cld.url(petImageUrl));
+      console.log(cld.url(petImageUrl))
       setNewPet({
         ...newPet,
         // Here we add in the user id by force
@@ -117,15 +122,16 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
       //Setting the current local state to the image url
       setPetUrl(cld.url(petImageUrl))
 
-      //Testing to see if the enitre url is being used
-      console.log(petUrl)
     } catch(error) {
       console.error(error)
     }
   }
+  useEffect(() => {
+    user &&setId(user._id)
+  }, [user])
 
   return (
-    <div className="d-flex justify-content-evenly align-items-center">
+    <div className="d-flex justify-content-evenly align-items-start">
       <div className="AddPetForm col-4 100vw d-flex justify-content-center" style={{border: "solid blue 2px"}}>
         <div className="row">
           <div style={{margin: "0px auto"}}>
@@ -271,7 +277,7 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
         </div>
       </div>
 
-      <div className="col-5" style={{border: "2px solid blue", textAlign: 'center'}}>
+      <div className="col-5 align-items-start" style={{border: "2px solid blue", textAlign: 'center'}}>
          <h2>Need a reminder of the breed? No worries, click here!</h2>
          <ImageRecognizer />
       </div>
