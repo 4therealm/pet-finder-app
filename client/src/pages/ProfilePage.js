@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import cookie from "js-cookie";
 import { UpdateUserForm } from "./forms";
 import AddPetForm from "./forms/AddPetForm";
 import PetAside from "../components/PetList";
 import { useAppCtx } from '../utils/AppContext';
 import { useParams } from "react-router-dom";
 import { usePetList } from "../hooks/usePetList";
+
 const ProfilePage = () => {
   const [activeForm, setActiveForm] = useState(null);
   const { user } = useAppCtx();
@@ -12,16 +14,27 @@ const ProfilePage = () => {
 
   const [loading, setLoading] = useState(false);
   const [pets, setPets] = useState([]);
+  
+  const authCookie = cookie.get("auth-token")
 
   useEffect(() => {
+    console.log("starting query...")
     const getPetList = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`/api/user/${id}`);
+        const response = await fetch(`/api/user/${id}`,{
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Auth-Token": authCookie
+          }
+        });
+        console.log(response)
         if (!response.ok) {
           throw new Error("Failed to fetch pets");
         }
         const data = await response.json();
+        console.log(data)
         setPets(data.pets);
       } catch (error) {
         console.error(error);
