@@ -27,12 +27,7 @@ export default function SendSMS(phone) {
         },
         body: JSON.stringify({
           to: phone.phone,
-          body: `${user.name} wants to contact you about your lost pet.\n
-          a message will be sent to  ${phone.phone}\n
-          the user's location is ${userLocation[0].city}, ${userLocation[0].coordinates}\n
-          ${body}
-          if you would like to contact them for further information, please call them at ${user.phone}
-          `,
+          body: `${body}`,
         }),
       });
   
@@ -58,10 +53,6 @@ export default function SendSMS(phone) {
 
   return (
     <div>
-      <p>
-        {user.name} wants to contact you about your lost pet.
-        The user's location is {userLocation[0].city}, {userLocation[0].coordinates}.
-      </p>
       <div>
         <label htmlFor="message-body">Message body:</label>
         <textarea id="message-body" value={body} onChange={handleChangeBody} />
