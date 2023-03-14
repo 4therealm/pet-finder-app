@@ -6,7 +6,6 @@ import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Geolocation from "./Geolocation";
 
 
-
 const Header = () => {
   const { user, userlocation, getUser } = useAppCtx();
 
@@ -23,33 +22,14 @@ const Header = () => {
   };
 
 
-  // if( !user ) return <></>
-
-
-  //Getting the users profile image if one exists
-  // const fetchUserProfileImage = async () => {
-  //   const query = await fetch(`/api/user/profileImage/${user._id}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   })
-  //   const data = await query.json()
-  //   console.log(data)
-  //   const userProfileImage = data.profileImage;
-  //   setUserProfileImage(userProfileImage);
-  //   console.log(userProfileImage);
-  // }
-
-
   return (
     <header className="px-2 pb-0 mb-0 row d-flex justify-context-between">
       {/* style={{ borderBottom: '1px solid #333' }} */}
       <div className="d-flex justify-content-between align-items-center col-auto">
         <div className="h2-title d-flex align-items-center col-auto">
-        <a className="nav-link active" aria-current="page" href="/" >
-          <h2>PawPrints</h2>
-        </a>
+          <a className="nav-link active" aria-current="page" href="/">
+            <h2>PawPrints</h2>
+          </a>
           <p className="header-p">Find a lost pet near you!</p>
         </div>
       </div>
@@ -80,7 +60,6 @@ const Header = () => {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="/">
