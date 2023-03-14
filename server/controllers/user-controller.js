@@ -116,15 +116,10 @@ async verifyUser(req, res){
   //get('/api/users/:id')
   async getUserById(req, res) {
     try {
-      const dbUser = await User.findById(req.params.id)
-      .populate('pets')
-      res
-        .status(200)
-        .json(dbUser)
+      const dbUser = await User.findById("640a5b12fa7ca90014d7169f")
+      return res.status(200).json({ result: "success"})
     } catch (error) {
-      res
-        .status(500)
-        .json(error)
+      return res.status(500).json(error)
     }
   },
 //this is the route that is called when the user adds a pet
