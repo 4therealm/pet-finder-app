@@ -84,6 +84,8 @@ async authUser({ body }, res) {
 
   res.header("auth-token", token).json({ error: null, data: { user, token }})
 },
+
+
 //post('/api/users/verify')
 async verifyUser(req, res){
   const token = req.headers["auth-token"]
@@ -146,6 +148,9 @@ async verifyUser(req, res){
       if (!dbUser) {
         throw new Error("Failed to update user");
       }
+
+      console.log(dbpet)
+
       res.status(200).json(`dbPet: ${dbPet} dbUser: ${dbUser}`);
     } catch (error) {
       console.log(error);

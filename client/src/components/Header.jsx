@@ -1,15 +1,37 @@
 import cookie from 'js-cookie';
+import {useState} from 'react';
 import { useAppCtx } from '../utils/AppContext';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Geolocation from './Geolocation';
+import { Image } from 'cloudinary-react';
 
 const Header = () => {
-  const { user, userlocation } = useAppCtx()
+  const { user, userlocation } = useAppCtx();
+
+  const { userProfileImage, setUserProfileImage } = useState(null);
+
+  console.log(userProfileImage);
+  console.log(user);
+  // console.log(user.profileImage);
 
   const logout = () => {
     cookie.remove('auth-token');
     window.location.href = '/';
   };
+
+  //Getting the users profile image if one exists
+  const fetchUserProfileImage = async () => {
+    const query = await fetch(`/api/user/profileImage/${user._id}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    const data = await query.json()
+    const userProfileImage = data.profileImage;
+    console.log(userProfileImage)
+    setUserProfileImage(userProfileImage);
+  }
 
   return (
     <header className="px-2 pb-0 mb-0 row d-flex justify-context-between" >
@@ -79,7 +101,13 @@ const Header = () => {
                       Logout
                     </a>
                   </li>
+                  
+                  {!userProfileImage ?( 
+                  <li>
+                    <a className="nav-link" href='/profileImage'>Add a profile Image!</a>
+                  </li>) : ( <p>test test?</p> ) }
                 </>
+                // <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId={userProfileImage} />
               )}
             </ul>
           </div>

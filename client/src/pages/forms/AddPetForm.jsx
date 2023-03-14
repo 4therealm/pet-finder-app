@@ -18,6 +18,8 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
   //Grabbing the 'user' Model from AppContext.jsx
   const {user}=useAppCtx()
 
+  console.log(user)
+
   //Assigning the uses id to 'id' for ease
   const id=user._id
 
@@ -40,6 +42,7 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
         const publicId = response.data.public_id;
 
         //Returning the full url of the image from Cloudinary
+        console.log(cld.url(publicId))
         return cld.url(publicId);
     } catch (err) {
         console.log(err);
@@ -68,6 +71,8 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
     event.preventDefault()
     try {
       const petImageUrl = await uploadImage(); // Wait for the image to upload. We need to do this to get all the data from the user before we begin to add it to the model
+      setPetUrl(cld.url(petImageUrl));
+      console.log(cld.url(petImageUrl))
       setNewPet({
         ...newPet,
         // Here we add in the user id by force
@@ -117,8 +122,6 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
       //Setting the current local state to the image url
       setPetUrl(cld.url(petImageUrl))
 
-      //Testing to see if the enitre url is being used
-      console.log(petUrl)
     } catch(error) {
       console.error(error)
     }
