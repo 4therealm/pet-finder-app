@@ -59,7 +59,7 @@ p, li, td, th, blockquote, label, input, textarea, select {
 
 /* === lostPet "temp" ====== */
 .lostPetCard {
-  border: 1px solid white;
+  /* border: 1px solid white; */
   border-radius: 5px;
   margin: 10px;
   padding: 10px;

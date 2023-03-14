@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { useState, useEffect } from "react";
 import useLostPets from "../hooks/useLostPets";
 import { useAppCtx } from "../utils/AppContext";
@@ -8,6 +9,7 @@ const LostPets = () => {
   const { lostPets } = useLostPets();
   const [expandedPet, setExpandedPet] = useState(null);
   const [ownerPhone, setOwnerPhone] = useState(null);
+  // eslint-disable-next-line
   const { user, userLocation } = useAppCtx();
   const handleExpandPet = (pet) => {
     setOwnerPhone("+1" + pet.owner.phone);
@@ -48,8 +50,7 @@ const LostPets = () => {
              
             >
               <img  style={{
-                // height: 400 / 2,
-                // width: 400 / 2,
+                
                 borderRadius: 800 / 4,
               }}
                 src={pet.petImageUrl ? pet.petImageUrl : getImage(pet.type)}
