@@ -84,8 +84,6 @@ async authUser({ body }, res) {
 
   res.header("auth-token", token).json({ error: null, data: { user, token }})
 },
-
-
 //post('/api/users/verify')
 async verifyUser(req, res){
   const token = req.headers["auth-token"]
@@ -95,10 +93,10 @@ async verifyUser(req, res){
   const isVerified = jwt.verify(token, process.env.JWT_SECRET)
   if( !isVerified ) return res.status(401).json({msg: "un-authorized"})
 
-  const user = await User.findById(isVerified.id).populate('pets');
+  const user = await User.findById(isVerified.id)
   if( !user ) return res.status(401).json({msg: "un-authorized"})
   
-  return res.status(200).json(user);
+  return res.status(200).json({ _id: user._id, email: user.email, name: user.name, phone: user.phone, profileImage: user.profileImage})
 },
 //get('/api/users')
   async getAllUsers(req, res) {
@@ -119,9 +117,14 @@ async verifyUser(req, res){
   async getUserById(req, res) {
     try {
       const dbUser = await User.findById(req.params.id)
-      return res.status(200).headers({"Content-Result": dbUser._id}).json({ result: "success"})
+      .populate('pets')
+      res
+        .status(200)
+        .json(dbUser)
     } catch (error) {
-      return res.status(500).json(error)
+      res
+        .status(500)
+        .json(error)
     }
   },
 //this is the route that is called when the user adds a pet
@@ -143,9 +146,6 @@ async verifyUser(req, res){
       if (!dbUser) {
         throw new Error("Failed to update user");
       }
-
-      console.log(dbpet)
-
       res.status(200).json(`dbPet: ${dbPet} dbUser: ${dbUser}`);
     } catch (error) {
       console.log(error);
