@@ -21,7 +21,7 @@ const HomePage = () => {
     <div>
  {user ? (
         <div style={{border: "2px solid blue"}}className='container-fluid'>
-          <Feed />
+          {/* <Feed /> */}
           <LostPets />
           <Link to='/addPetForm' >Add a lost pet</Link>
         </div>
