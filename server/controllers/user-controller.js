@@ -116,8 +116,8 @@ async verifyUser(req, res){
   //get('/api/users/:id')
   async getUserById(req, res) {
     try {
-      const dbUser = await User.findById("640a5b12fa7ca90014d7169f")
-      return res.status(200).json({ result: "success"})
+      const dbUser = await User.findById(req.params.id)
+      return res.status(200).headers({"Content-Result": dbUser._id}).json({ result: "success"})
     } catch (error) {
       return res.status(500).json(error)
     }
