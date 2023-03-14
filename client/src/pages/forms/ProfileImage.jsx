@@ -11,17 +11,15 @@ export default function ProfileImage() {
     //Destructuring the 'user' object from the util folder
     const { user, updateUserContext } = useAppCtx();
 
-    //Setting the 'user._id' as a variable for easier acess
-    const user_id = user._id;
+    //Setting the 'user._id' as a variable for easier access
+    const user_id = user ? user._id : null;
+    console.log(user);
 
     //Using the 'cloudinary-react' package to get the full url
     const cld = new cloudinary.Cloudinary({cloud_name: 'diwhrgwml'});
 
     //Setting local state to figure out if an image has been uploaded by the user
     const [userUrl, setUserUrl] = useState(null);
-
-    //!Original -> This should work with no other function. See the end of the this video for base solution that works:
-    //! https://www.youtube.com/watch?v=Y-VgaRwWS3o&ab_channel=PedroTech
     
     //The get user ID from server
     //^ Technically we do not need this function, since the 'user' state permeates through our code

@@ -84,6 +84,8 @@ async authUser({ body }, res) {
 
   res.header("auth-token", token).json({ error: null, data: { user, token }})
 },
+
+
 //post('/api/users/verify')
 async verifyUser(req, res){
   const token = req.headers["auth-token"]
@@ -93,10 +95,10 @@ async verifyUser(req, res){
   const isVerified = jwt.verify(token, process.env.JWT_SECRET)
   if( !isVerified ) return res.status(401).json({msg: "un-authorized"})
 
-  const user = await User.findById(isVerified.id)
+  const user = await User.findById(isVerified.id).populate('pets');
   if( !user ) return res.status(401).json({msg: "un-authorized"})
   
-  return res.status(200).json({ _id: user._id, email: user.email, name: user.name, phone: user.phone, profileImage: user.profileImage})
+  return res.status(200).json(user);
 },
 //get('/api/users')
   async getAllUsers(req, res) {
@@ -141,6 +143,9 @@ async verifyUser(req, res){
       if (!dbUser) {
         throw new Error("Failed to update user");
       }
+
+      console.log(dbpet)
+
       res.status(200).json(`dbPet: ${dbPet} dbUser: ${dbUser}`);
     } catch (error) {
       console.log(error);
