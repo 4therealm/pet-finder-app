@@ -2,12 +2,6 @@ import cookie from "js-cookie";
 import { useAppCtx } from "../utils/AppContext";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Geolocation from "./Geolocation";
-// import Tabs from '@mui/material/Tabs';
-// import Tab from '@mui/material/Tab';
-// import Box from '@mui/material/Box';
-// import Button from "@mui/material/Button";
-// import Menu from "@mui/material/Menu";
-// import MenuItem from "@mui/material/MenuItem";
 
 const Header = () => {
   const { user, userlocation } = useAppCtx();
@@ -17,27 +11,14 @@ const Header = () => {
     window.location.href = "/";
   };
 
-  // const [anchorEl, setAnchorEl] =
-  //   (React.useState < null) | (HTMLElement > null);
-  // const open = Boolean(anchorEl);
-  // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-
-
-  
   return (
     <header className="px-2 pb-0 mb-0 row d-flex justify-context-between">
       {/* style={{ borderBottom: '1px solid #333' }} */}
       <div className="d-flex justify-content-between align-items-center col-auto">
         <div className="h2-title d-flex align-items-center col-auto">
-        <a className="nav-link active" aria-current="page" href="/" >
-          <h2>PawPrints</h2>
-        </a>
+          <a className="nav-link active" aria-current="page" href="/">
+            <h2>PawPrints</h2>
+          </a>
           <p className="header-p">Find a lost pet near you!</p>
         </div>
       </div>
@@ -66,7 +47,6 @@ const Header = () => {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <a className="nav-link active" aria-current="page" href="/">
