@@ -92,7 +92,7 @@ export default function UpdateUserForm({setShowUserForm,user}) {
                     />
                   </div>
                   <div className="form-group">
-                    <button className="btn btn-primary">Update Profile</button>
+                    <button className="btn btn-rounded btn-dark">Update Profile</button>
                   </div>
                 </form>
               </div>

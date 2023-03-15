@@ -66,7 +66,7 @@ const LoginPage = (props) => {
         </div>
 
         <div className="form-group mt-2 d-flex justify-content-center">
-          <button className="btn btn-primary" style={{ textAlign: "center" }} onClick={handleFormSubmit}>Log Me In!</button>
+          <button className="btn btn-rounded btn-dark" style={{ textAlign: "center" }} onClick={handleFormSubmit}>Log Me In!</button>
         </div>
       </form>
 

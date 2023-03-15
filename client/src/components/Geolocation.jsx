@@ -2,13 +2,15 @@ import  useGeoLocation  from "../hooks/useGeoLocation";
 import { useAppCtx } from "../utils/AppContext";
 
 
+
 const Geolocation = () => {
   const { loading, error } = useGeoLocation();
   const { userLocation } = useAppCtx();
-  
+
 //we could put a cool loading animation here
   if (loading) {
     return <p>Loading...</p>;
+   
   }
 
   if (error) {
@@ -27,3 +29,4 @@ const Geolocation = () => {
 };
 
 export default Geolocation;
+// className="btn btn-rounded btn-dark"

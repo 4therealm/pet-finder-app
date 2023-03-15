@@ -144,7 +144,7 @@ function ImageRecognizer() {
       )}
       <div style={{display: "flex", justifyContent: "center", alignItems: 'center'}}>
         {/* the 'onClick' here checks if there is a function associated with the current state. Remember that the 'appState' is the current state of the stateMachine, and we are simply checking to see if there is an 'action' function associated with that state */}
-        <button style={{margin: '0 auto' }} onClick={actionButton[appState].action || (() => {})}>
+        <button className="btn btn-rounded btn-dark" style={{margin: '0 auto' }} onClick={actionButton[appState].action || (() => {})}>
             {actionButton[appState].text}
         </button>
       </div>

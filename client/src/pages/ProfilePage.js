@@ -56,7 +56,7 @@ const ProfilePage = () => {
       <PetAside pets={pets} />
       {!activeForm && (
         <button
-          className="btn btn-primary"
+           className="btn btn-rounded btn-dark"
           onClick={() => setActiveForm("user")}
         >
           Update information
@@ -65,7 +65,7 @@ const ProfilePage = () => {
       {activeForm === "user" && (
         <div className="UpdateUserForm">
           <UpdateUserForm />
-          <button className="btn btn-primary" onClick={handleFormCancel}>
+          <button  className="btn btn-rounded btn-dark" onClick={handleFormCancel}>
             Cancel
           </button>
         </div>
@@ -74,7 +74,7 @@ const ProfilePage = () => {
       <h2>Your Pets</h2>
       {!activeForm && (
         <button
-          className="btn btn-primary"
+           className="btn btn-rounded btn-dark"
           onClick={() => setActiveForm("pet")}
         >
           Add Pet
@@ -83,7 +83,7 @@ const ProfilePage = () => {
       {activeForm === "pet" && (
         <>
           <AddPetForm user={user} />
-          <button className="btn btn-primary" onClick={handleFormCancel}>
+          <button  className="btn btn-rounded btn-dark" onClick={handleFormCancel}>
             Cancel
           </button>
         </>

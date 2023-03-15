@@ -88,7 +88,7 @@ export default function ProfileImage() {
     return (
         <div style={{color: "white"}}>
             <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/>
-            <button onClick={uploadImage}>Upload Image</button>
+            <button className="btn btn-rounded btn-dark" onClick={uploadImage}>Upload Image</button>
 
             {/* If the state has been changed (aka if the user successfully uploaded an image), display the image */}
             {userUrl && <Image style={{width: "200px"}} cloudName="diwhrgwml" publicId={userUrl}/>}
