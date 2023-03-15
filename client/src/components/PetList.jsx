@@ -147,7 +147,7 @@ const PetAside=({pets}) => {
 
   return (
     <aside className="col-8">
-      <h2>Pet List</h2>
+      <h2>Your Pet List</h2>
       <div className="btn-group-vertical">
         {pets.map((pet) => (
             <React.Fragment key={pet._id}>
