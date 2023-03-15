@@ -6,7 +6,7 @@ const PetAside=({pets}) => {
   const [selectedPet,setSelectedPet]=useState(null)
   const [modalVisible,setModalVisible]=useState(false)
   const [petInfo,setPetInfo]=useState({})
-  const {userLocation}=useAppCtx()
+  const {user, userLocation}=useAppCtx()
 
 
   const handlePetButtonClick=async (petId) => {
@@ -116,9 +116,28 @@ const PetAside=({pets}) => {
       console.log(error);
     }
   };
-  
 
+  const handleDeleteButtonClicked = async () => {
+    console.log("delete button clicked");
+    try {
+      const deletePet = await fetch(`/api/pet/${selectedPet}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ petId: petInfo._id }),
+        });
+        if (!deletePet.ok) {
+          throw new Error("Pet not found");
+        }
+        const deletedPet = await deletePet.json();
 
+        console.log("Pet data:", deletedPet);
+        window.location.href = `/profile/${user._id}`;
+    } catch (err) {
+      console.log(err)
+    }
+  };
 
   return (
     <aside className="col-8">
@@ -175,6 +194,8 @@ const PetAside=({pets}) => {
                   onClick={handleLostButtonClicked}>lost?</button>
                 <button
                   onClick={handleFoundButtonClicked}>found?</button>
+                <button
+                  onClick={handleDeleteButtonClicked}>Delete</button>
 
               </div>
             </div>
