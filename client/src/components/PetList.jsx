@@ -6,7 +6,7 @@ const PetAside=({pets}) => {
   const [selectedPet,setSelectedPet]=useState(null)
   const [modalVisible,setModalVisible]=useState(false)
   const [petInfo,setPetInfo]=useState({})
-  const {userLocation}=useAppCtx()
+  const {user, userLocation}=useAppCtx()
 
 
   const handlePetButtonClick=async (petId) => {
@@ -74,6 +74,9 @@ const PetAside=({pets}) => {
       }
       const data2=await response2.json()
       console.log("Pet data:",data2)
+
+      window.location.href = `/profile/${user._id}`;
+
     } catch(error) {
       console.log(error)
     }
@@ -112,28 +115,53 @@ const PetAside=({pets}) => {
       }
       const data2 = await response2.json();
       console.log("Pet data:", data2);
+
+      window.location.href = `/profile/${user._id}`;
+
     } catch (error) {
       console.log(error);
     }
   };
-  
 
+  const handleDeleteButtonClicked = async () => {
+    console.log("delete button clicked");
+    try {
+      const deletePet = await fetch(`/api/pet/${selectedPet}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ petId: petInfo._id }),
+        });
+        if (!deletePet.ok) {
+          throw new Error("Pet not found");
+        }
+        const deletedPet = await deletePet.json();
 
+        console.log("Pet data:", deletedPet);
+        window.location.href = `/profile/${user._id}`;
+    } catch (err) {
+      console.log(err)
+    }
+  };
 
   return (
     <aside className="col-8">
       <h2>Pet List</h2>
       <div className="btn-group-vertical">
         {pets.map((pet) => (
-          <button
-            key={pet._id}
-            type="button"
-            className="btn btn-outline-secondary"
-            onClick={() => handlePetButtonClick(pet._id)}
-          >
-            {pet.name}
-          </button>
-        ))}
+            <React.Fragment key={pet._id}>
+              <img src={pet.petImageUrl} alt="pet" />
+              <button
+                key={pet._id}
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => handlePetButtonClick(pet._id)}
+              >
+                {pet.name}
+              </button>
+            </React.Fragment>
+          ))}
       </div>
       {modalVisible===true&&(
         <div className="modal show" tabIndex="-1" role="dialog" style={{display: "block"}} >
@@ -175,6 +203,9 @@ const PetAside=({pets}) => {
                   onClick={handleLostButtonClicked}>lost?</button>
                 <button
                   onClick={handleFoundButtonClicked}>found?</button>
+                <button
+                  style={{ backgroundColor: 'red', color: 'white' }}
+                  onClick={handleDeleteButtonClicked}>Delete</button>
 
               </div>
             </div>

@@ -40,7 +40,7 @@ export default function ProfileImage() {
 
     const updateUser = async (userId, publicId) => {
         try {
-            const response = await fetch(`/api/user/${userId}`, {
+            const response = await fetch(`/api/user/updateProfileImage/${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

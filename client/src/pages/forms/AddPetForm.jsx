@@ -8,6 +8,7 @@ import ImageRecognizer from "../../components/ImageRecognition";
 //! Add the following to any component to use:
     /* <AddPetForm handleAddPet={handleAddPet} /> */
 
+
 export default function AddPetForm({handleAddPet, setShowPetForm}) {
   //We need to manage the state of the image
   const [imageSelected, setImageSelected] = useState('');
@@ -18,7 +19,7 @@ export default function AddPetForm({handleAddPet, setShowPetForm}) {
   //Grabbing the 'user' Model from AppContext.jsx
   const {user}=useAppCtx()
 
-  console.log(user)
+  console.log(user._id)
 
   //Assigning the uses id to 'id' for ease
 const [id,setId]=useState("")
@@ -29,6 +30,7 @@ const [id,setId]=useState("")
   //Responsible for uploading the image
   const uploadImage = async () => {
     try {
+      console.log("Test for upload image")
         //We need to use 'fromData' for the image in order to upload it
         const formData = new FormData();
         formData.append("file", imageSelected);
@@ -68,26 +70,23 @@ const [id,setId]=useState("")
 
   //The function that activates when the user clicks "Add Pet"
   const handleSubmit = async (event) => {
+    console.log("handle submit button")
     event.preventDefault()
     try {
       const petImageUrl = await uploadImage(); // Wait for the image to upload. We need to do this to get all the data from the user before we begin to add it to the model
       setPetUrl(cld.url(petImageUrl));
       console.log(cld.url(petImageUrl))
-      setNewPet({
+      const updatedNewPet = {
         ...newPet,
-        // Here we add in the user id by force
         owner: id,
-
-        //Adding the petImageUrl from state 
-        petImageUrl: petImageUrl
-      });
+        petImageUrl: petImageUrl,
+      };
+      setNewPet(updatedNewPet);
 
       //Adding a pet to the user who is logged in
-      const query=await fetch(`/api/user/pet/${id}`,{
+      const query=await fetch(`/api/user/pet/${id}`, {
         method: "post",
-        body: JSON.stringify({...newPet, 
-          owner: id, 
-          petImageUrl}), //We need to include all the necessary data in the body
+        body: JSON.stringify({newPet: updatedNewPet}), //We need to include all the necessary data in the body
         headers: {
           "Content-Type": "application/json"
         }
