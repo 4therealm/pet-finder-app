@@ -48,7 +48,7 @@ const Header = () => {
       >
         <div className="container-fluid">
           <button
-            className="navbar-toggler"
+            className="navbar-toggler btn btn-rounded btn-dark"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
