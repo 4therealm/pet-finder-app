@@ -1,6 +1,6 @@
 // The "Feed" section from the Excali draw
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import ProfileImage from '../pages/forms/profileImage'
+import ProfileImage from '../pages/forms/ProfileImage'
 
 function Feed() {
     return (
