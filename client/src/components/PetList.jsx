@@ -144,15 +144,18 @@ const PetAside=({pets}) => {
       <h2>Pet List</h2>
       <div className="btn-group-vertical">
         {pets.map((pet) => (
-          <button
-            key={pet._id}
-            type="button"
-            className="btn btn-outline-secondary"
-            onClick={() => handlePetButtonClick(pet._id)}
-          >
-            {pet.name}
-          </button>
-        ))}
+            <>
+              <img src={pet.petImageUrl} alt="pet" />
+              <button
+                key={pet._id}
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => handlePetButtonClick(pet._id)}
+              >
+                {pet.name}
+              </button>
+            </>
+          ))}
       </div>
       {modalVisible===true&&(
         <div className="modal show" tabIndex="-1" role="dialog" style={{display: "block"}} >
