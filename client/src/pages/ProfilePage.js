@@ -52,45 +52,52 @@ const ProfilePage = () => {
   };
 
   return (
-    <>
-      <PetAside pets={pets} />
-      {!activeForm && (
-        <button
-           className="btn btn-rounded btn-dark"
-          onClick={() => setActiveForm("user")}
-        >
-          Update information
-        </button>
-      )}
-      {activeForm === "user" && (
-        <div className="UpdateUserForm">
-          <UpdateUserForm />
-          <button  className="btn btn-rounded btn-dark" onClick={handleFormCancel}>
-            Cancel
-          </button>
-        </div>
-      )}
-
-      <h2>Your Pets</h2>
-      {!activeForm && (
-        <button
-           className="btn btn-rounded btn-dark"
-          onClick={() => setActiveForm("pet")}
-        >
-          Add Pet
-        </button>
-      )}
-      {activeForm === "pet" && (
-        <>
-          <AddPetForm user={user} />
-          <button  className="btn btn-rounded btn-dark" onClick={handleFormCancel}>
-            Cancel
-          </button>
-        </>
-      )}
-
-      {loading && <p>Loading...</p>}
-    </>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <div>
+        <PetAside pets={pets} />
+        {!activeForm && (
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <button
+              className="btn btn-rounded btn-dark"
+              onClick={() => setActiveForm("user")}
+            >
+              Update information
+            </button>
+          </div>
+        )}
+        {activeForm === "user" && (
+          <div className="UpdateUserForm">
+            <UpdateUserForm />
+            <button className="btn btn-rounded btn-dark" onClick={handleFormCancel}>
+              Cancel
+            </button>
+          </div>
+        )}
+  
+        {!activeForm && (
+          <div className="d-flex flex-column justify-center align-items-center">
+            <button
+              className="btn btn-rounded btn-dark"
+              style={{ alignItems: "center" }}
+              onClick={() => setActiveForm("pet")}
+            >
+              Add Pet
+            </button>
+          </div>
+        )}
+  
+        {activeForm === "pet" && (
+          <>
+            <AddPetForm user={user} />
+            <button className="btn btn-rounded btn-dark" onClick={handleFormCancel}>
+              Cancel
+            </button>
+          </>
+        )}
+  
+        {loading && <p>Loading...</p>}
+      </div>
+    </div>
   );
 };
 
