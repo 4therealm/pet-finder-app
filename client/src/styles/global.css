@@ -32,7 +32,6 @@ p, li, td, th, blockquote, label, input, textarea, select {
 
 .header-p {
   margin-bottom: 1rem;
-  /* margin-top: 20px; */
   margin-left: 1vw;
 }
 
@@ -63,7 +62,6 @@ p, li, td, th, blockquote, label, input, textarea, select {
 
 /* === lostPet "temp" ====== */
 .lostPetCard {
-  /* border: 1px solid white; */
   border-radius: 5px;
   margin: 10px;
   padding: 10px;

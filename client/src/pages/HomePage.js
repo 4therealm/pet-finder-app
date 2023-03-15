@@ -15,7 +15,7 @@ const HomePage = () => {
   }
 
   return (
-    <div>
+    <div style={{height: "auto", paddingBottom:"150px"}}>
  {user ? (
         <div className='container-fluid'>
           {/* <Feed /> */}
@@ -29,7 +29,7 @@ const HomePage = () => {
 
         </div>
       ) : (
-        <p>Please log in to see your profile.</p>
+        <p style={{textAlign: "center"}}>Please log in to see your profile.</p>
       )}
     </div>
   );
