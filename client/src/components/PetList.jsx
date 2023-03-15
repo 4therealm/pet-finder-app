@@ -195,6 +195,7 @@ const PetAside=({pets}) => {
                 <button
                   onClick={handleFoundButtonClicked}>found?</button>
                 <button
+                  style={{ backgroundColor: 'red', color: 'white' }}
                   onClick={handleDeleteButtonClicked}>Delete</button>
 
               </div>
