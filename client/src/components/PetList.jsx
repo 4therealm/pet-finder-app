@@ -74,6 +74,9 @@ const PetAside=({pets}) => {
       }
       const data2=await response2.json()
       console.log("Pet data:",data2)
+
+      window.location.href = `/profile/${user._id}`;
+
     } catch(error) {
       console.log(error)
     }
@@ -112,6 +115,9 @@ const PetAside=({pets}) => {
       }
       const data2 = await response2.json();
       console.log("Pet data:", data2);
+
+      window.location.href = `/profile/${user._id}`;
+
     } catch (error) {
       console.log(error);
     }
@@ -144,7 +150,7 @@ const PetAside=({pets}) => {
       <h2>Pet List</h2>
       <div className="btn-group-vertical">
         {pets.map((pet) => (
-            <>
+            <React.Fragment key={pet._id}>
               <img src={pet.petImageUrl} alt="pet" />
               <button
                 key={pet._id}
@@ -154,7 +160,7 @@ const PetAside=({pets}) => {
               >
                 {pet.name}
               </button>
-            </>
+            </React.Fragment>
           ))}
       </div>
       {modalVisible===true&&(
