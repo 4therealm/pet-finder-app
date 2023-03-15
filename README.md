@@ -9,10 +9,16 @@
 - [Source Code](https://github.com/4therealm/pet-finder-app)
 - [Deployed App](https://pet-finder-application.herokuapp.com)
 
-
 ## Description
 
 The Pet Finder App helps pet owners locate their lost pets quickly and efficiently. Create a profile for your pet with their name, breed, age, and photo, and report them as missing through the app. Our app uses TensegrityJS, a JavaScript library that helps identify the breed of the pet you are adding, making it easier to match your pet with other lost pets. The app also uses GPS technology to track both your and your pet's location, so you can easily reunite with your furry friend. Additionally, we've integrated Twilio to alert pet owners when their pet has been spotted by others. Others in the area can also report sightings through the app, notifying you immediately. Join our community and reunite with your lost pet joyfully!
+
+## Screenshots
+![Login](assets/login.png)
+![Signup](assets/signup.png)
+![Home](assets/home.png)
+![Profile Page](assets/profilepage.png)
+![Add Pet](assets/profileWaddPet.png)
 
 ## Table of Contents
 - [Usage](#usage)
@@ -63,7 +69,6 @@ Follow these steps to set up the project on your local machine:
    npm run develop```
 
 6. Open your browser and navigate to `http://localhost:3000` to view the app.
-
 
 ## License
 
@@ -131,3 +136,4 @@ Don't hesitate to reach out to the project maintainers if you have any questions
 ## Acknowledgments
 
 We would like to extend a heartfelt thank you to our cohort teacher, Gary Almes, and his TA, Kathryn Vincent. Their tireless efforts, guidance, and support have been instrumental in enabling us to complete this project. We are truly grateful for their dedication and the knowledge they've shared with us throughout our learning journey.
+
