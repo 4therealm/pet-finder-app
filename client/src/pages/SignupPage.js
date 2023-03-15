@@ -131,7 +131,7 @@ const SignupPage = () => {
         </div>
         <div className="form-group mt-2 d-flex justify-content-center">
           <button
-            className="btn btn-primary"
+            className="btn btn-rounded btn-dark"
             style={{ textAlign: "center" }}
             type="submit"
             disabled={!formIsValid}

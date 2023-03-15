@@ -1,5 +1,7 @@
-import React,{useState} from "react"
-import {useAppCtx} from '../utils/AppContext'
+import React, { useState } from "react";
+import { useAppCtx } from "../utils/AppContext";
+
+
 
 
 const PetAside=({pets}) => {
@@ -9,33 +11,35 @@ const PetAside=({pets}) => {
   const {user, userLocation}=useAppCtx()
 
 
-  const handlePetButtonClick=async (petId) => {
-    // console.log(userLocation);
-    // console.log(petId);
-    try {
-      const response=await fetch(`/api/pet/${petId}`)
-      if(!response.ok) {
-        throw new Error("Network response was not ok")
+  const handlePetButtonClick = async (petId) => {
+
+    
+      // console.log(userLocation);
+      // console.log(petId);
+      try {
+        const response=await fetch(`/api/pet/${petId}`)
+        if(!response.ok) {
+          throw new Error("Network response was not ok")
+        }
+        const data=await response.json()
+        // console.table(data);
+        setPetInfo(data)
+        setSelectedPet(petId)
+        setModalVisible(true)
+      } catch(error) {
+        console.log(error)
       }
-      const data=await response.json()
-      // console.table(data);
-      setPetInfo(data)
-      setSelectedPet(petId)
-      setModalVisible(true)
-    } catch(error) {
-      console.log(error)
     }
-  }
 
-  const handleModalClose=() => {
-    setSelectedPet(null)
-    setModalVisible(false)
-  }
+  const handleModalClose = () => {
+    setSelectedPet(null);
+    setModalVisible(false);
+  };
 
-  const handleLostButtonClicked=async () => {
-    console.log("lost button clicked")
+  const handleLostButtonClicked = async () => {
+    console.log("lost button clicked");
     try {
-      const response=await fetch(`/api/pet/${selectedPet}`,{
+      const response = await fetch(`/api/pet/${selectedPet}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -44,34 +48,40 @@ const PetAside=({pets}) => {
           isLost: true,
           lastSeenLocation: userLocation,
         }),
-      })
-      if(!response.ok) {
-        throw new Error("Network response for Pet update was not ok")
+      });
+      if (!response.ok) {
+        throw new Error("Network response for Pet update was not ok");
       }
-      const data=await response.json()
-      setPetInfo(data)
+      const data = await response.json();
+      setPetInfo(data);
 
       // Check if location exists before adding lost pet
-      const {lastSeenLocation}=data
-      console.log("Last seen location:",lastSeenLocation)
-      const locationResponse=await fetch(`/api/location/${lastSeenLocation[0]._id}`)
-      if(!locationResponse.ok) {
-        throw new Error("Network response for Location lookup was not ok")
+      const { lastSeenLocation } = data;
+      console.log("Last seen location:", lastSeenLocation);
+      const locationResponse = await fetch(
+        `/api/location/${lastSeenLocation[0]._id}`
+      );
+      if (!locationResponse.ok) {
+        throw new Error("Network response for Location lookup was not ok");
       }
-      const locationData=await locationResponse.json()
+      const locationData = await locationResponse.json();
       console.log("Location data:", locationData);
 
       // Add pet to lostPets array in location document
-      const response2=await fetch(`/api/location/lost/${lastSeenLocation[0]._id}`,{
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({petId: data._id}),
-      })
-      if(!response2.ok) {
-        throw new Error("Network response for Location update was not ok")
+      const response2 = await fetch(
+        `/api/location/lost/${lastSeenLocation[0]._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ petId: data._id }),
+        }
+      );
+      if (!response2.ok) {
+        throw new Error("Network response for Location update was not ok");
       }
+
       const data2=await response2.json()
       console.log("Pet data:",data2)
 
@@ -79,8 +89,12 @@ const PetAside=({pets}) => {
 
     } catch(error) {
       console.log(error)
+
     }
-  }
+  };
+
+
+
   const handleFoundButtonClicked = async () => {
     console.log("found button clicked");
     try {
@@ -91,7 +105,7 @@ const PetAside=({pets}) => {
         },
         body: JSON.stringify({
           isLost: false,
-          lastSeenLocation: { type: "Point", coordinates: [0, 0] }
+          lastSeenLocation: { type: "Point", coordinates: [0, 0] },
         }),
       });
       if (!response.ok) {
@@ -99,17 +113,20 @@ const PetAside=({pets}) => {
       }
       const data = await response.json();
       setPetInfo(data);
-  
+
       // Remove pet from lostPets array in location document
       const { lastSeenLocation } = data;
       console.log("Last seen location:", lastSeenLocation);
-      const response2 = await fetch(`/api/location/lost/${lastSeenLocation[0]._id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ petId: data._id }),
-      });
+      const response2 = await fetch(
+        `/api/location/lost/${lastSeenLocation[0]._id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ petId: data._id }),
+        }
+      );
       if (!response2.ok) {
         throw new Error("Network response for Location update was not ok");
       }
@@ -122,6 +139,7 @@ const PetAside=({pets}) => {
       console.log(error);
     }
   };
+
 
   const handleDeleteButtonClicked = async () => {
     console.log("delete button clicked");
@@ -145,6 +163,8 @@ const PetAside=({pets}) => {
     }
   };
 
+  
+
   return (
     <aside className="col-8">
       <h2>Your Pet List</h2>
@@ -155,23 +175,30 @@ const PetAside=({pets}) => {
               <button
                 key={pet._id}
                 type="button"
-                className="btn btn-outline-secondary"
+                className="btn btn-rounded btn-dark"
                 onClick={() => handlePetButtonClick(pet._id)}
               >
                 {pet.name}
               </button>
             </React.Fragment>
           ))}
+
+   
       </div>
-      {modalVisible===true&&(
-        <div className="modal show" tabIndex="-1" role="dialog" style={{display: "block"}} >
+      {modalVisible === true && (
+        <div
+          className="modal show"
+          tabIndex="-1"
+          role="dialog"
+          style={{ display: "block" }}
+        >
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">{petInfo.name}</h5>
                 <button
                   type="button"
-                  className="close"
+                  className="btn btn-rounded btn-dark close"
                   data-dismiss="modal"
                   aria-label="Close"
                   onClick={handleModalClose}
@@ -186,19 +213,20 @@ const PetAside=({pets}) => {
                 <p>Age: {petInfo.age}</p>
                 <p>Size: {petInfo.size}</p>
                 <p>Color: {petInfo.color}</p>
-                <p>Friendly: {petInfo.friendly? "Yes":"No"}</p>
+                <p>Friendly: {petInfo.friendly ? "Yes" : "No"}</p>
                 <p>Health: {petInfo.health}</p>
                 <p>Notes: {petInfo.notes}</p>
               </div>
               <div className="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-secondary"
+                  className="btn btn-rounded btn-dark"
                   data-dismiss="modal"
                   onClick={handleModalClose}
                 >
                   Close
                 </button>
+
                 <button
                   onClick={handleLostButtonClicked}>lost?</button>
                 <button
@@ -207,13 +235,14 @@ const PetAside=({pets}) => {
                   style={{ backgroundColor: 'red', color: 'white' }}
                   onClick={handleDeleteButtonClicked}>Delete</button>
 
+
               </div>
             </div>
           </div>
         </div>
       )}
     </aside>
-  )
-}
+  );
+};
 
-export default PetAside
+export default PetAside;
