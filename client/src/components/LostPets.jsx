@@ -11,6 +11,15 @@ const LostPets = () => {
   const [ownerPhone, setOwnerPhone] = useState(null);
   // eslint-disable-next-line
   const { user, userLocation } = useAppCtx();
+  const cardStyle = {
+    boxShadow: '5px 5px 10px blue, -5px -5px 10px orange, 0px 0px 10px purple',
+    borderRadius: '5px',
+    padding: '10px',
+    display: 'inline-block',
+    margin: '10px',
+    textAlign: 'center',
+  };
+  
   const handleExpandPet = (pet) => {
     console.log("Pet clicked:", pet);
     setOwnerPhone("+1" + pet.owner.phone);
@@ -46,7 +55,7 @@ const LostPets = () => {
   return (
     <div className="row">
       {lostPets.map((pet) => (
-        <div key={pet._id} className="col-md-3 mb-3">
+        <div style={cardStyle} key={pet._id} className="col-md-3 mb-3">
           <div
             className={`card ${
               expandedPet === pet._id ? "expanded" : ""

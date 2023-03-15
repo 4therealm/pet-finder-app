@@ -20,7 +20,7 @@ const Geolocation = () => {
   return (
     <div>
       {userLocation ? (
-      <p style={{marginRight: "10rem"}} >{userLocation[0].city}</p>
+      <p style={{marginLeft: "5rem"}} >{userLocation[0].city}</p>
       ) : (
       <p>Location not found</p>
       )}

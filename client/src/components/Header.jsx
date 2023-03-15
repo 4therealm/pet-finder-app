@@ -14,27 +14,31 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <Navbar bg="dark" expand="md">
+    <header >
+      <Navbar bg="dark" expand="md" className="d-flex justify-content-between">
         <Navbar.Brand href="/">
           <h2>PawPrints</h2>
         </Navbar.Brand>
-        <div className="d-flex flex-grow-1 justify-content-center">
+        <div className="d-flex flex-grow-1 ml-auto float-right justify-content-end">
           <Geolocation />
         </div>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+          <Nav className="ml-auto justify-content-end" style={{
+    display: "flex",
+    justifyContent: "center",
+    flexGrow: "1",
+  }}>
+            <Nav.Link href="/" style={{color: 'white'}}>Home</Nav.Link>
             {!user ? (
               <>
-                <Nav.Link href="/signup">Signup</Nav.Link>
-                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/signup" style={{color: 'white'}}>Signup</Nav.Link>
+                <Nav.Link href="/login" style={{color: 'white'}}>Login</Nav.Link>
               </>
             ) : (
               <>
-                <Nav.Link href={`/profile/${user._id}`}>Profile</Nav.Link>
-                <Nav.Link href="##" onClick={logout}>
+                <Nav.Link href={`/profile/${user._id}`} style={{color: 'white'}}>Profile</Nav.Link>
+                <Nav.Link href="##" onClick={logout} style={{color: 'white'}}>
                   Logout
                 </Nav.Link>
                 {!user.profileImage ? (

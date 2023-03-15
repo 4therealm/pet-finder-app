@@ -9,6 +9,14 @@ const PetAside=({pets}) => {
   const [modalVisible,setModalVisible]=useState(false)
   const [petInfo,setPetInfo]=useState({})
   const {user, userLocation}=useAppCtx()
+  const cardStyle = {
+    boxShadow: '5px 5px 10px orange, -5px -5px 10px blue, 0px 0px 10px purple',
+    borderRadius: '5px',
+    padding: '10px',
+    display: 'inline-block',
+    margin: '10px',
+    textAlign: 'center',
+  };
 
 
   const handlePetButtonClick = async (petId) => {
@@ -166,11 +174,11 @@ const PetAside=({pets}) => {
   
 
   return (
-    <aside className="col-8">
-      <h2>Pet List</h2>
+    <aside className="col-12 text-center">
+      <h2>Your Pet List</h2>
       <div className="btn-group-vertical">
         {pets.map((pet) => (
-            <React.Fragment key={pet._id}>
+            <div style={cardStyle} key={pet._id}>
               <img src={pet.petImageUrl} alt="pet" />
               <button
                 key={pet._id}
@@ -180,7 +188,7 @@ const PetAside=({pets}) => {
               >
                 {pet.name}
               </button>
-            </React.Fragment>
+            </div>
           ))}
 
    

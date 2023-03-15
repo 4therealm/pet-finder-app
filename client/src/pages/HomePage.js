@@ -17,11 +17,11 @@ const HomePage = () => {
   return (
     <div>
  {user ? (
-        <div style={{border: "2px solid blue"}}className='container-fluid'>
+        <div className='container-fluid'>
           {/* <Feed /> */}
           
           {/* <Link to='/addPetForm' >Add a lost pet</Link> */}
-          <h2 style={{textAlign: 'center'}}>Lost pets!</h2>
+          <h2 style={{textAlign: 'center', color: '#D1BDF2'}}>Lost pets!</h2>
           <div className="col-12" >
             <LostPets />
           </div>

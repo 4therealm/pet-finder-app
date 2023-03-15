@@ -1,11 +1,7 @@
-
-
-
-
 const Wrapper = ({children}) => {
 
   return (
-    <div style={{ height: "300vh", backgroundColor: "#111"}}>
+    <div style={{ height: "auto", paddingBottom: "200px", backgroundColor: "#2b2b2b"}}>
       { children }
     </div>
   )
