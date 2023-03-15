@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Header, Wrapper, } from "./components";
 import { HomePage, LoginPage, ProfilePage, SignupPage } from "./pages";
-import ProfileImage from './pages/forms/ProfileImage';
+import ProfileImage from './pages/forms/profileImage';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/global.css";
 import {AppProvider} from "./utils/AppContext"

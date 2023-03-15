@@ -131,10 +131,11 @@ async verifyUser(req, res){
 
   async createPet(req, res) {
     const userId = req.params.id;
+    console.log("Request body:", req.body);
     try {
-      const {name, type, description, breed, age, gender, size, color, friendly, health, notes
-      } = req.body;
-      const dbPet = await Pet.create( {name, type, description, breed, age, gender, size, color, friendly, health, notes, owner: userId
+      const newPet = req.body.newPet; // Access the newPet object from the request body
+      const {name, type, description, breed, age, gender, size, color, friendly, health, notes, petImageUrl } = newPet;
+      const dbPet = await Pet.create( {name, type, description, breed, age, gender, size, color, friendly, health, notes, petImageUrl, owner: userId
       });
       if (!dbPet) {
         throw new Error("Failed to create pet");
@@ -152,6 +153,7 @@ async verifyUser(req, res){
       res.status(500).json(error);
     }
   },
+
 //delete('/api/users/:id')
  async deleteUser(req, res) {
     try {
@@ -164,7 +166,73 @@ async verifyUser(req, res){
         .status(500)
         .json(error)
     }
+  },
+
+    async getSinglePet(req, res) {
+    try {
+      const userId = req.params.id;
+      const petData = req.body;
+      const pet = await Pet.create(petData);
+      const user = await User.findByIdAndUpdate(userId, { $push: { pets: pet } }, { new: true });
+      console.log(pet)
+
+      res.json(pet);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  },
+
+    async updateProfileImage(req, res) {
+      const userId = req.params.userId;
+      const { url } = req.body.profileImage;
+    
+      try {
+        const user = await User.findOneAndUpdate(
+          { _id: userId },
+          { profileImage: url },
+          { new: true }
+        );
+    
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+
+      console.log(user);
+      res
+        .status(200)
+        .json({ message: "Profile image updated successfully", user });
+    } catch (error) {
+      console.error("Error updating profile image:", error);
+      res.status(500).json({ message: "Server error" });
+    }
   }
+
+
+
+  //! Don't think we need this since we are getting User data from the context
+  //Getting the profile image from the user to display on the page
+  // async (`/profileImage/:userId`(req, res) => {
+  //   try {
+  //     console.log("Testing profile image route")
+  //     const userId = req.params.id;
+  //     const user = await User.findById(userId);
+  //     if( !user) {
+  //       return res.status(404).json({message: "User not found"})
+  //     }
+
+  //     const profileImage = user.profileImage;
+  //     if (!profileImage) {
+  //       return res.status(404).json({message: "Profile image not found"})
+  //     }
+
+  //     res.status(200).send(profileImage)
+      
+  //   } catch (err) {
+  //     console.log(err)
+  //     res.status(500).json({ message: "Server error" });
+  //   }
+  // })
    
   
 };

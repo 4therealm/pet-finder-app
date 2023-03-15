@@ -97,7 +97,7 @@ const Header = () => {
                   {!user.profileImage ?( 
                   <li className='nav-item'>
                     <a className="nav-link" href='/profileImage'>Add a profile Image!</a>
-                  </li>) : ( <img src={user.profileImage} alt="The users profile pic" style={{width: "47vh", borderRadius: "50px"}} /> ) }
+                  </li>) : ( <img src={user.profileImage} alt="The users profile pic" style={{width: "10vh", borderRadius: "50px"}} /> ) }
                 </>
                 
               )}

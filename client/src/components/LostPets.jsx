@@ -21,6 +21,9 @@ const LostPets = () => {
       setExpandedPet(pet._id);
     }
     console.log("Expanded pet:", expandedPet);
+    console.log(pet);
+    console.log(pet.petImageUrl)
+
   };
   
   const getImage = (petType) => {
@@ -36,7 +39,9 @@ const LostPets = () => {
   const handleContactOwner = (e) => {
     setOwnerPhone(e.target.value);
     e.stopPropagation();
+
   };
+
 
   return (
     <div className="row">
