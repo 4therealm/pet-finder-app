@@ -52,7 +52,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: 'auto', paddingBottom: '200px'}}>
       <div>
         <PetAside pets={pets} />
         {!activeForm && (
