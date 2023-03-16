@@ -4,6 +4,20 @@
 
 ### "Find your lost pet with ease using **PawPrints** - the ultimate pet finder app. Create a pet profile, report them missing, and track their location with GPS technology. Join our community and reunite with your furry friend today!"
 
+## Table of Contents
+- [Links](#links)
+- [Description](#description)
+- [Screenshots](#screenshots)
+- [Features and Usage](#features-and-usage)
+- [Installation](#installation)
+- [License](#license)
+- [Things We Learned](#things-we-learned)
+- [Sources](#sources)
+- [Team](#team)
+- [RoadMap](#roadmap)
+- [How to Contribute](#how-to-contribute)
+- [Acknowledgements](#acknowledgements)
+
 ## Links
 
 - [Source Code](https://github.com/4therealm/pet-finder-app)
@@ -20,22 +34,16 @@ The Pet Finder App helps pet owners locate their lost pets quickly and efficient
 ![Profile Page](assets/profilepage.png)
 ![Add Pet](assets/profileWaddPet.png)
 
-## Table of Contents
-- [Usage](#usage)
-- [Installation](#installation)
-- [License](#license)
-- [Things We Learned](#things-we-learned)
-- [Sources](#sources)
-- [Team](#team)
-- [RoadMap](#roadmap)
 
-## Usage
+## Features and Usage
 
-* Create a profile for your pet with their name, breed, age, and photo.
-* Report your missing pet through the app to alert other users in the area.
-* The app's GPS technology tracks you and your pet's location, making it easy to reunite with your furry friend.
-* Other users can report sightings through the app, notifying you immediately.
-* Join our community and joyfully reunite with your lost pet!
+- **Pet Profiles**: Create a profile for your pet with their name, type, breed, age, size, color, health, notes and photo.
+- **Pet Matching**: The TensegrityJS library helps identify the breed of the pet. This helps other users identify lost pets better.
+- **GPS Tracking**: The app's GPS technology tracks you and your pet's location, making it easy to reunite with your furry friend.
+- **Twilio Integration**: Alert pet owners when their pet has been spotted by others. The app uses Twilio to send notifications, ensuring that they receive timely updates on their pet's whereabouts.
+- **Community Reporting**: Other users can report sightings of lost pets through the app, notifying you immediately and fostering a supportive community of pet lovers.
+- **Join our community and joyfully reunite with your lost pet!**
+
 
 ## Installation
 
@@ -94,10 +102,15 @@ Click the license badge at the beginning of the document to get more info.
 
 ## RoadMap
 
-* Refactor code to be more efficient.
-* Make UI "prettier".
-* Continued improvements to make the app more user friendly.
-* TODO: Add a Feed, which would run Ads for pet foods, items, Health Care and Donations etc (this could be for potential sponsorship and/or paid ads to generate funds etc)."
+Here are the upcoming features and enhancements we plan to incorporate into PawPrints to improve the overall user experience and functionality:
+
+1. **Updating Pets**: We will be adding the ability to update pet profiles, allowing users to easily modify and maintain their pet's information.
+2. **Dark/Light Mode**: We plan to introduce a dark/light mode toggle for the app, catering to user preferences and offering a more comfortable viewing experience.
+3. **Uniform Image Scaling**: We aim to improve image handling by implementing uniform scaling, ensuring that all images uploaded to the app maintain a consistent aspect ratio and appearance.
+4. **User Profile Image Customization**: We will be enhancing the user experience by allowing users to customize their profile images, adding a personal touch to their accounts.
+
+We will continue to evaluate and prioritize these features based on user feedback and the development team's capacity. Stay tuned for updates on the progress of these enhancements!
+
 
 ## How to Contribute
 
