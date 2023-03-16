@@ -7,6 +7,11 @@
 }
 /* === typography ====== */ 
 
+body {
+  height: 100vh;
+  padding-bottom: "150px"
+}
+
 h1, h2, h3, h4, h5, h6, p, li, td, th, blockquote, label, span {
   color: white;
   /* margin-top: 20px; */
