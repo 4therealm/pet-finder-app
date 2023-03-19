@@ -252,8 +252,11 @@ const PetAside=({pets}) => {
         <Row>
           {pets.map((pet) => (
             <Col key={pet._id} className="d-flex justify-content-center">
-              <Card cardStyle={{
-                width: "200px",marginBottom: "10px",boxShadow: '5px 5px 10px orange, -5px -5px 10px blue, 0px 0px 10px purple',
+              <Card style={{
+                width: "200px",
+                marginBottom: "10px",
+                boxShadow: 
+                  '5px 5px 10px orange, -5px -5px 10px blue, 0px 0px 10px purple',
                 borderRadius: '5px',
                 padding: '10px',
                 display: 'inline-block',
