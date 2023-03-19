@@ -62,7 +62,7 @@ const [id,setId]=useState("")
     description: "",
     age: "",
     gender: "",
-    size: "small",
+    size: "",
     color: "",
     friendly: "",
     health: "",
@@ -159,8 +159,9 @@ const [id,setId]=useState("")
 
 
   return (
-    <div className="d-flex justify-content-evenly align-items-start">
-      <div className="AddPetForm col-4 100vw d-flex justify-content-center" >
+    // <div className="d-flex justify-content-evenly align-items-start">
+    <div className="container">
+      <div className="AddPetForm col-lg-4 col-sm-12 100vw d-flex justify-content-center" >
         <div className="row">
           <div style={{margin: "0px auto"}}>
 
@@ -211,6 +212,12 @@ const [id,setId]=useState("")
                     breed: event.target.value
                   })}
                 />
+                
+       <div className="" style={{ textAlign: 'center'}}>
+         {/* <h2>Need a reminder of the breed? No worries, click here!</h2> */}
+         <br />
+         <ImageRecognizer />
+      </div> 
               </div>
               <div className="form-group mb-2">
                 <label>Age</label>
@@ -314,10 +321,6 @@ const [id,setId]=useState("")
         </div>
       </div>
 
-      <div className="col-5 align-items-start " style={{ textAlign: 'center'}}>
-         <h2>Need a reminder of the breed? No worries, click here!</h2>
-         <ImageRecognizer />
-      </div>
     </div>
   )
 }            
