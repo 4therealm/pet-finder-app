@@ -8,8 +8,10 @@ import ImageRecognizer from "../../components/ImageRecognition";
 //! Add the following to any component to use:
     /* <AddPetForm handleAddPet={handleAddPet} /> */
 
-
 export default function AddPetForm({handleAddPet, setShowPetForm}) {
+  const [nameError, setNameError] = useState("");
+const [typeError, setTypeError] = useState("");
+const [friendlyError, setFriendlyError] = useState("");
   //We need to manage the state of the image
   const [imageSelected, setImageSelected] = useState('');
 
@@ -60,7 +62,7 @@ const [id,setId]=useState("")
     description: "",
     age: "",
     gender: "",
-    size: "small",
+    size: "",
     color: "",
     friendly: "",
     health: "",
@@ -70,8 +72,33 @@ const [id,setId]=useState("")
 
   //The function that activates when the user clicks "Add Pet"
   const handleSubmit = async (event) => {
-    console.log("handle submit button")
     event.preventDefault()
+
+    //validate name field
+    if (!newPet.name) {
+      setNameError("Please enter a pet name");
+      return;
+    } else {
+      setNameError("");
+    }
+
+    //Validate type field
+    if (!newPet.type) {
+      setTypeError("Please enter a pet type");
+      return;
+    } else {
+      setTypeError("");
+    }
+
+    //validate friendly field
+    if (!newPet.friendly) {
+      setFriendlyError("Please select a friendly value");
+      return;
+    } else {
+      setFriendlyError("");
+
+  }
+
     try {
       const petImageUrl = await uploadImage(); // Wait for the image to upload. We need to do this to get all the data from the user before we begin to add it to the model
       setPetUrl(cld.url(petImageUrl));
@@ -121,17 +148,20 @@ const [id,setId]=useState("")
       //Setting the current local state to the image url
       setPetUrl(cld.url(petImageUrl))
 
-    } catch(error) {
+    }catch(error) {
       console.error(error)
     }
   }
+
   useEffect(() => {
     user &&setId(user._id)
   }, [user])
 
+
   return (
-    <div className="d-flex justify-content-evenly align-items-start">
-      <div className="AddPetForm col-4 100vw d-flex justify-content-center" >
+    // <div className="d-flex justify-content-evenly align-items-start">
+    <div className="container">
+      <div className="AddPetForm col-lg-4 col-sm-12 100vw d-flex justify-content-center" >
         <div className="row">
           <div style={{margin: "0px auto"}}>
 
@@ -148,13 +178,17 @@ const [id,setId]=useState("")
                     name: event.target.value
                   })}
                 />
+                {nameError && (
+                  <div className="invalid-feedback">{nameError}</div>
+                )}
               </div>
+
               <div className="form-group mb-2">
                 <label>Type</label>
                 <input
 
                   type="text"
-                  className="form-control"
+                  className={`form-control ${typeError ? "is-invalid" : ""}`}
                   name="type"
                   value={newPet.type}
                   onChange={(event) => setNewPet({
@@ -162,6 +196,9 @@ const [id,setId]=useState("")
                     type: event.target.value
                   })}
                 />
+                {typeError && (
+                  <div className="invlaid-feedback"> {typeError} </div>
+                )}
               </div>
               <div className="form-group mb-2">
                 <label>Pet Breed</label>
@@ -175,6 +212,12 @@ const [id,setId]=useState("")
                     breed: event.target.value
                   })}
                 />
+                
+       <div className="" style={{ textAlign: 'center'}}>
+         {/* <h2>Need a reminder of the breed? No worries, click here!</h2> */}
+         <br />
+         <ImageRecognizer />
+      </div> 
               </div>
               <div className="form-group mb-2">
                 <label>Age</label>
@@ -244,7 +287,9 @@ const [id,setId]=useState("")
                   <label htmlFor="friendly-no">No</label>
                 </div>
               </div>
-
+              {friendlyError && (
+                <div className="invalid-feedback">{friendlyError} </div>
+              )}
               <div>
                 <label htmlFor="health">Health:</label>
                 <input type="text" name="health" onChange={(event) => setNewPet({
@@ -276,10 +321,6 @@ const [id,setId]=useState("")
         </div>
       </div>
 
-      <div className="col-5 align-items-start " style={{ textAlign: 'center'}}>
-         <h2>Need a reminder of the breed? No worries, click here!</h2>
-         <ImageRecognizer />
-      </div>
     </div>
   )
-}
+}            
