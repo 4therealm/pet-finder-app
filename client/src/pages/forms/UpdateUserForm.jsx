@@ -1,6 +1,12 @@
 import React,{useState,useEffect} from "react"
 import {useParams} from "react-router-dom"
-export default function UpdateUserForm({setShowUserForm,user}) {
+import { useAppCtx } from '../../utils/AppContext';
+
+
+export default function UpdateUserForm({setShowUserForm}) {
+  const { user, userlocation, getUser } = useAppCtx();
+
+  console.log(user)
   const {id}=useParams()
   const [userFormData,setUserFormData]=useState({email: "",password: "",name: "",phone: ""})
   const [userUpdateResult,setUserUpdateResult]=useState("")
