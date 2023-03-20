@@ -33,10 +33,10 @@ export default function UpdateUserForm({setShowUserForm,user}) {
 
   return (
     <>
-      <div style={{width: "50%"}}>
+      <div style={{width: "100%"}}>
         <div className="row">
-          <div className="col-6">
-            <h2>Update Your Profile</h2>
+          <div className="col-12">
+            <h2 style={{textAlign:'center'}}>Update Your Profile</h2>
             {userUpdateResult==="success"&&(
               <div className="alert alert-success" role="alert">
                 Your profile has been updated!
@@ -48,7 +48,7 @@ export default function UpdateUserForm({setShowUserForm,user}) {
               </div>
             )}
             <div className="row">
-              <div className="col-6">
+              <div className="col-12">
                 <form onSubmit={updateUser} className="mb-2">
                   <div className="form-group mb-2">
                     <label>Email Address</label>

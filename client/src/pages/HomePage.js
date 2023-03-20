@@ -15,7 +15,7 @@ const HomePage = () => {
   }
 
   return (
-    <div style={{height: "auto", paddingBottom:"150px"}}>
+    <div style={{height: "auto", paddingBottom:"300px"}}>
  {user ? (
         <div className='container-fluid'>
           {/* <Feed /> */}
