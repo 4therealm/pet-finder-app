@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react"
 import {useParams} from "react-router-dom"
 import { useAppCtx } from '../../utils/AppContext';
+import { Link } from "react-router-dom";
 
 
 export default function UpdateUserForm({setShowUserForm}) {
@@ -96,6 +97,12 @@ export default function UpdateUserForm({setShowUserForm}) {
                       value={userFormData.phone}
                       onChange={handleUserInputChange}
                     />
+                  </div>
+
+                  <div>
+                    <button className="btn btn-rounded btn-dark" style={{color: 'white'}}>
+                      <Link style={{color: 'white', textDecoration: 'none'}} to='/profileImage'>Update Profile Image</Link>
+                    </button>
                   </div>
                   <div className="form-group">
                     <button className="btn btn-rounded btn-dark">Update Profile</button>
