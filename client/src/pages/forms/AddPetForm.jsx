@@ -61,8 +61,8 @@ const [id,setId]=useState("")
     breed: "",
     description: "",
     age: "",
-    gender: "",
-    size: "",
+    gender: "male",
+    size: "small",
     color: "",
     friendly: "",
     health: "",
@@ -109,6 +109,7 @@ const [id,setId]=useState("")
         petImageUrl: petImageUrl,
       };
       setNewPet(updatedNewPet);
+      console.log(updatedNewPet);
 
       //Adding a pet to the user who is logged in
       const query=await fetch(`/api/user/pet/${id}`, {
@@ -129,15 +130,16 @@ const [id,setId]=useState("")
 
       //Resetting the fields when/if the user wants to add another pet
       setNewPet({
+        //! Do not change these values! You will get a 500 error if you do!
         name: "",
         type: "",
         breed: "",
         description: "",
         age: "",
-        gender: "",
-        size: "",
+        gender: "male",
+        size: "small",
         color: "",
-        friendly: "",
+        friendly: "yes",
         health: "",
         notes: "",
         petImageUrl: ""

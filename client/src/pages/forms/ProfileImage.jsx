@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Image } from 'cloudinary-react';
 import Axios from 'axios';
 import { useAppCtx } from '../../utils/AppContext';
@@ -20,6 +20,10 @@ export default function ProfileImage() {
 
     //Setting local state to figure out if an image has been uploaded by the user
     const [userUrl, setUserUrl] = useState(null);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
     
     //The get user ID from server
     //^ Technically we do not need this function, since the 'user' state permeates through our code
@@ -86,7 +90,7 @@ export default function ProfileImage() {
     }
       
     return (
-        <div style={{color: "white"}}>
+        <div style={{color: "white", height: '100vh', paddingBottom: '100px', textAlign:'center'}}>
             <input type="file" onChange={(event) => setImageSelected(event.target.files[0])}/>
             <button className="btn btn-rounded btn-dark" onClick={uploadImage}>Upload Image</button>
 
